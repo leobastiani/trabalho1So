@@ -1,0 +1,1990 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"print",
+				"printf	printf …"
+			],
+			[
+				"prit",
+				"printf	printf …"
+			],
+			[
+				"checkbox",
+				"checkBoxAmploNaoMarcado"
+			],
+			[
+				"esconderPais",
+				"esconderPais"
+			],
+			[
+				"each",
+				"each	.each()"
+			],
+			[
+				"tama",
+				"tamanhoMaxArquivo"
+			],
+			[
+				"append",
+				"appendTo	.appendTo()"
+			],
+			[
+				"resp",
+				"respostaYN	errorMsg, digite y ou n.'"
+			],
+			[
+				"script",
+				"scriptLattesDiff	importJsons.js"
+			],
+			[
+				"select",
+				"select	<select>"
+			],
+			[
+				"FIltrocarre",
+				"Filtro.carregar	nomeFiltro"
+			],
+			[
+				"pesquisadores",
+				"pesquisadoresList"
+			],
+			[
+				"pesqui",
+				"pesquisadores	statement"
+			],
+			[
+				"campo",
+				"campoPrincipal	x, y"
+			],
+			[
+				"Tempo",
+				"tempoDecorrido	statement"
+			],
+			[
+				"filter",
+				"filter	.filter()"
+			],
+			[
+				"dot",
+				"dotProtPos	statement"
+			],
+			[
+				"prop",
+				"prop	.prop() - single"
+			],
+			[
+				"child",
+				"childText	function"
+			],
+			[
+				"childText",
+				"childText	child"
+			],
+			[
+				"exit",
+				"exit	instance"
+			],
+			[
+				"nov",
+				"criarNovoSnapshot	caminhoDest "
+			],
+			[
+				"criarNovoS",
+				"criarNovoSnapshot	caminhoDest "
+			],
+			[
+				"Lc",
+				"LCtrl"
+			],
+			[
+				"Alt",
+				"AltDown"
+			],
+			[
+				"soma",
+				"somaThread	()"
+			],
+			[
+				"footer",
+				"footerLi"
+			],
+			[
+				"header",
+				"headerNav"
+			],
+			[
+				"_dife",
+				"_differences	x, y"
+			],
+			[
+				"next",
+				"nextArg	args"
+			],
+			[
+				"conca",
+				"concat	Array"
+			],
+			[
+				"with",
+				"withopen	withopen"
+			],
+			[
+				"sintaxe",
+				"sintaxeGroups	statement"
+			],
+			[
+				"criarno",
+				"criarNovoSnapshot	()"
+			],
+			[
+				"spl",
+				"splitext	function"
+			],
+			[
+				"path",
+				"pathsep	instance"
+			],
+			[
+				"if",
+				"if	If Condition"
+			],
+			[
+				"maisrece",
+				"maisRecentePath	statement"
+			],
+			[
+				"str",
+				"strftime	function"
+			],
+			[
+				"depende",
+				"depedencies"
+			],
+			[
+				"mult",
+				"float_multiply_single|mul_s_	$x = $y * $z"
+			],
+			[
+				"mips",
+				"multiply_unsigned_with_hi_lo|multu_	LO=(($s * $t)<<32)>>32; HI=($s * $t)>>32;"
+			],
+			[
+				"compile",
+				"compile	function"
+			],
+			[
+				"foreach",
+				"foreach	foreach"
+			],
+			[
+				"Error",
+				"EnvironmentError	class"
+			],
+			[
+				"abbr",
+				"abbr\\t<abbr>	Javascript.sublime-completions"
+			],
+			[
+				"asd",
+				"aasd	Javascript.sublime-completions"
+			],
+			[
+				"a",
+				"<acronym>$0</acronym>	Javascript.sublime-completions"
+			],
+			[
+				"Sectio",
+				"Section//	Section//"
+			],
+			[
+				"pesqu",
+				"pesquisador"
+			],
+			[
+				"merge",
+				"mergeAlteracoes	alteracoesAnterior, alteracoesPosterior, campo, sinalAnterior"
+			],
+			[
+				"campos",
+				"camposUtilizados"
+			],
+			[
+				"slice",
+				"slice	Array"
+			],
+			[
+				"removi",
+				"removido"
+			],
+			[
+				"cam",
+				"campo"
+			],
+			[
+				"resu",
+				"result"
+			],
+			[
+				"log",
+				"log	console.log"
+			],
+			[
+				"gets",
+				"getSyntaxByFilePath	function"
+			],
+			[
+				"foregrou",
+				"FOREGROUND_GREEN	statement"
+			],
+			[
+				"resumir",
+				"resumir	dict"
+			],
+			[
+				"data",
+				"data	.data()"
+			],
+			[
+				"Datafin",
+				"iDataFin"
+			],
+			[
+				"Dataini",
+				"iDataIni"
+			],
+			[
+				"datarp",
+				"datasProcessamento	index.htm"
+			],
+			[
+				"pesquisador",
+				"Pesquisador	json"
+			],
+			[
+				"leoco",
+				"leocodeintel"
+			],
+			[
+				"principalateracoes",
+				"principaisAlteracoes	index.htm"
+			],
+			[
+				"push",
+				"pushUnique	elem"
+			],
+			[
+				"ana",
+				"analisarJsons	()"
+			],
+			[
+				"analisa",
+				"analisarJsons"
+			],
+			[
+				"param",
+				"parameters	forstmt"
+			],
+			[
+				"pop",
+				"popQueue	queue"
+			],
+			[
+				"preload",
+				"preload_files	statement"
+			],
+			[
+				"show",
+				"show_only_last_word	statement"
+			],
+			[
+				"document",
+				"documentReady	(index.htm)"
+			],
+			[
+				"testa",
+				"testa	palavras"
+			],
+			[
+				"scripal",
+				"scriptLattesDiff"
+			],
+			[
+				"scrit",
+				"scriptLattesDiff"
+			],
+			[
+				"folder",
+				"folder_exclude_patterns	(Preferences.sublime-settings)"
+			],
+			[
+				"inputs",
+				"inputs	input - submit"
+			],
+			[
+				"div",
+				"div	<div>"
+			],
+			[
+				"input",
+				"inputd	input - date"
+			],
+			[
+				"labe",
+				"label	<label>"
+			],
+			[
+				"appe",
+				"append	.append()"
+			],
+			[
+				"eleme",
+				"elementosSimilares	(ScriptLattesDiff.py)"
+			],
+			[
+				"key",
+				"keys	(Dict.py)"
+			],
+			[
+				"simi",
+				"similarPath"
+			],
+			[
+				"ready",
+				"ready	$(document).ready"
+			],
+			[
+				"scriplat",
+				"scriptLattesDiff"
+			],
+			[
+				"elem",
+				"elementosSimilares	statement"
+			],
+			[
+				"write",
+				"write	function"
+			],
+			[
+				"static",
+				"staticmethod	(ScriptLattesDiff.py)"
+			],
+			[
+				"d",
+				"dump	function"
+			],
+			[
+				"json",
+				"json"
+			],
+			[
+				"scirpa",
+				"scriptLattesDiff"
+			],
+			[
+				"output",
+				"outputFolder	statement"
+			],
+			[
+				"move",
+				"move	function"
+			],
+			[
+				"shut",
+				"shutil	module"
+			],
+			[
+				"scri",
+				"ScriptLattesDiff"
+			],
+			[
+				"princi",
+				"principaisAlteracoes"
+			],
+			[
+				"parecid",
+				"parecido"
+			],
+			[
+				"css",
+				"css	.css() - single"
+			],
+			[
+				"attr",
+				"attr	.attr() - single"
+			],
+			[
+				"principas",
+				"principaisAlteracoes	(scriptLattesDiff.js)"
+			],
+			[
+				"scirp",
+				"scriptLattesDiff"
+			],
+			[
+				"read",
+				"ready	document.ready - $(function(){})"
+			],
+			[
+				"scit",
+				"scriptLattesDiff"
+			],
+			[
+				"js",
+				"json"
+			],
+			[
+				"pode",
+				"podeErrar"
+			],
+			[
+				"edid",
+				"edit_distance	function"
+			],
+			[
+				"prin",
+				"print	print …"
+			],
+			[
+				"scriptLattes",
+				"scriptLattesDiff	(scriptLattesDiff.py)"
+			],
+			[
+				"scriptLatt",
+				"scriptLattesDiff"
+			],
+			[
+				"sys",
+				"system	function"
+			],
+			[
+				"considerar",
+				"considerarNoTeste"
+			],
+			[
+				"especi",
+				"especificado	(membro.py)"
+			],
+			[
+				"scrip",
+				"scriptLattesDiff	(scriptLattesDiff.py)"
+			],
+			[
+				"isem",
+				"isEmptyObject	(documentReady.js)"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"isemp",
+				"isEmptyObject"
+			],
+			[
+				"for",
+				"for	for"
+			],
+			[
+				"line",
+				"line-height"
+			],
+			[
+				"foreac",
+				"foreach	forEach(index, elem)"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"style",
+				"style	Attr"
+			],
+			[
+				"sectio",
+				"section	Tag"
+			],
+			[
+				"Sec",
+				"Section-->	Section-->"
+			],
+			[
+				"li",
+				"li	Tag"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/D/Facul/comp/pthreads/main.c",
+			"settings":
+			{
+				"buffer_size": 1415,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Facul/comp/pthreads/test.c",
+			"settings":
+			{
+				"buffer_size": 213,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/User/C++ Leo/C++.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Test",
+					""
+				],
+				[
+					"Packages/User/Python Leo/Python.sublime-build",
+					""
+				]
+			],
+			[
+				"Test",
+				""
+			]
+		],
+		[
+			[
+				[
+					"List",
+					""
+				],
+				[
+					"Packages/User/Python Leo/Python.sublime-build",
+					""
+				]
+			],
+			[
+				"List",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				],
+				[
+					"Packages/User/C++ Leo/C++.sublime-build",
+					""
+				],
+				[
+					"Packages/User/C++ Leo/C++.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/C++ Leo/C++.sublime-build",
+					"Debug"
+				]
+			],
+			[
+				"Packages/User/C++ Leo/C++.sublime-build",
+				"Debug"
+			]
+		],
+		[
+			[
+				[
+					"Test",
+					""
+				],
+				[
+					"Packages/AutoHotkey/AutoHotkey.sublime-build",
+					""
+				],
+				[
+					"Packages/AutoHotkey/AutoHotkey.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/AutoHotkey/AutoHotkey.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Test",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Test",
+					""
+				],
+				[
+					"Packages/User/Python Leo/Python.sublime-build",
+					""
+				]
+			],
+			[
+				"Test",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 242.0,
+		"last_filter": "1",
+		"selected_items":
+		[
+			[
+				"1",
+				"Text Pastry: From 1 To X"
+			],
+			[
+				"set js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"sort",
+				"Sort Lines"
+			],
+			[
+				"setjavasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"eval",
+				"Emmet: Evaluate Math Expression"
+			],
+			[
+				"javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"setjava",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"set",
+				"Set Syntax: C"
+			],
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"prett",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"JSON",
+				"Pretty JSON: Validate"
+			],
+			[
+				"lower",
+				"Convert Case: Lower Case"
+			],
+			[
+				"url",
+				"URL Decode"
+			],
+			[
+				"decode",
+				"URL Decode"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"set text",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"set javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"json",
+				"Set Syntax: JSON"
+			],
+			[
+				"1 to",
+				"Text Pastry: From 1 To X"
+			],
+			[
+				"unique",
+				"Permute Lines: Unique"
+			],
+			[
+				"up",
+				"Convert Case: Upper Case"
+			],
+			[
+				"rand int",
+				"Random:Int"
+			],
+			[
+				"html e",
+				"HTML: Encode Special Characters"
+			],
+			[
+				"jsin",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"set mips",
+				"Set Syntax: MIPS"
+			],
+			[
+				"set c",
+				"Set Syntax: C"
+			],
+			[
+				"set javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"setc",
+				"Set Syntax: C"
+			],
+			[
+				"set json",
+				"Set Syntax: JSON"
+			],
+			[
+				"set JSON",
+				"Snippet: jQuery.getJSON"
+			],
+			[
+				"pretty json",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"remove pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"set pp",
+				"Set Syntax: PHP"
+			],
+			[
+				"repl",
+				"SublimeREPL: PHP"
+			],
+			[
+				"set pty",
+				"Set Syntax: Python"
+			],
+			[
+				"repl pyt",
+				"SublimeREPL: Python - Sublime Text Console"
+			],
+			[
+				"REPL python",
+				"SublimeREPL: Python - execnet"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"mb",
+				"BracketHighlighter: Match Brackets (ignore threshold)"
+			],
+			[
+				"snippet",
+				"Snippet: <sub>"
+			],
+			[
+				"set mark",
+				"Set Syntax: Markdown"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"removepac",
+				"Package Control: Remove Package"
+			],
+			[
+				"set mi",
+				"Set Syntax: MIPS"
+			],
+			[
+				"word",
+				"Word Wrap: Toggle"
+			],
+			[
+				"plainte",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"set c++",
+				"Set Syntax: C++"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"javsc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"lowe",
+				"Convert Case: Lower Case"
+			],
+			[
+				"set html",
+				"Set Syntax: HTML"
+			],
+			[
+				"quote",
+				"BracketHighlighter: Swap Quotes"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"uppercas",
+				"Convert Case: Upper Case"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"close",
+				"Project: Close"
+			],
+			[
+				"snippet wh",
+				"Snippet: While Loop"
+			],
+			[
+				"set bat",
+				"Set Syntax: Batch File"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"upgrade",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"build",
+				"Build: New Build System"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"instlal",
+				"Package Control: Install Package"
+			],
+			[
+				"set pyt",
+				"Set Syntax: Python"
+			],
+			[
+				"pla",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 479.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Facul/comp/pthreads"
+	],
+	"file_history":
+	[
+		"/D/Facul/Semestres/5/SO/Exemplos/prodcons_1_thread_varcond.c",
+		"/D/Facul/Semestres/5/SO/Exemplos/prodcons_1_thread_sem.c",
+		"/D/Facul/Semestres/5/SO/Exemplos/prodCons.c",
+		"/D/Facul/comp/misc.h",
+		"/D/Facul/comp/pthreads/test.c",
+		"/D/Facul/comp/pthreads/misc.c",
+		"/D/Facul/comp/pthreads/misc.h",
+		"/D/Facul/comp/pthreads/main.c",
+		"/D/Facul/comp/pthreads/Makefile",
+		"/D/Facul/comp/pthreads/saida.txt",
+		"/D/Vostro/Backups/20160211/Users/Leonardo/Desktop/facebook-leobastiani/pedidosAmizade.txt",
+		"/D/Facul/comp/pthreads/subl/Trabalho1So.sublime-project",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/User/gcc-Makefile.sublime-snippet",
+		"/D/Facul/IC/scriptLattesDiff/js/Filtro.js",
+		"/D/Facul/IC/scriptLattesDiff/js/documentReady.js",
+		"/D/Facul/IC/scriptLattesDiff/js/scriptLattesDiff.js",
+		"/D/Facul/IC/scriptLattesDiff/icmc.bat",
+		"/D/Facul/IC/scriptLattesDiff/js/Array.js",
+		"/C/Users/Leonardo/AppData/Local/Temp/Rar$DIa0.934/prodcons_1_thread_varcond.c",
+		"/D/Facul/IC/scriptLattesDiff/removeDependencias.bat",
+		"/C/Users/Leonardo/Desktop/rocket.c",
+		"/D/Facul/IC/scriptLattesDiff/py/Settings.py",
+		"/D/Facul/IC/scriptLattesDiff/py/misc.py",
+		"/D/Facul/IC/scriptLattesDiff/html/index.htm",
+		"/D/Facul/IC/scriptLattesDiff/scriptLattesDiff.py",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO875F3B41/polish.lng",
+		"/D/Riot Games/League of Legends/Config/gameWindowMode.cfg",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47DBAD02/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47D34912/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47D53562/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47DCA452/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47D2F172/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zE47DB7CD1/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zE47D2BCE1/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47D89C01/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO47D44E61/portuguese_brazil.lng",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zE47D2ACC0/portuguese_brazil.lng",
+		"/D/dev/Sublime Snippets/Python.txt",
+		"/D/dev/Sublime Snippets/run.py",
+		"/C/Users/Leonardo/Desktop/Javascript.sublime-completions",
+		"/D/shortcuts/lolWindow.bat",
+		"/D/dev/Sublime Snippets/runOneFile.py",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/LeoCodeIntel/Javascript.sublime-completions",
+		"/D/Facul/c++/main.cpp",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/LeoCodeIntel/LeoCodeIntel.py",
+		"/D/Facul/c++/Makefile",
+		"/D/shortcuts/lol.bat",
+		"/C/Users/Leonardo/Desktop/Ambereh-1.5_source/UnitConfigDialog.cpp",
+		"/D/shortcuts/altofalante.bat",
+		"/D/restartWifi/init.bat",
+		"/D/Downloads/Mirillis Action/NoFirewall.bat",
+		"/D/Downloads/Mirillis Action/run.bat",
+		"/D/Downloads/Mirillis Action/init.bat",
+		"/D/Downloads/Mirillis Action/colocarNoHost.txt",
+		"/C/Users/Leonardo/Desktop/hosts",
+		"/D/Downloads/Mirillis Action/README.txt",
+		"/D/Downloads/Mirillis Action/Info.txt",
+		"/D/shortcuts/play.py",
+		"/D/shortcuts/fone.bat",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/LeoCodeIntel/C.sublime-completions",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/mips-syntax/mips.JSON-tmLanguage",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/mips-syntax/MIPS.sublime-completions",
+		"/D/Facul/IC/scriptLattesDiff/ssc.sh",
+		"/D/Facul/IC/scriptLattesDiff/py/Print.py",
+		"/D/Facul/IC/scriptLattesDiff/py/ScriptLattesDiff.py",
+		"/D/Facul/IC/scriptLattesDiff/py/ConfigFile.py",
+		"/D/Facul/IC/scriptLattesDiff/scriptLattes.bat",
+		"/D/Facul/IC/scriptLattesDiff/py/Dependencies.py",
+		"/D/Facul/IC/scriptLattesV8.10/WindowsDependencias/WindowsDependencias.bat",
+		"/D/Facul/IC/scriptLattesV8.10/WindowsDependencias/FAQ.html",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO036B00A8/WindowsDependencias.bat",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO036B9668/WindowsDependencias.bat",
+		"/D/Facul/IC/scriptLattesV8.10/WindowsDependencias - Copia/WindowsDependencias.bat",
+		"/D/shortcuts/m4atomp3.bat",
+		"/D/Facul/IC/scriptLattesDiff/js/Pesquisador.js",
+		"/D/Facul/IC/scriptLattesDiff/py/Dict.py",
+		"/D/Facul/IC/scriptLattesDiff/outputs/bringItBack.bat",
+		"/D/Facul/IC/scriptLattesDiff/outputs/bringItBack.js",
+		"/D/Facul/IC/scriptLattesDiff/ssc.bat",
+		"/D/Facul/IC/scriptLattesDiff/test.bat",
+		"/D/Facul/IC/scriptLattesDiff/js/Date.js",
+		"/D/Facul/IC/scriptLattesDiff/json/scriptLattesDiff.js",
+		"/D/Facul/IC/scriptLattesDiff/py/List.py",
+		"/D/Facul/IC/scriptLattesDiff/json/idLattes/1201079310363734.js",
+		"/D/Facul/IC/Snaps/ICMC/20151221/teste-01-database.xml",
+		"/D/Facul/IC/scriptLattesDiff/output.txt",
+		"/D/Facul/IC/scriptLattesDiff/test2.bat",
+		"/D/Facul/IC/scriptLattesDiff/json/idLattes/0241862487783754.js",
+		"/D/Facul/IC/scriptLattesDiff/json/idLattes/1251013053012882.js",
+		"/D/Facul/IC/scriptLattesDiff/json/idLattes/0145887238250184.js",
+		"/D/Facul/IC/scriptLattesDiff/py/TempoDecorrido.py",
+		"/D/Facul/IC/scriptLattesDiff/js/jqueryFn.js",
+		"/D/Facul/IC/scriptLattesDiff/js/importJsons.js",
+		"/D/Facul/IC/scriptLattesDiff/TODO.txt",
+		"/C/Users/Leonardo/AppData/Local/Temp/7zO4B5E6089/UnitConnectDialog.h",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/User/JavaScript Leo/logd.sublime-snippet",
+		"/D/Programas/EasyPHP/binaries/conf_files/httpd.conf",
+		"/D/Riot Games/League of Legends/mir.txt",
+		"/D/Riot Games/League of Legends/RADS/system/locale.cfg",
+		"/D/shortcuts/sshIc.bat",
+		"/D/Facul/IC/scriptLattesDiff/py/Json.py",
+		"/C/Users/Leonardo/Desktop/jquery-1.12.1.js",
+		"/D/shortcuts/wifibat.bat",
+		"/D/WirelessMode/setWirelessMode.bat",
+		"/D/Riot Games/League of Legends/lockfile",
+		"/C/Users/Leonardo/Desktop/musicaEq.reg",
+		"/D/Riot Games/League of Legends/Config/game.cfg",
+		"/D/Riot Games/League of Legends/Config/input.ini",
+		"/D/Riot Games/League of Legends/Config/PersistedSettings.json",
+		"/D/Riot Games/League of Legends/Config/ItemSets.json",
+		"/C/Users/Leonardo/Desktop/loginUsp.js",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/User/JavaScript Leo/len.sublime-snippet",
+		"/D/Facul/IC/scriptLattesDiff/json/idLattes/5368167403557640.js",
+		"/D/Facul/IC/Snaps/ICMC/20160211/teste-01-database.xml",
+		"/D/Facul/IC/Snaps/Test/20160112/teste-01-database.xml",
+		"/D/Facul/IC/Snaps/SSC/20150711/teste-01-database.xml",
+		"/D/Facul/IC/Snaps/ICMC/20150830/teste-01-database.xml",
+		"/C/Users/Leonardo/Desktop/WirelessMode32.reg",
+		"/C/Users/Leonardo/Desktop/WirelessMode.reg",
+		"/D/Facul/HP/Tutorial/AreaDeCiruclo.hpprg",
+		"/C/Users/Leonardo/Desktop/ConfigFile.py",
+		"/C/Users/Leonardo/AppData/Roaming/Sublime Text 3/Packages/User/Python Leo/printd.sublime-snippet",
+		"/C/Users/Leonardo/Desktop/ConfigFile - Copia.py",
+		"/D/Facul/IC/Snaps/Test/Data2/teste-01-database.xml",
+		"/D/Facul/IC/Snaps/Test/Data1/teste-01-database.xml",
+		"/D/Facul/IC/scriptLattesDiff/py/ConfigFile - Copia.py",
+		"/D/Facul/IC/Snaps/ICMC/20160111/teste-01-database.xml"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"<open folders>",
+			"D:\\shortcuts\\*.bat",
+			"<open folders>",
+			"<open folders>, *.js",
+			"SSC/*.*",
+			"/SSC/*.*",
+			"<open folders>",
+			"<open folders>, *.py",
+			"<open folders>",
+			"<open folders>, *.js",
+			"<open folders>",
+			"D:\\shortcuts",
+			"<open folders>, *.py",
+			"<open folders>",
+			"<open folders>, *.py",
+			"<open folders>, *.js",
+			"*.js",
+			"D:\\Facul\\IC\\scriptLattesDiff\\outputs\\20151217\\ICMC\\json\\idLattes",
+			"D:\\Facul\\IC\\scriptLattesDiff\\json\\idLattes",
+			"<open folders>",
+			"<open folders>, *.bat",
+			"<open folders>",
+			"<open folders>, *.config",
+			"<open folders>",
+			"<open folders>, *.py",
+			"<open folders>",
+			"<open folders>, *.xml",
+			"<open folders>",
+			"<open folders>, *.py, -vendor/*.*, -outputs/*.*, -json/*.*, -debug/*.*",
+			"<open folders>, -vendor/*.*, -outputs/*.*, -json/*.*, -debug/*.*",
+			"<open folders>",
+			"<open folders>, *.js, -vendor/*.*, -outputs/*.*, -json/*.*, -debug/*.*",
+			"<open folders>, *.js, -vendor/*.*, -outputs/*.*, -json/*.*",
+			"<open folders>, *.js, -vendor/*.*, -output/*.*, -json/*.*",
+			"<open folders>,*.js, -vendor/*.*, -output/*.*, -json/*.*",
+			"<open folders>,*.js, -vendor/*.*, -output/*.*",
+			"<open folders>,*.js,-vendor/*.*",
+			"<open folders>,*.js,-vendor",
+			"<open folders>,*.js,-output/*",
+			"<open folders>,*.js, -output, -vendor",
+			"<open folders>,*.js, -output",
+			"<open folders>,*.js",
+			"<open folders>",
+			"<open folders>, *.js",
+			"<open folders>",
+			"<open folders>,*.html,*.htm",
+			"<open folders>",
+			"<open folders>, *.py",
+			"<open folders>, *.xml",
+			"<open folders>",
+			"C:\\Users\\Leonardo\\AppData\\Roaming\\Sublime Text 3\\Packages\\User\\JavaScript Leo",
+			"./*.*",
+			"./*.config"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"max",
+			"1",
+			"100000",
+			"max",
+			"Math_random",
+			"javascript",
+			"argv1",
+			"is_float",
+			"Leticia Vieira",
+			"Vieira",
+			"123",
+			"trabalho1So",
+			"argv[1]",
+			"\\",
+			"is_int",
+			"jaUseiPonto",
+			"pontoNaStr",
+			"Misc",
+			"campoAlterado",
+			"true",
+			"false",
+			"filtroAmploQrEsconder",
+			"Filtro.uncheck",
+			"Exibir",
+			"filtroAmploHide",
+			"possuiElementosVisiveis",
+			"filtroAmploHide",
+			"max",
+			"'ps'",
+			"begin",
+			"720",
+			"list",
+			"int",
+			"int(",
+			"MB",
+			"Mb",
+			"55706",
+			"Action2",
+			"52429",
+			"55706",
+			"52429",
+			"80",
+			"é",
+			"65536",
+			"system",
+			"execmd(",
+			"execmd",
+			"os.",
+			"system",
+			".on('change'",
+			"filtroAmploHide",
+			"filtroAmplo",
+			"sinal",
+			"getSinalTabelaAlterados",
+			"if",
+			"tabela",
+			"Somente",
+			"filtroAmplo",
+			"filtro",
+			"filtroAmplo",
+			"filtroPrincipal",
+			"filtro",
+			"filtroPrincipal",
+			"ps",
+			"          ",
+			"         ",
+			"             ",
+			"            ",
+			"           ",
+			"          ",
+			"         ",
+			"print('-",
+			"string",
+			"p",
+			"pesquisadores",
+			"strToList",
+			"avor, rode o scriptLattes nesse novo snapshot",
+			"\\",
+			"deseja exe",
+			"bin",
+			"7z",
+			"WindowsDependencias",
+			"scriptLattes",
+			"instalarDependWgetExtract",
+			"instalarDependSemWget",
+			"instalarDependWget",
+			"Python",
+			"scriptLattes",
+			"scriptLattes.py",
+			"scriptLattes",
+			"%1 %2 %3 %4 %5 %6 %7 %8 %9",
+			"$datas",
+			"TODO",
+			"elem",
+			"datas",
+			"dataComb",
+			"datasComboIni",
+			"devido",
+			"name",
+			"An approach based on hybrid genetic algorithm applied to image denoising problem",
+			"Consciência Situacional em Voo de Sistemas Aéreos não Tripulados",
+			"\nConsciência Situacional em Voo de Sistemas Aéreos não Tripulados",
+			"Otimização de Instruções de código C, através de Algoritmos Genéticos, para a geração de Arquiteturas baseadas em Computação Reconfigurável",
+			"\nOtimização de Instruções de código C, através de Algoritmos Genéticos, para a geração de Arquiteturas baseadas em Computação Reconfigurável",
+			"List.differences",
+			"_differences",
+			"\"agencia_de_fomento\": \"Fundação de Amparo à Pesquisa do Estado de São Paulo\",\n                    \"ano\": \"2015\",\n                    \"instituicao\": \"Tese (Doutorado em Ciências da Computação e Matemática Computacional) - Universidade de São Paulo\",\n                    \"nome_aluno\": \"Daniel Rodrigo Ferraz Bonetti\",\n                    \"tipo_de_orientacao\": \"Orientador\",\n                    \"titulo_trabalho\": \"Algoritmos de Estimação de Distribuição para Predição Ab Initio de Estruturas de Proteínas\"",
+			"print",
+			"exit()",
+			"Algoritmos de Estimação de Distribuição para Predição Ab Initio de Estruturas de Proteínas",
+			"Algoritmos de Estimaçã",
+			"ip",
+			"True",
+			"incluirPrimeiroSnap",
+			"pesquisadoresStr",
+			"dsa",
+			"\"31/08/2015 00:39:42\": [",
+			"nomeFiltro",
+			"TODO",
+			"pass",
+			"max",
+			"pesquisadores",
+			"                #",
+			"pesquisadoresStr",
+			"deveSer",
+			"#",
+			"math",
+			"contador"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"%*",
+			"for(var",
+			"for(var \\1",
+			"for(\\1",
+			"D:/Facul/IC/Snaps/",
+			"\\1Snap/\\2",
+			"Snaps\\2\\1\\2\\3",
+			"\\1./.\\2",
+			"vendor/jquery",
+			"scriptLattesDiff.resumirDict",
+			"Pesquisador.",
+			"/js/jquery.js",
+			"jquery.js",
+			"js/jquery/jquery.js",
+			"# coding=utf-8",
+			"# coding=iso-8859-1",
+			"Misc.scriptPath",
+			"# coding=utf-8",
+			"datasProcessamento",
+			"./ICMC",
+			"= "
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/D/Facul/comp/pthreads/main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1415,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/User/C++ Leo/C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Facul/comp/pthreads/test.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 213,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								185,
+								185
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"syntax": "Packages/User/C++ Leo/C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 182.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "Trabalho1So.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"misc",
+				"scriptLattesDiff\\py\\misc.py"
+			],
+			[
+				"setti",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"filtro",
+				"scriptLattesDiff\\js\\Filtro.js"
+			],
+			[
+				"sett",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"scrit",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"filtrojs",
+				"scriptLattesDiff\\js\\Filtro.js"
+			],
+			[
+				"documentread",
+				"scriptLattesDiff\\js\\documentReady.js"
+			],
+			[
+				"scri",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"depen",
+				"scriptLattesDiff\\py\\Dependencies.py"
+			],
+			[
+				"dict",
+				"scriptLattesDiff\\py\\Dict.py"
+			],
+			[
+				"date.js",
+				"scriptLattesDiff\\js\\Date.js"
+			],
+			[
+				"script",
+				"scriptLattesDiff\\json\\scriptLattesDiff.js"
+			],
+			[
+				"depe",
+				"scriptLattesDiff\\py\\Dependencies.py"
+			],
+			[
+				"settings",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				".py",
+				"scriptLattesDiff\\py\\Dict.py"
+			],
+			[
+				"confi",
+				"scriptLattesDiff\\py\\ConfigFile.py"
+			],
+			[
+				"jque",
+				"scriptLattesDiff\\js\\jqueryFn.js"
+			],
+			[
+				"import",
+				"scriptLattesDiff\\js\\importJsons.js"
+			],
+			[
+				"scrild",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"print",
+				"scriptLattesDiff\\py\\Print.py"
+			],
+			[
+				"json",
+				"scriptLattesDiff\\py\\Json.py"
+			],
+			[
+				"imporjs",
+				"scriptLattesDiff\\js\\importJsons.js"
+			],
+			[
+				"misc.",
+				"scriptLattesDiff\\py\\misc.py"
+			],
+			[
+				"depend",
+				"scriptLattesDiff\\py\\Dependencies.py"
+			],
+			[
+				"pesquisa",
+				"scriptLattesDiff\\js\\Pesquisador.js"
+			],
+			[
+				"configf",
+				"scriptLattesDiff\\py\\ConfigFile.py"
+			],
+			[
+				"seetings",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"setting",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"list",
+				"scriptLattesDiff\\py\\List.py"
+			],
+			[
+				"scriptlattes",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"settin",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"scr",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"config",
+				"scriptLattesDiff\\py\\ConfigFile.py"
+			],
+			[
+				"script.js",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"pesqui",
+				"scriptLattesDiff\\js\\Pesquisador.js"
+			],
+			[
+				"docu",
+				"scriptLattesDiff\\js\\documentReady.js"
+			],
+			[
+				"documenre",
+				"scriptLattesDiff\\js\\documentReady.js"
+			],
+			[
+				"set",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"debug",
+				"scriptLattesDiff\\py\\Debug.py"
+			],
+			[
+				"sc",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"array",
+				"scriptLattesDiff\\js\\Array.js"
+			],
+			[
+				"sldpy",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				"scirdifjs",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"sldjs",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"scriptld",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"strp.",
+				"scriptLattesDiff\\py\\Str.py"
+			],
+			[
+				"deb",
+				"scriptLattesDiff\\py\\Debug.py"
+			],
+			[
+				"scrlatedif.py",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				"dictjs",
+				"scriptLattesDiff\\js\\Dict.js"
+			],
+			[
+				"index",
+				"scriptLattesDiff\\html\\index.htm"
+			],
+			[
+				"scripy",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				"scripajs",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"scriptlad",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				".xml",
+				"ICMC\\20150830\\teste-01-database.xml"
+			],
+			[
+				"",
+				"D:\\Facul\\IC\\scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"scrip",
+				"D:\\Facul\\IC\\scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"str",
+				"scriptLattesDiff\\py\\Str.py"
+			],
+			[
+				"di",
+				"scriptLattesDiff\\py\\Dict.py"
+			],
+			[
+				"ssc0830xml",
+				"SSC\\20150830\\teste-01-database.xml"
+			],
+			[
+				"scriptdiff",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				"scriptdf",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"jsontojs",
+				"scriptLattesDiff\\py\\JsonToJs.py"
+			],
+			[
+				"jsto",
+				"scriptLattesDiff\\py\\JsonToJs.py"
+			],
+			[
+				"simi",
+				"scriptLattesDiff\\debug\\json\\similares.json"
+			],
+			[
+				"scdiff",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				"htm",
+				"scriptLattesDiff\\html\\index.htm"
+			],
+			[
+				"idla",
+				"scriptLattesDiff\\js\\idLattes.js"
+			],
+			[
+				"scrdiff.py",
+				"scriptLattesDiff\\py\\ScriptLattesDiff.py"
+			],
+			[
+				"diff.js",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"documnera",
+				"scriptLattesDiff\\js\\documentReady.js"
+			],
+			[
+				"jqueryfn",
+				"scriptLattesDiff\\js\\jqueryFn.js"
+			],
+			[
+				"scripadif.py",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"sscxml",
+				"ICMC\\11072015\\get-ssc\\teste-01-database.xml"
+			],
+			[
+				"style",
+				"scriptLattesDiff\\css\\style.css"
+			],
+			[
+				"scriptla.js",
+				"scriptLattesDiff\\js\\scriptLattesDiff.js"
+			],
+			[
+				"index.",
+				"scriptLattesDiff\\html\\index.htm"
+			],
+			[
+				"settig",
+				"scriptLattesDiff\\py\\Settings.py"
+			],
+			[
+				"scrilatedif",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"jquery",
+				"scriptLattesDiff\\js\\jquery.js"
+			],
+			[
+				".js",
+				"scriptLattesDiff\\js\\js.js"
+			],
+			[
+				"scrid",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"scriptdiff.p",
+				"scriptLattesDiff\\scriptLattesDiff.sublime-project"
+			],
+			[
+				"docume",
+				"scriptLattesDiff\\js\\documentReady.js"
+			],
+			[
+				"imporj",
+				"scriptLattesDiff\\js\\importJsons.js"
+			],
+			[
+				"css",
+				"scriptLattesV8.10c\\css\\scriptLattes.css"
+			],
+			[
+				"doc",
+				"scriptLattesDiff\\js\\documentReady.js"
+			],
+			[
+				"idnex",
+				"scriptLattesDiff\\html\\index.htm"
+			],
+			[
+				"ssc",
+				"ICMC\\10072015\\get-ssc.config"
+			],
+			[
+				"js",
+				"scriptLattesDiff\\js\\js.js"
+			],
+			[
+				"scriptidif",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"scriptdif",
+				"scriptLattesV8.10c\\scriptLattesDiff1.3\\scriptLattesDiff"
+			],
+			[
+				"scridiff",
+				"scriptLattesDiff\\scriptLattesDiff.py"
+			],
+			[
+				"informatio",
+				"scriptLattesDiff\\jsons\\informations.js"
+			],
+			[
+				"xml",
+				"ICMC\\get-ssc\\teste-01-database.xml"
+			],
+			[
+				"ssc.xml",
+				"ICMC\\get-ssc\\teste-01-database.xml"
+			],
+			[
+				"-ssc/teste-01-database.xml",
+				"ICMC\\get-ssc\\teste-01-database.xml"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"D:\\Facul\\comp\\ieee754\\subl\\ieee754.sublime-project"
+			],
+			[
+				"iee",
+				"D:\\Facul\\comp\\ieee754\\subl\\ieee754.sublime-project"
+			],
+			[
+				"labcal",
+				"C:\\Program Files (x86)\\EasyPHP\\data\\localweb\\LabCalc\\subl\\LabCalc.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 160.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
