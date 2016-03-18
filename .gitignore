@@ -1,6 +1,7 @@
 # Nós mexemos:
 *.exe
 *.o
+subl
 
 # Windows image file caches
 Thumbs.db
