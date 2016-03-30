@@ -1,19 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <dirent.h>
-#include <string.h>
-#include <stdbool.h>
-#include <time.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <stdarg.h>
-
 // define para dizer que este é o arquivo principal
 #define __MISC_C__
 #include "misc.h"
 
-// 17.03.2016
+// 29.03.2016
 
 // getchar que não deixa enter no buffer
 char _getchar() {
@@ -172,11 +161,22 @@ void *_realloc(void *ptr, size_t new_size) {
 	return result;
 }
 
+// mesmo que free, mas não dá free em NULL
 void _free(void *ptr) {
 	#ifdef CHECK_LEAK
 		printf("FREE: %p => ", ptr);
 	#endif // CHECK_LEAK
 	free(ptr);
+}
+
+// mesmo que pthread_create, mas testa o status
+int _pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg) {
+	int result = pthread_create(thread, attr, start_routine, arg);
+	if(result != 0) {
+		fprintf(stderr, "_pthread_create: returned %d.\n", result);
+		exit(1);
+	}
+	return result;
 }
 
 // funcao fopen que fecha o programa se fopen retornar NULL
@@ -237,7 +237,7 @@ int remove_directory(const char *path) {
              continue;
           }
           len = path_len + strlen(p->d_name) + 2; 
-          buf = malloc(len);
+          buf = (char *) malloc(len);
           if(buf) {
              struct stat statbuf;
              snprintf(buf, len, "%s/%s", path, p->d_name);
@@ -266,23 +266,23 @@ int remove_directory(const char *path) {
 void setBufferedInput(bool enable) {
 	static bool enabled = true;
 	static struct termios old;
-	struct termios new;
+	struct termios new_termios;
 
 	if (enable && !enabled) {
 		// restore the former settings
 		tcsetattr(STDIN_FILENO,TCSANOW,&old);
-		// set the new state
+		// set the new_termios state
 		enabled = true;
 	} else if (!enable && enabled) {
 		// get the terminal settings for standard input
-		tcgetattr(STDIN_FILENO,&new);
+		tcgetattr(STDIN_FILENO,&new_termios);
 		// we want to keep the old setting to restore them at the end
-		old = new;
+		old = new_termios;
 		// disable canonical mode (buffered i/o) and local echo
-		new.c_lflag &=(~ICANON & ~ECHO);
-		// set the new settings immediately
-		tcsetattr(STDIN_FILENO,TCSANOW,&new);
-		// set the new state
+		new_termios.c_lflag &=(~ICANON & ~ECHO);
+		// set the new_termios settings immediately
+		tcsetattr(STDIN_FILENO,TCSANOW,&new_termios);
+		// set the new_termios state
 		enabled = false;
 	}
 }
@@ -290,6 +290,10 @@ void setBufferedInput(bool enable) {
 
 // apaga o conteudo da tela
 void clearScreen() {
+	#ifdef TEST
+		printf("clearScreen();\n");
+		return ;
+	#endif // TEST
 	#ifdef __WIN32
 		system("cls");
 	#else
@@ -300,23 +304,69 @@ void clearScreen() {
 
 // esconde o cursor
 void hide_cursor() {
+	#ifdef TEST
+		printf("hide_cursor();\n");
+		return ;
+	#endif // TEST
 	printf("\033[?25l");
 }
 
 // mostra o cursor dps de escondido
 void show_cursor() {
+	#ifdef TEST
+		printf("show_cursor();\n");
+		return ;
+	#endif // TEST
 	printf("\033[?25h");
 }
 
+// define a posição do cursor iniciando pela posição 0,0
+void setCursor(int lin, int col) {
+	#ifdef TEST
+		printf("setCursor(%d, %d);\n", lin, col);
+		return ;
+	#endif // TEST
+	printf("\033[%d;%dH", lin+1, col+1);
+}
+
+// move o cursor de acordo com as linhas e colunas
+void moveCursor(int lin, int col) {
+	#ifdef TEST
+		printf("moveCursor(%d, %d);\n", lin, col);
+		return ;
+	#endif // TEST
+	if(lin < 0) {
+		printf("\033[%dA", -lin); // Move up lin lines;	
+	} else if(lin > 0) {
+		printf("\033[%dB", lin); // Move down lin lines;
+	}
+
+	if(col < 0) {
+		printf("\033[%dD", -col); // Move left col column;
+	}
+	else if(col > 0) {
+		printf("\033[%dC", col); // Move right col column;
+	}
+}
+
+// apaga a linha que o cursor está
+void apagaLinha() {
+	#ifdef TEST
+		printf("apagaLinha();\n");
+		return ;
+	#endif // TEST
+	printf("\033[2K");
+}
+
 // devolve em segundos o tempo passado de starthere = true e starthere = false
-float timediff(bool starthere) {
+double timediff(bool starthere) {
 	static clock_t t;
 	if(starthere == 1) {
 		t = clock();
 		return 0;
 	}
 	t = clock() - t;
-	return ((float)t) / CLOCKS_PER_SEC;
+	return ((double)t) / (double)CLOCKS_PER_SEC;
 }
 
 // funcao boa para debug, imprime strings verticalmente
