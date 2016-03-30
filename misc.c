@@ -438,7 +438,7 @@ double randMinMaxD(double min, double max) {
  ******************************************************/
 void listInit(list_t *list) {
 	// define os valores padrões da lista
-	memset(list, 0, sizeof(list));
+	memset(list, 0, sizeof(list_t));
 }
 
 
@@ -457,19 +457,23 @@ bool emptyList(list_t *list) {
 
 list_node_t *novoNo(list_elem_t elem) {
 	list_node_t *result = (list_node_t *) calloc(1, sizeof(list_node_t));
+	// padronizei pelo calloc, deixei tudo como NULL
 	result->elem = elem;
 	return result;
 }
 
 
-// essa função recebe o void *, a função sem o underline recebe qlqr parametro
-void _inserirList(list_t *list, list_elem_t elem) {
+/**
+ * insere no final
+ * essa função recebe o void *
+ * a função sem o underline recebe qlqr parametro
+ */
+void _inserirFinalList(list_t *list, list_elem_t elem) {
 	list_node_t *node = novoNo(elem);
-	bool estaVazia = emptyList(list);
 	list->length++;
 
-	if(estaVazia) {
-		// se a lista está vazia
+	if(list->length == 1) {
+		// só existe esse novo no que estou inserindo
 		// insere tanto no começo quanto no fim
 		list->first = node;
 		list->last = node;
@@ -480,6 +484,8 @@ void _inserirList(list_t *list, list_elem_t elem) {
 	// se a lista n é vazia
 	// defino o proximo
 	list->last->prox = node;
+	// defino o anterior
+	node->prev = list->last;
 	// defino o ultimo
 	list->last = node;
 }
@@ -493,17 +499,30 @@ void _inserirInicioList(list_t *list, list_elem_t elem) {
 	// define o novo segundo nó
 	// q era o começo da lista
 	node->prox = list->first;
+	// defino que o antigo primeiro, tem um anterior
+	// se ele existir
+	if(list->first) {
+		list->first->prev = node;
+	}
 	// define o novo primeiro nó
 	list->first = node;
+
+	// se só tenho esse elemento na lista, o ultimo tmb é igual ao primieiro
+	if(list->length == 1) {
+		list->last = list->first;
+	}
 }
 
 
-list_node_t *getNodeList(list_t *list, int pos) {
+list_node_t *getNode(list_t *list, int pos) {
 	// se pos for negativo, copmeça a contagem de trás para frente
 	// exemplo: uma lista com 9 elementos
 	// pos = -1, pego o list[8]
+	bool contagemReversa = false;
 	if(pos < 0) {
 		pos = list->length + pos;
+		// vou fazer uma contagem reversa
+		contagemReversa = true;
 	}
 
 	// se passei do limite da lista, devo sair para não dar segfault
@@ -514,18 +533,36 @@ list_node_t *getNodeList(list_t *list, int pos) {
 	}
 
 
+	list_node_t *result;
+
+	// caso da contagem reversa
+	if(contagemReversa) {
+		result = list->last;
+		for(int i=list->length-1; i>pos; i--) {
+			// supor uma lista de tamaho 9
+			// meu i começa valendo 8
+			// se meu pos é 8
+			// nem entra nesse loop
+			// se for 7, roda o loop uma vez
+			result = result->prev;
+		}
+		return result;
+	}
+
+
 	// só obter o elemento
-	list_node_t *node = list->first;
+	result = list->first;
 	for(int i=0; i<pos; i++) {
 		// vo avançando até encontrar
-		node = node->prox;
+		result = result->prox;
 	}
-	return node;
+	return result;
 }
 
 
 list_elem_t _getList(list_t *list, int pos) {
-	return getNodeList(list, pos)->elem;
+	// pra pegar o elemento, pego o nó e trago o elemento
+	return getNode(list, pos)->elem;
 }
 
 
@@ -537,6 +574,7 @@ list_elem_t *_removeUltimoList(list_t *list) {
 
 	// para todos os casos
 	list_node_t *nodeUltimo = list->last;
+	list_node_t *nodePenultimo = nodeUltimo->prev;
 	list_elem_t result = nodeUltimo->elem;
 	list->length--;
 
@@ -549,7 +587,7 @@ list_elem_t *_removeUltimoList(list_t *list) {
 
 	// caso em que eu tenho um penultimo
 	free(nodeUltimo);
-	list_node_t *nodePenultimo = getNodeList(list, -1);
+
 	// remove o link do penultimo
 	nodePenultimo->prox = NULL;
 	// o ultimo da lista é o penultimo
@@ -571,12 +609,14 @@ list_elem_t *_removeInicioList(list_t *list) {
 	// caso em que eu tenho mais de um elemento
 	list_node_t *nodeFirst = list->first;
 	list_elem_t result = nodeFirst->elem;
-	list_node_t *nodeSegundo = getNodeList(list, 1);
+	list_node_t *nodeSegundo = nodeFirst->prox;
 	free(nodeFirst);
 	list->length--;
 
-
+	// o novo primeiro era o q estava em segundo
 	list->first = nodeSegundo;
+	// e ele não tem anterior
+	nodeSegundo->prev = NULL;
 	return result;
 }
 

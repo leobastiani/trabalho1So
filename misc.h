@@ -171,6 +171,8 @@ typedef struct list_node_t {
 	list_elem_t elem;
 	// proximo da lista
 	struct list_node_t *prox;
+	// anterior da lista
+	struct list_node_t *prev;
 } list_node_t;
 
 typedef struct list_t {
@@ -186,15 +188,16 @@ typedef struct list_t {
 void listInit(list_t *list);
 list_t *createList();
 
-void _inserirList(list_t *list, list_elem_t elem);
+void _inserirFinalList(list_t *list, list_elem_t elem);
 void _inserirInicioList(list_t *list, list_elem_t elem);
+list_node_t *getNode(list_t *list, int pos);
 list_elem_t _getList(list_t *list, int pos);
 list_elem_t *_removeUltimoList(list_t *list);
 list_elem_t *_removeInicioList(list_t *list);
 void freeList(list_t *list, void (*freeElem)(void *)); // chame freeList(list, NULL) para realizar um free normal
 
 
-#define inserirList(list, elem) (_inserirList(list, cast(list_elem_t, elem)))
+#define inserirFinalList(list, elem) (_inserirFinalList(list, cast(list_elem_t, elem)))
 #define inserirInicioList(list, elem) (_inserirInicioList(list, cast(list_elem_t, elem)))
 #define getList(list, pos, tipo) (cast(tipo, _getList(list, pos)))
 #define removeUltimoList(list, tipo) (cast(tipo, _removeUltimoList(list)))
