@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 #include "misc.h"
 #include "main.h"
 

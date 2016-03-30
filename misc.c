@@ -2,7 +2,7 @@
 #define __MISC_C__
 #include "misc.h"
 
-// 29.03.2016
+// 30.03.2016
 
 // getchar que não deixa enter no buffer
 char _getchar() {
@@ -208,6 +208,11 @@ long int _file_size(FILE *file) {
 	return result;
 }
 
+#ifndef WIN32
+#include <sys/stat.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/time.h>
 // funcao que retorna true ou false se o arquivo existe, retorna um dos três defines
 char file_exists(char const *path_file) {
 	struct stat status;
@@ -219,8 +224,10 @@ char file_exists(char const *path_file) {
 	}
 	return IS_FILE;
 }
+#endif
 
 // remove um diretorio não vazio por completo
+#ifndef WIN32
 int remove_directory(const char *path) {
    DIR *d = opendir(path);
    size_t path_len = strlen(path);
@@ -259,9 +266,10 @@ int remove_directory(const char *path) {
    }
    return r;
 }
+#endif
 
-#ifndef __WIN32
-#include <termios.h>
+
+#ifndef WIN32
 // obtem comandos do teclado sem armazenar buffer
 void setBufferedInput(bool enable) {
 	static bool enabled = true;
@@ -294,7 +302,7 @@ void clearScreen() {
 		printf("clearScreen();\n");
 		return ;
 	#endif // TEST
-	#ifdef __WIN32
+	#ifdef WIN32
 		system("cls");
 	#else
 		printf("\033[2J");
@@ -358,16 +366,24 @@ void apagaLinha() {
 	printf("\033[2K");
 }
 
-// devolve em segundos o tempo passado de starthere = true e starthere = false
+#ifndef WIN32
+// devolve em microssegundos o tempo passado de starthere = true e starthere = false
 double timediff(bool starthere) {
-	static clock_t t;
-	if(starthere == 1) {
-		t = clock();
+	static struct timeval tempoInicial;
+	if(starthere) {
+		gettimeofday(&tempoInicial, NULL);
 		return 0;
 	}
-	t = clock() - t;
-	return ((double)t) / (double)CLOCKS_PER_SEC;
+	struct timeval tempoAtual;
+	gettimeofday(&tempoAtual, NULL);
+	// já possuo os dois tempos, o atual e o inicial
+	
+	double tempoPassado; // em microssegundos
+	tempoPassado = (tempoAtual.tv_sec - tempoInicial.tv_sec) * 1000.0;      // sec to ms
+	tempoPassado += (tempoAtual.tv_usec - tempoInicial.tv_usec) / 1000.0;   // us to ms
+	return tempoPassado;
 }
+#endif
 
 // funcao boa para debug, imprime strings verticalmente
 int printfVerticaly(char *str) {
@@ -395,8 +411,10 @@ void section(char *str, ...) {
 }
 
 // inicializa uma seed para gerar números randômicos
-void rand_init() {
-	srand(time(NULL));
+time_t rand_init() {
+	time_t seed = time(NULL);
+	srand(seed);
+	return seed;
 }
 
 // gera um número aleatório entre 0 e 1
@@ -407,4 +425,9 @@ double Math_random() {
 // gera um número aleatório x, min <= x <= max
 int randMinMax(int min, int max) {
 	return ((max - min + 1) * Math_random()) + min;
+}
+
+// gera um número aleatório double x, min <= x <= max
+double randMinMaxD(double min, double max) {
+	return ((max - min) * Math_random()) + min;
 }

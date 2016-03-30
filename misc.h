@@ -8,8 +8,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include <unistd.h>
-#include <sys/stat.h>
 #include <stdarg.h>
 #include <pthread.h>
 
@@ -54,13 +52,14 @@ void show_cursor(); // mostra o cursor dps de escondido
 void setCursor(int lin, int col); // define a posição do cursor iniciando pela posição 0,0
 void moveCursor(int lin, int col); // move o cursor de acordo com as linhas e colunas
 void apagaLinha(); // apaga a linha que o cursor está
-double timediff(bool starthere); // devolve em segundos o tempo passado de starthere = true e starthere = false
+double timediff(bool starthere); // devolve em microssegundos o tempo passado de starthere = true e starthere = false
 int printfVerticaly(char *str); // funcao boa para debug, imprime strings verticalmente
 void section(char *str, ...); // cria uma seção para facilitar o debug da saida
 
-void rand_init(); // inicializa uma seed para gerar números randômicos
+time_t rand_init(); // inicializa uma seed para gerar números randômicos
 double Math_random(); // gera um número aleatório entre 0 e 1
 int randMinMax(int min, int max); // gera um número aleatório x, min <= x <= max
+double randMinMaxD(double min, double max); // gera um número aleatório double x, min <= x <= max
 
 // troca as funções de alocação de memória, menos no arquivo .c
 #ifndef __MISC_C__
@@ -85,8 +84,8 @@ int randMinMax(int min, int max); // gera um número aleatório x, min <= x <= m
 	#define debug(str, ...) printf(str, ##__VA_ARGS__)
 	#define sectionDebug(str, ...) section(str, ##__VA_ARGS__)
 #else
-	#define debug(str, ...) ()
-	#define sectionDebug(str, ...) ()
+	#define debug(str, ...)
+	#define sectionDebug(str, ...)
 #endif // DEBUG
 
 /**
@@ -134,26 +133,28 @@ int randMinMax(int min, int max); // gera um número aleatório x, min <= x <= m
 	// caso em que estou depurando o programa, não preciso
 	// imprimir com cores, pois as vezes estou lendo um arquivo
 	// e não o terminal
-	#define negrito()       ()
+	#define negrito()
 	// cor do texto
-	#define vermelho()      ()
-	#define verde()         ()
-	#define amarelo()       ()
-	#define azul()          ()
-	#define magenta()       ()
-	#define ciano()         ()
+	#define vermelho()
+	#define verde()
+	#define amarelo()
+	#define azul()
+	#define magenta()
+	#define ciano()
 	// cor do fundo
-	#define fundoVermelho() ()
-	#define fundoVerde()    ()
-	#define fundoAmarelo()  ()
-	#define fundoAzul()     ()
-	#define fundoMagenta()  ()
-	#define fundoCiano()    ()
+	#define fundoVermelho()
+	#define fundoVerde()
+	#define fundoAmarelo()
+	#define fundoAzul()
+	#define fundoMagenta()
+	#define fundoCiano()
 #endif // TEST
 
 // resolve problemas como converter (void *) para (int)
 #define cast(tipo, variavel) ((tipo) (intptr_t) variavel)
 // dá um cast para o tipo void *
 #define voidptr_t(variavel) (cast(void *, variavel))
+// transforma uma variável em string
+#define varToStr(variavel) #variavel
 
 #endif

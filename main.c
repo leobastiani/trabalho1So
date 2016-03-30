@@ -39,7 +39,14 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	P = P_param; debug("Número de passageiros: %d\n", P);
 	A = A_param; debug("Assentos em cada ônibus: %d\n", A);
 
-	// testa as condições de existencia
+	//----------------------------------------------------
+	// Testa as condições de existencia
+	//----------------------------------------------------
+	// todos eles devem ser maiores do que zero
+	if(S <= 0 || C <= 0 || P <= 0 || A <= 0) {
+		printf("Por favor, todos os parâmetros de entrada devem ser maiores do que zero.\n");
+		exit(0);
+	}
 	if(P <= A) {
 		printf("Por favor, utilize uma quantiadede de passageiros maior do que a quantidade de assentos.\n");
 		exit(0);
@@ -122,7 +129,9 @@ int main(int argc, char *argv[]) {
 	 * Garanta que P >> A >> C.
 	 */
 	
-	// testando so valores se são inteirios
+	//----------------------------------------------------
+	// Testando parametros de entrada
+	//----------------------------------------------------
 	int i;
 	for(i=1; i<5; i++) {
 		if(!is_int(argv[i])) {
@@ -132,17 +141,16 @@ int main(int argc, char *argv[]) {
 			return 0;
 		}
 	}
-	
+
+
+
+	/**
+	 * Preparando para a função init
+	 */
 	char *Sstr = argv[1];
 	char *Cstr = argv[2];
 	char *Pstr = argv[3];
 	char *Astr = argv[4];
-
-	// exibição na tela
-	debug("S: %s\n", Sstr);
-	debug("C: %s\n", Cstr);
-	debug("P: %s\n", Pstr);
-	debug("A: %s\n", Astr);
 
 	// convertendo para inteiros
 	init(atoi(Sstr), atoi(Cstr), atoi(Pstr), atoi(Astr));

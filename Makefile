@@ -22,7 +22,7 @@ test: $(SOURCES)
 	./$(EXECUTABLE)
 
 sublimegdb: $(SOURCES)
-	$(CC) $(SOURCES) -o $(EXECUTABLE) $(LDFLAGS) -g -DDEBUG -DSGDB
+	$(CC) $(SOURCES) -o $(EXECUTABLE) $(LDFLAGS) -g -DDEBUG -DSGDB -DTEST
 
 .c.o:
 	$(CC) $< -o $@ $(CFLAGS)
