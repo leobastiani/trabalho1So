@@ -431,3 +431,177 @@ int randMinMax(int min, int max) {
 double randMinMaxD(double min, double max) {
 	return ((max - min) * Math_random()) + min;
 }
+
+
+/******************************************************
+ * Implementação de list_t
+ ******************************************************/
+void listInit(list_t *list) {
+	// define os valores padrões da lista
+	memset(list, 0, sizeof(list));
+}
+
+
+list_t *createList() {
+	list_t *result = (list_t *) malloc(sizeof(list_t));
+	listInit(result);
+	return result;
+}
+
+
+// diz se uma lista está vazia
+bool emptyList(list_t *list) {
+	return list->length == 0;
+}
+
+
+list_node_t *novoNo(list_elem_t elem) {
+	list_node_t *result = (list_node_t *) calloc(1, sizeof(list_node_t));
+	result->elem = elem;
+	return result;
+}
+
+
+// essa função recebe o void *, a função sem o underline recebe qlqr parametro
+void _inserirList(list_t *list, list_elem_t elem) {
+	list_node_t *node = novoNo(elem);
+	bool estaVazia = emptyList(list);
+	list->length++;
+
+	if(estaVazia) {
+		// se a lista está vazia
+		// insere tanto no começo quanto no fim
+		list->first = node;
+		list->last = node;
+		return ;
+	}
+
+
+	// se a lista n é vazia
+	// defino o proximo
+	list->last->prox = node;
+	// defino o ultimo
+	list->last = node;
+}
+
+
+// essa função recebe o void *, a função sem o underline recebe qlqr parametro
+void _inserirInicioList(list_t *list, list_elem_t elem) {
+	list_node_t *node = novoNo(elem);
+	list->length++;
+
+	// define o novo segundo nó
+	// q era o começo da lista
+	node->prox = list->first;
+	// define o novo primeiro nó
+	list->first = node;
+}
+
+
+list_node_t *getNodeList(list_t *list, int pos) {
+	// se pos for negativo, copmeça a contagem de trás para frente
+	// exemplo: uma lista com 9 elementos
+	// pos = -1, pego o list[8]
+	if(pos < 0) {
+		pos = list->length + pos;
+	}
+
+	// se passei do limite da lista, devo sair para não dar segfault
+	bool posValida = (0 <= pos) && (pos < list->length);
+	if(!posValida) {
+		printf("posição da lista exigida: %d, mas a lista é de tamanho: %d. exiting\n", pos, list->length);
+		exit(EXIT_FAILURE);
+	}
+
+
+	// só obter o elemento
+	list_node_t *node = list->first;
+	for(int i=0; i<pos; i++) {
+		// vo avançando até encontrar
+		node = node->prox;
+	}
+	return node;
+}
+
+
+list_elem_t _getList(list_t *list, int pos) {
+	return getNodeList(list, pos)->elem;
+}
+
+
+list_elem_t *_removeUltimoList(list_t *list) {
+	if(list->length == 0) {
+		printf("não posso remover de uma lista vazia. exiting\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// para todos os casos
+	list_node_t *nodeUltimo = list->last;
+	list_elem_t result = nodeUltimo->elem;
+	list->length--;
+
+	// caso que eu só tinha 1 elemento
+	if(list->length == 0) {
+		freeList(list, NULL);
+		return result;
+	}
+
+
+	// caso em que eu tenho um penultimo
+	free(nodeUltimo);
+	list_node_t *nodePenultimo = getNodeList(list, -1);
+	// remove o link do penultimo
+	nodePenultimo->prox = NULL;
+	// o ultimo da lista é o penultimo
+	list->last = nodePenultimo;
+	return result;
+}
+
+
+list_elem_t *_removeInicioList(list_t *list) {
+	if(list->length == 0) {
+		printf("não posso remover de uma lista vazia. exiting\n");
+		exit(EXIT_FAILURE);
+	}
+	// caso em que só há um elemento
+	if(list->length == 1) {
+		return _removeUltimoList(list);
+	}
+
+	// caso em que eu tenho mais de um elemento
+	list_node_t *nodeFirst = list->first;
+	list_elem_t result = nodeFirst->elem;
+	list_node_t *nodeSegundo = getNodeList(list, 1);
+	free(nodeFirst);
+	list->length--;
+
+
+	list->first = nodeSegundo;
+	return result;
+}
+
+
+void freeNodeAndProx(list_node_t *node, void (*freeElem)(void *)) {
+	if(node == NULL) {
+		// não faço nada
+		return ;
+	}
+	// libero do último para o primeiro
+	freeNodeAndProx(node->prox, freeElem);
+
+	if(freeElem) {
+		// devo dar free no elemento
+		freeElem(node->elem);
+	}
+
+	free(node);
+}
+
+
+// chame freeList(list, NULL) para realizar um free normal
+void freeList(list_t *list, void (*freeElem)(void *)) {
+	// libera o primeiro nó, que os demais vão sendo liberados
+	freeNodeAndProx(list->first, freeElem);
+	// zera a lista completamente
+	memset(list, 0, sizeof(list_t));
+}

@@ -111,7 +111,6 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 
 #ifndef TEST
 int main(int argc, char *argv[]) {
-
 	// testa os argumentos no início
 	if(argc != 5) {
 		// são 4 argumentos +1 do inicial
@@ -142,6 +141,9 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+
+	// inicializa uma seed para números randômicos
+	rand_init();
 
 
 	/**

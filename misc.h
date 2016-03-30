@@ -157,4 +157,48 @@ double randMinMaxD(double min, double max); // gera um número aleatório double
 // transforma uma variável em string
 #define varToStr(variavel) #variavel
 
+
+
+/******************************************************
+ * Implementação de list_t
+ ******************************************************/
+// é uma lista genérica,
+// que pode ser usada tanto como pilha, como fila
+typedef void * list_elem_t;
+
+typedef struct list_node_t {
+	// valor atual do nó
+	list_elem_t elem;
+	// proximo da lista
+	struct list_node_t *prox;
+} list_node_t;
+
+typedef struct list_t {
+	// primeiro elemento da lista
+	list_node_t *first;
+	// ultimo elemento da lista
+	list_node_t *last;
+	// tamanho da lista
+	int length;
+} list_t;
+
+
+void listInit(list_t *list);
+list_t *createList();
+
+void _inserirList(list_t *list, list_elem_t elem);
+void _inserirInicioList(list_t *list, list_elem_t elem);
+list_elem_t _getList(list_t *list, int pos);
+list_elem_t *_removeUltimoList(list_t *list);
+list_elem_t *_removeInicioList(list_t *list);
+void freeList(list_t *list, void (*freeElem)(void *)); // chame freeList(list, NULL) para realizar um free normal
+
+
+#define inserirList(list, elem) (_inserirList(list, cast(list_elem_t, elem)))
+#define inserirInicioList(list, elem) (_inserirInicioList(list, cast(list_elem_t, elem)))
+#define getList(list, pos, tipo) (cast(tipo, _getList(list, pos)))
+#define removeUltimoList(list, tipo) (cast(tipo, _removeUltimoList(list)))
+#define removeInicioList(list, tipo) (cast(tipo, _removeInicioList(list)))
+
+
 #endif
