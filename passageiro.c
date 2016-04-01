@@ -67,12 +67,12 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 
 
 void irParaPonto(passageiro_t *this) {
-	debug("passageiro %d indo para o ponto %d\n", this->id, this->pontoOrigem->id);
-
 	// só dar um sleep e simula a caminhada até o ponto
 	// convertido em microssegundos
-	double tempoEspera = randMinMaxD(0, 1);
-	usleep(tempoEspera * 1000000);
+	double tempoEspera = randMinMaxD(0, 20);
+	debug("passageiro %d indo para o ponto %d em %g segundos\n", this->id, this->pontoOrigem->id, tempoEspera);
+
+	usleep(tempoEspera * 1000000 * fatorTempo);
 
 	debug("passageiro %2d chegou no ponto %2d, esperou por %g s\n", this->id, this->pontoOrigem->id, tempoEspera);
 }

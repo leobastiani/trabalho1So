@@ -11,10 +11,6 @@ typedef struct pontoOnibus_t pontoOnibus_t;
 typedef struct list_t list_t;
 
 
-// é uma lista com todas as seeds necessárias
-// cada thread precisa de uma seed
-list_t *seeds;
-
 //----------------------------------------------------
 // Variaveis
 //----------------------------------------------------
@@ -33,6 +29,24 @@ int S, C, P, A;
 #define nOnibus       C
 #define nPassageiros  P
 #define nAssentos     A
+
+
+
+// é uma lista com todas as seeds necessárias
+// cada thread precisa de uma seed
+list_t *seeds;
+
+
+// diz com ql velocidade o programa vai executar
+// se é 1, roda na velocidade normal
+// se é 0.2, roda em apenas 20% do tempo
+// é sempre multiplicado quando vou dar um sleep
+#ifdef TEST
+	// estou em teste
+	#define fatorTempo 0.05
+#else
+	#define fatorTempo 1
+#endif // TEST
 
 
 
