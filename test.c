@@ -58,7 +58,12 @@ void testList() {
 int main(int argc, char *argv[]) {
 	srand(1);
 
-	init(2, 3, 20, 5);
+	init(
+		2, // numero de pontos
+		3, // numero de onibus
+	  10, // passageiros
+	  4 // assentos
+	 );
 
 	return 0;
 }

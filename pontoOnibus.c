@@ -21,18 +21,7 @@ void *pontoOnibusRun(void *param) {
 	int id = cast(int, param);
 	debug("pontoOnibus executando: %d\n", id);
 
-	// pega todos os passageiros e fazem eles subirem no onibus
 	pontoOnibus_t *this = &pontosOnibus[id];
-	
-	if(this->onibus) {
-		// se tem um onibus nesse ponto
-		passageiro_t *passageiro;
-		forList(passageiro_t *, passageiro, this->passageiros) {
-			debug("analisando passageiro %d\n", passageiro->id);
-			subirNoOnibus(passageiro, this->onibus);
-		}
-	}
-
 }
 
 

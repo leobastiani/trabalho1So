@@ -64,6 +64,12 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	// agora é certeza que vou iniciar
 	clearScreen();
 
+	// cria uma seed para cada nova thread
+	seeds = createList();
+	for(int i=0; i<S+C+A+P; i++) {
+		inserirInicioList(seeds, rand());
+	}
+
 
 
 	// iniciando objetos
@@ -82,7 +88,6 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	for(int i=0; i<P; i++) {
 		passageiroInit(&passageiros[i], i);
 	}
-
 
 
 	// criando as threads
@@ -104,7 +109,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, voidptr_t(i));
 	}
 
-
+	sleep(2);
 
 	// finalizando as threads
 	// devem seguir a ordem
@@ -128,6 +133,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	free(threadsPassageiro);
 	free(threadsPontoOnibus);
 
+	freeList(seeds, NULL);
 }
 
 

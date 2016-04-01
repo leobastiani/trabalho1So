@@ -2,6 +2,9 @@
 #define __PASSAGEIRO_H__
 
 
+#include <unistd.h>
+
+
 typedef struct pontoOnibus_t pontoOnibus_t;
 typedef struct onibus_t onibus_t;
 
@@ -19,5 +22,6 @@ typedef struct passageiro_t {
 void passageiroInit(passageiro_t *passageiro, int id);
 void *passageiroRun(void *param);
 void subirNoOnibus(passageiro_t *passageiro, onibus_t *onibus);
+void irParaPonto(passageiro_t *this);
 
 #endif // __PASSAGEIRO_H__

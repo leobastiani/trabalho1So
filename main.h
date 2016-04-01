@@ -8,7 +8,12 @@
 typedef struct onibus_t onibus_t;
 typedef struct passageiro_t passageiro_t;
 typedef struct pontoOnibus_t pontoOnibus_t;
+typedef struct list_t list_t;
 
+
+// é uma lista com todas as seeds necessárias
+// cada thread precisa de uma seed
+list_t *seeds;
 
 //----------------------------------------------------
 // Variaveis

@@ -20,21 +20,31 @@ void passageiroInit(passageiro_t *this, int id) {
 		pontoDestino = randMinMax(0, S-1);
 		// se eles forem diferentes, posso sair
 	} while(pontoOrigem == pontoDestino);
-
 	this->pontoOrigem = &pontosOnibus[pontoOrigem];
 	this->pontoDestino = &pontosOnibus[pontoDestino];
-	// agora que eu sei o ponto em que estou
-	// devo adicionar o passageiro a lista de passageiros
-	inserirFinalList(this->pontoOrigem->passageiros, this);
 
 	debug("passageiro %2d iniciado, origem %2d, destino %2d\n", this->id, pontoOrigem, pontoDestino);
 }
 
 
+/**
+ * devo fazer free de param
+ */
 void *passageiroRun(void *param) {
 	int id = cast(int, param);
+	passageiro_t *this = &passageiros[id];
+
+	// cada thread deve fazer um srand
+	// resgatando da lista de seeds
+	int seed = removeInicioList(seeds, int);
+	srand(seed);
+
+
 	debug("passageiro executando: %d\n", id);
 
+	// o que cada passageiro deve fazer:
+	// primeiro, vai para o ponto de origem
+	irParaPonto(this);
 }
 
 
@@ -52,4 +62,17 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 		debug("passageiro %d do ponto %d tentou subir no onibus %d que possuia %d passageiros. e voltou a aguardar\n",
 			this->id, this->pontoOrigem->id, onibus->id, onibus->passageiros->length);
 	}
+}
+
+
+
+void irParaPonto(passageiro_t *this) {
+	debug("passageiro %d indo para o ponto %d\n", this->id, this->pontoOrigem->id);
+
+	// só dar um sleep e simula a caminhada até o ponto
+	// convertido em microssegundos
+	double tempoEspera = randMinMaxD(0, 1);
+	usleep(tempoEspera * 1000000);
+
+	debug("passageiro %2d chegou no ponto %2d, esperou por %g s\n", this->id, this->pontoOrigem->id, tempoEspera);
 }
