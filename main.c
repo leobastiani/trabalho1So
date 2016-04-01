@@ -55,17 +55,45 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		printf("Por favor, utilize uma quantidade de assentos maior do que a quantidade de ônibus.\n");
 		exit(0);
 	}
+	if(S == 1) {
+		printf("A aplicação precisa ter mais de um ponto de ônibus.\n");
+		exit(0);
+	}
 
 
-	sectionDebug("Inicializando threads");
+	// agora é certeza que vou iniciar
+	clearScreen();
+
+
+
+	// iniciando objetos
+	// primeiro alloco
+	pontosOnibus = (pontoOnibus_t *) malloc(sizeof(pontoOnibus_t) * S);
+	onibusArray  = (onibus_t *) malloc(sizeof(onibus_t) * C);
+	passageiros  = (passageiro_t *) malloc(sizeof(passageiro_t) * P);
+	// agora eu inicializo
+	sectionDebug("Iniciando as variaveis");
+	for(int i=0; i<S; i++) {
+		pontoOnibusInit(&pontosOnibus[i], i);
+	}
+	for(int i=0; i<C; i++) {
+		onibusInit(&onibusArray[i], i);
+	}
+	for(int i=0; i<P; i++) {
+		passageiroInit(&passageiros[i], i);
+	}
+
+
+
 	// criando as threads
 	// alocando a memória
+	threadsPontoOnibus = (pthread_t *) calloc(S, sizeof(pthread_t));
 	threadsOnibus      = (pthread_t *) calloc(C, sizeof(pthread_t));
 	threadsPassageiro  = (pthread_t *) calloc(P, sizeof(pthread_t));
-	threadsPontoOnibus = (pthread_t *) calloc(S, sizeof(pthread_t));
 
 
 	// inicializando as threads
+	sectionDebug("Inicializando threads");
 	for(int i=0; i<S; i++) {
 		pthread_create(&threadsPontoOnibus[i], NULL, pontoOnibusRun, voidptr_t(i));
 	}
@@ -75,27 +103,24 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	for(int i=0; i<P; i++) {
 		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, voidptr_t(i));
 	}
-	// só falta criar a thread tela
-	pthread_create(&threadTela, NULL, telaRun, NULL);
 
 
 
 	// finalizando as threads
+	// devem seguir a ordem
+	for(int i=0; i<S; i++) {
+		pthread_join(threadsPontoOnibus[i], NULL);
+	}
 	for(int i=0; i<C; i++) {
 		pthread_join(threadsOnibus[i], NULL);
 	}
 	for(int i=0; i<P; i++) {
 		pthread_join(threadsPassageiro[i], NULL);
 	}
-	for(int i=0; i<S; i++) {
-		pthread_join(threadsPontoOnibus[i], NULL);
-	}
-	// só falta dar join na tela
-	pthread_join(threadTela, NULL);
 
 
 	debug("\n");
-	sectionDebug("Função init na main voltando a executar.");
+	sectionDebug("Todas as threads foram encerradas");
 
 
 	// desalocando a memória

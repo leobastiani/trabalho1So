@@ -204,4 +204,13 @@ void freeList(list_t *list, void (*freeElem)(void *)); // chame freeList(list, N
 #define removeInicioList(list, tipo) (cast(tipo, _removeInicioList(list)))
 
 
+// varre todos os elementos da lista
+#define forList(tipo, variavel, lista) for(list_node_t *node=lista->first;node && (variavel=node->elem);node=node->prox)
+// exemplo:
+// int elem;
+// forList(lista, elem) {
+// 	printf("%d\n", elem);
+// }
+
+
 #endif

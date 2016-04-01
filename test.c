@@ -56,7 +56,9 @@ void testList() {
 
 #ifdef TEST
 int main(int argc, char *argv[]) {
-	init(4, 6, 100, 40);
+	srand(1);
+
+	init(2, 3, 20, 5);
 
 	return 0;
 }
