@@ -100,16 +100,14 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	// inicializando as threads
 	sectionDebug("Inicializando threads");
 	for(int i=0; i<S; i++) {
-		pthread_create(&threadsPontoOnibus[i], NULL, pontoOnibusRun, voidptr_t(i));
+		pthread_create(&threadsPontoOnibus[i], NULL, pontoOnibusRun, cast(void *, i));
 	}
 	for(int i=0; i<C; i++) {
-		pthread_create(&threadsOnibus[i], NULL, onibusRun, voidptr_t(i));
+		pthread_create(&threadsOnibus[i], NULL, onibusRun, cast(void *, i));
 	}
 	for(int i=0; i<P; i++) {
-		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, voidptr_t(i));
+		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, cast(void *, i));
 	}
-
-	sleep(2);
 
 	// finalizando as threads
 	// devem seguir a ordem

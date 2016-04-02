@@ -36,7 +36,7 @@ void *passageiroRun(void *param) {
 
 	// cada thread deve fazer um srand
 	// resgatando da lista de seeds
-	int seed = removeInicioList(seeds, int);
+	int seed = removeInicioList(seeds);
 	srand(seed);
 
 
@@ -45,6 +45,9 @@ void *passageiroRun(void *param) {
 	// o que cada passageiro deve fazer:
 	// primeiro, vai para o ponto de origem
 	irParaPonto(this);
+
+
+	debug("passageiro %2d encerrado\n", this->id);
 }
 
 

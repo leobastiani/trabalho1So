@@ -454,11 +454,44 @@ bool emptyList(list_t *list) {
 	return list->length == 0;
 }
 
+bool posValidaList(list_t *list, int pos) {
+	if(pos < 0) {
+		pos = list->length + pos;
+	}
 
-list_node_t *novoNo(list_elem_t elem) {
+	return (0 <= pos) && (pos < list->length);
+}
+
+
+// insere o nó entre o prev e o prox
+list_node_t *novoNo(list_t *list, list_node_t *prev, list_node_t *prox, list_elem_t elem) {
+	// aloco o espaço
 	list_node_t *result = (list_node_t *) calloc(1, sizeof(list_node_t));
 	// padronizei pelo calloc, deixei tudo como NULL
 	result->elem = elem;
+
+	// inserindo entre prev e prox
+	bool isFirst = list->first == prox;
+	bool isLast = list->last == prev;
+
+	result->prev = prev;
+	result->prox = prox;
+
+	if(prev) {
+		prev->prox = result;
+	}
+	if(prox) {
+		prox->prev = result;
+	}
+
+	// insiro ele na lista
+	if(isFirst) {
+		list->first = result;
+	}
+	if(isLast) {
+		list->last = result;
+	}
+	list->length++;
 	return result;
 }
 
@@ -469,52 +502,31 @@ list_node_t *novoNo(list_elem_t elem) {
  * a função sem o underline recebe qlqr parametro
  */
 void _inserirFinalList(list_t *list, list_elem_t elem) {
-	list_node_t *node = novoNo(elem);
-	list->length++;
-
-	if(list->length == 1) {
-		// só existe esse novo no que estou inserindo
-		// insere tanto no começo quanto no fim
-		list->first = node;
-		list->last = node;
-		return ;
-	}
-
-
-	// se a lista n é vazia
-	// defino o proximo
-	list->last->prox = node;
-	// defino o anterior
-	node->prev = list->last;
-	// defino o ultimo
-	list->last = node;
+	novoNo(list, list->last, NULL, elem);
 }
 
 
 // essa função recebe o void *, a função sem o underline recebe qlqr parametro
 void _inserirInicioList(list_t *list, list_elem_t elem) {
-	list_node_t *node = novoNo(elem);
-	list->length++;
+	novoNo(list, NULL, list->first, elem);
+}
 
-	// define o novo segundo nó
-	// q era o começo da lista
-	node->prox = list->first;
-	// defino que o antigo primeiro, tem um anterior
-	// se ele existir
-	if(list->first) {
-		list->first->prev = node;
-	}
-	// define o novo primeiro nó
-	list->first = node;
 
-	// se só tenho esse elemento na lista, o ultimo tmb é igual ao primieiro
-	if(list->length == 1) {
-		list->last = list->first;
-	}
+// essa função recebe o void *, a função sem o underline recebe qlqr parametro
+void _inserirList(list_t *list, list_elem_t elem, int pos) {
+	list_node_t *prev = getNode(list, pos);
+	list_node_t *prox = prev->prox;
+
+	novoNo(list, prev, prox, elem);
 }
 
 
 list_node_t *getNode(list_t *list, int pos) {
+	// se passei do limite da lista, devo sair para não dar segfault
+	if(!posValidaList(list, pos)) {
+		return NULL;
+	}
+
 	// se pos for negativo, copmeça a contagem de trás para frente
 	// exemplo: uma lista com 9 elementos
 	// pos = -1, pego o list[8]
@@ -524,14 +536,6 @@ list_node_t *getNode(list_t *list, int pos) {
 		// vou fazer uma contagem reversa
 		contagemReversa = true;
 	}
-
-	// se passei do limite da lista, devo sair para não dar segfault
-	bool posValida = (0 <= pos) && (pos < list->length);
-	if(!posValida) {
-		printf("posição da lista exigida: %d, mas a lista é de tamanho: %d. exiting\n", pos, list->length);
-		exit(EXIT_FAILURE);
-	}
-
 
 	list_node_t *result;
 
@@ -566,32 +570,67 @@ list_elem_t _getList(list_t *list, int pos) {
 }
 
 
+/**
+ * remove um nó da lista
+ * retorna o nó anterior
+ */
+list_node_t *removeNode(list_t *list, list_node_t *node) {
+	if(node == NULL) {
+		return NULL;
+	}
+
+	if(list->length == 0) {
+		printf("não posso remover de uma lista vazia. exiting\n");
+		exit(EXIT_FAILURE);
+	}
+
+	bool isFirst = list->first == node;
+	bool isLast = list->last == node;
+	list_node_t *prev = node->prev;
+	list_node_t *prox = node->prox;
+
+	// se tem anterior
+	if(prev) {
+		prev->prox = node->prox;
+	}
+
+	// se tem proximo
+	if(prox) {
+		prox->prev = node->prev;
+	}
+
+
+	if(isFirst) {
+		// faz o segundo ser o novo primeiro
+		list->first = prox;
+	}
+
+	if(isLast) {
+		// faz o penultimo ser o novo ultimo
+		list->last = prev;
+	}
+
+
+	list->length--;
+
+	// libera esse nó
+	node->prox = NULL;
+	freeNodeAndProx(node, NULL);
+	return prev;
+}
+
+
 list_elem_t *_removeUltimoList(list_t *list) {
 	if(list->length == 0) {
 		printf("não posso remover de uma lista vazia. exiting\n");
 		exit(EXIT_FAILURE);
 	}
 
-	// para todos os casos
 	list_node_t *nodeUltimo = list->last;
-	list_node_t *nodePenultimo = nodeUltimo->prev;
 	list_elem_t result = nodeUltimo->elem;
-	list->length--;
+	
+	removeNode(list, nodeUltimo);
 
-	// caso que eu só tinha 1 elemento
-	if(list->length == 0) {
-		freeList(list, NULL);
-		return result;
-	}
-
-
-	// caso em que eu tenho um penultimo
-	free(nodeUltimo);
-
-	// remove o link do penultimo
-	nodePenultimo->prox = NULL;
-	// o ultimo da lista é o penultimo
-	list->last = nodePenultimo;
 	return result;
 }
 
@@ -601,37 +640,42 @@ list_elem_t *_removeInicioList(list_t *list) {
 		printf("não posso remover de uma lista vazia. exiting\n");
 		exit(EXIT_FAILURE);
 	}
-	// caso em que só há um elemento
-	if(list->length == 1) {
-		return _removeUltimoList(list);
-	}
 
-	// caso em que eu tenho mais de um elemento
 	list_node_t *nodeFirst = list->first;
 	list_elem_t result = nodeFirst->elem;
-	list_node_t *nodeSegundo = nodeFirst->prox;
-	free(nodeFirst);
-	list->length--;
 
-	// o novo primeiro era o q estava em segundo
-	list->first = nodeSegundo;
-	// e ele não tem anterior
-	nodeSegundo->prev = NULL;
+	removeNode(list, nodeFirst);
+
 	return result;
 }
 
 
-void freeNodeAndProx(list_node_t *node, void (*freeElem)(void *)) {
+list_elem_t *_removeList(list_t *list, int pos) {
+	if(list->length == 0) {
+		printf("não posso remover de uma lista vazia. exiting\n");
+		exit(EXIT_FAILURE);
+	}
+
+	list_node_t *node = getNode(list, pos);
+	list_elem_t result = node->elem;
+
+	removeNode(list, node);
+
+	return result;
+}
+
+
+void freeNodeAndProx(list_node_t *node, void (*freeElemFn)(void *)) {
 	if(node == NULL) {
 		// não faço nada
 		return ;
 	}
 	// libero do último para o primeiro
-	freeNodeAndProx(node->prox, freeElem);
+	freeNodeAndProx(node->prox, freeElemFn);
 
-	if(freeElem) {
+	if(freeElemFn) {
 		// devo dar free no elemento
-		freeElem(node->elem);
+		freeElemFn(node->elem);
 	}
 
 	free(node);
@@ -639,9 +683,9 @@ void freeNodeAndProx(list_node_t *node, void (*freeElem)(void *)) {
 
 
 // chame freeList(list, NULL) para realizar um free normal
-void freeList(list_t *list, void (*freeElem)(void *)) {
+void freeList(list_t *list, void (*freeElemFn)(void *)) {
 	// libera o primeiro nó, que os demais vão sendo liberados
-	freeNodeAndProx(list->first, freeElem);
+	freeNodeAndProx(list->first, freeElemFn);
 	// zera a lista completamente
 	memset(list, 0, sizeof(list_t));
 }
