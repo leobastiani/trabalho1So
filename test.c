@@ -48,7 +48,7 @@ void testList() {
 	printf("list->length: %d\n", list->length);
 
 	int elem;
-	forList(list, elem) {
+	forList(int, elem, list) {
 		if(elem == 2) {
 			removeListInFor(list);
 		}

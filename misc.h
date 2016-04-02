@@ -210,11 +210,11 @@ void freeList(list_t *list, void (*freeElemFn)(void *)); // chame freeList(list,
 
 
 // varre todos os elementos da lista
-#define forList(list, elem) \
+#define forList(tipo, variavel, list) \
 	for(list_node_t *node=list->first;\
 		\
 		node && (\
-			node ? elem = cast(intptr_t, node->elem) : 0\
+			node ? (variavel = cast(tipo, node->elem)) : 0\
 		);\
 		\
 		node = (node == NULL) ? NULL : node->prox\

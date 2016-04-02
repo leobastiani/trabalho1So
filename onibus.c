@@ -15,7 +15,6 @@ void onibusInit(onibus_t *this, int id) {
 
 	// tenho que por cada ônibus em um ponto especifico
 	int pontoAtualInt = randMinMax(0, S-1);
-	int proxPonto = 0;
 	pontoOnibus_t *pontoAtual = &pontosOnibus[pontoAtualInt];
 	// tenta por esse ônibus nesse ponto
 	if(pontoAtual->onibus == NULL) {
@@ -23,6 +22,7 @@ void onibusInit(onibus_t *this, int id) {
 		pontoAtual->onibus = this;
 		this->pontoOnibus = pontoAtual;
 	} else {
+		int proxPonto;
 		// se aquele ponto ja estava ocupado
 		pontoAtual = NULL;
 		this->pontoOnibus = NULL;
@@ -45,7 +45,19 @@ void onibusInit(onibus_t *this, int id) {
 
 void *onibusRun(void *param) {
 	int id = cast(int, param);
+	onibus_t *this = &onibusArray[id];
 	debug("onibus executando: %d\n", id);
+
+	// se o onibus está num ponto
+	if(this->pontoOnibus) {
+		debug("onibus %d esta num ponto\n", this->id);
+		// devo verificar todos os passageiros
+		passageiro_t *passageiro;
+		forList(passageiro_t *, passageiro, this->pontoOnibus->passageiros) {
+			// aviso que o onibus chegou
+			
+		}
+	}
 }
 
 

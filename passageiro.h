@@ -2,6 +2,7 @@
 #define __PASSAGEIRO_H__
 
 
+#include <semaphore.h>
 #include <unistd.h>
 
 
@@ -16,6 +17,9 @@ typedef struct passageiro_t {
 
 	// é o status de cada passageiro, ele pode estar esperando, entrando no onibus, descendo
 	int status;
+
+	// estou no ponto e devo esperar o onibus
+	sem_t semEsperarOnibusChegar;
 } passageiro_t;
 
 

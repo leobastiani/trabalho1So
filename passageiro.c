@@ -23,6 +23,10 @@ void passageiroInit(passageiro_t *this, int id) {
 	this->pontoOrigem = &pontosOnibus[pontoOrigem];
 	this->pontoDestino = &pontosOnibus[pontoDestino];
 
+	// assim que eu dou um down, fico esperando
+	// começa em zero, pq o próximo wait eu fico bloqueado
+	sem_init(&this->semEsperarOnibusChegar, 0, 0);
+
 	debug("passageiro %2d iniciado, origem %2d, destino %2d\n", this->id, pontoOrigem, pontoDestino);
 }
 
@@ -47,6 +51,25 @@ void *passageiroRun(void *param) {
 	irParaPonto(this);
 
 
+	// espero o proximo onibus chegar
+	debug("passageiro %2d esperando um sinal do onibus\n", id);
+	sem_wait(&this->semEsperarOnibusChegar);
+
+	// se nesse ponto não tem onibus, devo esperá-lo
+	onibus_t *onibus = this->pontoOrigem->onibus;
+
+	// devo esperar o próximo se
+	// não tem onibus nesse ponto
+	// o onibus está cheio
+	bool devoEsperar = onibusCheio(onibus);
+	if(devoEsperar) {
+		
+	}
+
+	// nesse caso, posso entrar nesse ônibus
+	subirNoOnibus(this, onibus);
+
+
 	debug("passageiro %2d encerrado\n", this->id);
 }
 
@@ -58,11 +81,11 @@ void *passageiroRun(void *param) {
 void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 	if(!onibusCheio(onibus)) {
 		// se este ônibus não está cheio, só subir
-		debug("passageiro %d subindo no onibus %d\n", this->id, onibus->id);
+		debug("passageiro %2d subindo no onibus %d\n", this->id, onibus->id);
 		inserirFinalList(onibus->passageiros, this);
 	} else {
 		// se o onibus esta cheio
-		debug("passageiro %d do ponto %d tentou subir no onibus %d que possuia %d passageiros. e voltou a aguardar\n",
+		debug("passageiro %2d do ponto %d tentou subir no onibus %d que possuia %d passageiros. e voltou a aguardar\n",
 			this->id, this->pontoOrigem->id, onibus->id, onibus->passageiros->length);
 	}
 }
@@ -75,7 +98,7 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 void irParaPonto(passageiro_t *this) {
 	// em segundos
 	double tempoEspera = randMinMaxD(0, 20);
-	debug("passageiro %d indo para o ponto %d em %g segundos\n", this->id, this->pontoOrigem->id, tempoEspera);
+	debug("passageiro %2d indo para o ponto %d em %g segundos\n", this->id, this->pontoOrigem->id, tempoEspera);
 
 	// convertido em microssegundos
 	usleep(tempoEspera * 1000000 * fatorTempo);
