@@ -1,0 +1,12 @@
+/******************************************
+ * Leonardo Guarnieri de Bastiani 8910434 *
+ * Fábio Satoshi Sumida           8910542 *
+ * Paulo Humberto Sapio de Morais 8910591 *
+ * Guilherme José Acra            7150306 *
+ *                                        *
+ * Observações: os arquivos misc facili-  *
+ * taram muito o trabalho, por exemplo:   *
+ * não precisamos verificar o retorno de  *
+ * malloc, pois ela está implementada em  *
+ * _malloc no arquivo misc.c              *
+ ******************************************/

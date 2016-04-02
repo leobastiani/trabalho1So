@@ -2,6 +2,8 @@
 *.exe
 *.o
 subl
+backups
+*.bat
 
 # Windows image file caches
 Thumbs.db
