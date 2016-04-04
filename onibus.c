@@ -53,10 +53,10 @@ void *onibusRun(void *param) {
 		debug("onibus %d esta num ponto\n", this->id);
 		// devo verificar todos os passageiros
 		passageiro_t *passageiro;
-		forList(passageiro_t *, passageiro, this->pontoOnibus->passageiros) {
-			// aviso que o onibus chegou
+		// forList(passageiro_t *, passageiro, this->pontoOnibus->passageiros) {
+		// 	// aviso que o onibus chegou
 			
-		}
+		// }
 	}
 }
 

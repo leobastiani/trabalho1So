@@ -40,7 +40,7 @@ void *passageiroRun(void *param) {
 
 	// cada thread deve fazer um srand
 	// resgatando da lista de seeds
-	int seed = removeInicioList(seeds);
+	int seed = removeInicioList(seeds, int);
 	srand(seed);
 
 

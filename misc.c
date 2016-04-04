@@ -244,7 +244,7 @@ int remove_directory(const char *path) {
              continue;
           }
           len = path_len + strlen(p->d_name) + 2; 
-          buf = (char *) malloc(len);
+          buf = (char *) _malloc(len);
           if(buf) {
              struct stat statbuf;
              snprintf(buf, len, "%s/%s", path, p->d_name);
@@ -443,7 +443,7 @@ void listInit(list_t *list) {
 
 
 list_t *createList() {
-	list_t *result = (list_t *) malloc(sizeof(list_t));
+	list_t *result = (list_t *) _malloc(sizeof(list_t));
 	listInit(result);
 	return result;
 }
@@ -466,7 +466,7 @@ bool posValidaList(list_t *list, int pos) {
 // insere o nó entre o prev e o prox
 list_node_t *novoNo(list_t *list, list_node_t *prev, list_node_t *prox, list_elem_t elem) {
 	// aloco o espaço
-	list_node_t *result = (list_node_t *) calloc(1, sizeof(list_node_t));
+	list_node_t *result = (list_node_t *) _calloc(1, sizeof(list_node_t));
 	// padronizei pelo calloc, deixei tudo como NULL
 	result->elem = elem;
 
@@ -572,11 +572,10 @@ list_elem_t _getList(list_t *list, int pos) {
 
 /**
  * remove um nó da lista
- * retorna o nó anterior
  */
-list_node_t *removeNode(list_t *list, list_node_t *node) {
+void removeNode(list_t *list, list_node_t *node) {
 	if(node == NULL) {
-		return NULL;
+		return ;
 	}
 
 	if(list->length == 0) {
@@ -614,9 +613,7 @@ list_node_t *removeNode(list_t *list, list_node_t *node) {
 	list->length--;
 
 	// libera esse nó
-	node->prox = NULL;
-	freeNodeAndProx(node, NULL);
-	return prev;
+	freeNode(node, NULL);
 }
 
 
@@ -665,27 +662,27 @@ list_elem_t *_removeList(list_t *list, int pos) {
 }
 
 
-void freeNodeAndProx(list_node_t *node, void (*freeElemFn)(void *)) {
+void freeNode(list_node_t *node, void (*freeElemFn)(void *)) {
 	if(node == NULL) {
 		// não faço nada
 		return ;
 	}
-	// libero do último para o primeiro
-	freeNodeAndProx(node->prox, freeElemFn);
 
 	if(freeElemFn) {
 		// devo dar free no elemento
 		freeElemFn(node->elem);
 	}
 
-	free(node);
+	_free(node);
 }
 
 
 // chame freeList(list, NULL) para realizar um free normal
 void freeList(list_t *list, void (*freeElemFn)(void *)) {
-	// libera o primeiro nó, que os demais vão sendo liberados
-	freeNodeAndProx(list->first, freeElemFn);
-	// zera a lista completamente
-	memset(list, 0, sizeof(list_t));
+	void *elem;
+	forList(list_elem_t, elem, list) {
+		freeNode(node, freeElemFn);
+	}
+
+	_free(list);
 }

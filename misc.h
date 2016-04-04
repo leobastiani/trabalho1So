@@ -151,7 +151,7 @@ double randMinMaxD(double min, double max); // gera um número aleatório double
 #endif // TEST
 
 // resolve problemas como converter (void *) para (int)
-#define cast(tipo, variavel) ((tipo) (intptr_t) variavel)
+#define cast(tipo_t, variavel) ((tipo_t) (intptr_t) variavel)
 // transforma uma variável em string
 #define varToStr(variavel) #variavel
 
@@ -192,40 +192,40 @@ void _inserirList(list_t *list, list_elem_t elem, int pos);
 list_node_t *novoNo(list_t *list, list_node_t *prev, list_node_t *prox, list_elem_t elem);
 list_node_t *getNode(list_t *list, int pos);
 list_elem_t _getList(list_t *list, int pos);
-list_node_t *removeNode(list_t *list, list_node_t *node);
+void removeNode(list_t *list, list_node_t *node);
 list_elem_t *_removeUltimoList(list_t *list);
 list_elem_t *_removeInicioList(list_t *list);
 list_elem_t *_removeList(list_t *list, int pos);
-void freeNodeAndProx(list_node_t *node, void (*freeElemFn)(void *));
+void freeNode(list_node_t *node, void (*freeElemFn)(void *));
 void freeList(list_t *list, void (*freeElemFn)(void *)); // chame freeList(list, NULL) para realizar um free normal
 
 
 #define inserirFinalList(list, elem) (_inserirFinalList(list, cast(list_elem_t, elem)))
 #define inserirInicioList(list, elem) (_inserirInicioList(list, cast(list_elem_t, elem)))
 #define inserirList(list, elem, pos) (_inserirList(list, cast(list_elem_t, elem), pos))
-#define getList(list, pos) (cast(intptr_t, _getList(list, pos)))
-#define removeUltimoList(list) (cast(intptr_t, _removeUltimoList(list)))
-#define removeInicioList(list) (cast(intptr_t, _removeInicioList(list)))
-#define removeList(list, pos) (cast(intptr_t, _removeList(list, pos)))
+#define getList(list, pos, tipo_t) (cast(tipo_t, _getList(list, pos)))
+#define removeUltimoList(list, tipo_t) (cast(tipo_t, _removeUltimoList(list)))
+#define removeInicioList(list, tipo_t) (cast(tipo_t, _removeInicioList(list)))
+#define removeList(list, pos, tipo_t) (cast(tipo_t, _removeList(list, pos)))
 
 
 // varre todos os elementos da lista
-#define forList(tipo, variavel, list) \
-	for(list_node_t *node=list->first;\
+#define _forList(tipo_t, variavel, list, firstOuLast, prevOuProx) \
+	for(\
+		list_node_t *node=list->firstOuLast, *nextNode=node->prevOuProx;\
 		\
 		node && (\
-			node ? (variavel = cast(tipo, node->elem)) : 0\
+			node ? (variavel = cast(tipo_t, node->elem)) : 0\
 		);\
 		\
-		node = (node == NULL) ? NULL : node->prox\
+		node = nextNode, nextNode = (nextNode ? nextNode->prevOuProx : NULL)\
 	)
+#define forList(tipo_t, variavel, list) _forList(tipo_t, variavel, list, first, prox)
+#define forListReverse(tipo_t, variavel, list) _forList(tipo_t, variavel, list, last, prev)
 
 // essa função serve para remover o elemento que está sendo analisado
 // dentro de um for
-#define removeListInFor(list) \
-	{\
-		node = removeNode(list, node);\
-	}
+#define removeListInFor(list) removeNode(list, node)
 
 // exemplo:
 /*int elem;
@@ -235,6 +235,27 @@ forList(int, elem, list) {
 	}
 }*/
 
+#define printList(tipo_t, variavel, list, printfFn, delimiterStr, endStr) \
+	{ \
+		tipo_t elem; \
+		forList(tipo_t, elem, list) { \
+			if(node != list->first) { \
+				printf(delimiterStr); \
+			} \
+			printfFn; \
+		} \
+		printf(endStr);\
+	}
+
+// imprime uma lista, por exexmplo:
+// uma lista de inteiros
+// printList(int, elem, list, printf("%d", elem), ", ", "\n");
+
+// imprime uma lista de inteiros
+// exemplo:
+// 1, 2, 3, 4
+#define printListInteiros(list) printList(int, elem, list, printf("%d", elem), ", ", "\n")
+#define printListDouble(list) printList(double, elem, list, printf("%g", elem), ", ", "\n")
 
 
 #endif
