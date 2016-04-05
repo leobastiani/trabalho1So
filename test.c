@@ -85,7 +85,6 @@ void testList() {
 
 #ifdef TEST
 int main(int argc, char *argv[]) {
-	testList();
 	srand(1);
 
 	init(
