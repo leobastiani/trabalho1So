@@ -73,7 +73,7 @@ void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
 	}
 
 	// em segundos
-	double tempoEspera = randMinMaxD(30, 40);
+	double tempoEspera = randMinMaxD(12, 25);
 	debug("onibus %2d indo para o ponto %d em %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
 
 	// convertido em microssegundos
@@ -90,6 +90,7 @@ void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
 	}
 
 	// consegui parar nesse ponto
+	debug("onibus %2d conseguiu parar no ponto %2d de fato\n", this->id, pontoOnibus->id);
 	this->pontoOnibus = pontoOnibus;
 	avisarQueOnibusChegou(pontoOnibus, this);
 }

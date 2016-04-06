@@ -54,7 +54,7 @@ void *passageiroRun(void *param) {
 	}
 
 	// começo tudo de novo
-	// pegarOnibusOrigemDestino(this);
+	pegarOnibusOrigemDestino(this);
 
 
 
@@ -108,9 +108,17 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 	// depois vou descer e esperar receber um sinal para descer
 	// por tanto, enquanto não chegar no ponto, eu fico no onibus
 	while(true) {
-		debug("passageiro %2d esperando o onibus andar\n", this->id);
+		if(this->onibus) {
+			// se estou num onibus
+			debug("passageiro %2d esperando o onibus %2d andar\n", this->id, this->onibus->id);
+		} else {
+			// não estou num ônibus
+			debug("passageiro %2d esperando o onibus chegar, estou no ponto %2d\n", this->id, this->pontoOnibus->id);
+		}
 		sem_wait(&this->semEsperarOnibusChegar);
+		debug("passageiro %2d percebeu que o onibus\n", this->id);
 		// o onibus chegou a um ponto
+		// this->onibus foi definido em subirNoOnibus, que está sendo chamado em pontoOnibus.c
 		onibus_t *onibus = this->onibus;
 		pontoOnibus_t *pontoOnibus = onibus->pontoOnibus;
 		if(this->pontoDestino != pontoOnibus) {
