@@ -17,10 +17,6 @@ typedef struct passageiro_t {
 	// onibus que estou
 	onibus_t *onibus;
 	pontoOnibus_t *pontoOrigem, *pontoDestino;
-	// diz ql o próximo ponto que o passageiro quer descer
-	// primeiro ele desce no ponto destino
-	// dps desce no ponto de origem
-	pontoOnibus_t *pontoDescer;
 	// ponto que o passageiro se encontra
 	pontoOnibus_t *pontoOnibus;
 
