@@ -28,7 +28,7 @@ void usage(char *argv0) {
 
 
 /**
- * Inicio da aplicação
+ * Inicio da aplicação.
  * os parametros são iguais aos especificados pelo pdf
  */
 void init(int S_param, int C_param, int P_param, int A_param) {
