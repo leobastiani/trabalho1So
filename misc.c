@@ -621,7 +621,7 @@ void removeNode(list_t *list, list_node_t *node) {
 }
 
 
-list_elem_t *_removeUltimoList(list_t *list) {
+list_elem_t _removeUltimoList(list_t *list) {
 	if(list->length == 0) {
 		printf("não posso remover de uma lista vazia. exiting\n");
 		exit(EXIT_FAILURE);
@@ -636,7 +636,7 @@ list_elem_t *_removeUltimoList(list_t *list) {
 }
 
 
-list_elem_t *_removeInicioList(list_t *list) {
+list_elem_t _removeInicioList(list_t *list) {
 	if(list->length == 0) {
 		printf("não posso remover de uma lista vazia. exiting\n");
 		exit(EXIT_FAILURE);
@@ -651,7 +651,7 @@ list_elem_t *_removeInicioList(list_t *list) {
 }
 
 
-list_elem_t *_removeList(list_t *list, int pos) {
+list_elem_t _removeList(list_t *list, int pos) {
 	if(list->length == 0) {
 		printf("não posso remover de uma lista vazia. exiting\n");
 		exit(EXIT_FAILURE);

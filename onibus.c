@@ -34,7 +34,8 @@ void *onibusRun(void *param) {
 	debug("onibus executando: %d\n", id);
 
 	// definindo a seed desse ponto
-	srand(removeInicioList(seeds, int));
+	srand(removeInicioList(seeds, unsigned int));
+	sem_post(&semDepoisDePegarSeed);
 
 	onibusIrParaPonto(this, this->proxPonto);
 	
@@ -83,7 +84,7 @@ void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
 	// devo verificar se o ponto está ocupado
 	if(pontoOnibus->onibus) {
 		// estava ocupado
-		debug("onibus %2d encontrou o ponto %2d ocupado por onibus %2d, se encaminhando para o proximo ponto\n", this->id, pontoOnibus->id, pontoOnibus->onibus->id);
+		debug("onibus %2d encontrou o ponto %2d ocupado por onibus %2d, se encaminhando para o proximo ponto %2d\n", this->id, pontoOnibus->id, pontoOnibus->onibus->id, getProxPonto(pontoOnibus)->id);
 		onibusIrParaPonto(this, getProxPonto(pontoOnibus));
 		return ;
 	}

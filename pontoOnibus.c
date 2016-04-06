@@ -26,7 +26,8 @@ void *pontoOnibusRun(void *param) {
 
 	pontoOnibus_t *this = &pontosOnibus[id];
 
-	srand(removeInicioList(seeds, int));
+	srand(removeInicioList(seeds, unsigned int));
+	sem_post(&semDepoisDePegarSeed);
 
 	while(true) {
 		if(todosPassageirosChegaram()) {

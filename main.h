@@ -2,6 +2,7 @@
 #define __MAIN_H__
 
 #include <pthread.h>
+#include <semaphore.h>
 
 
 // declarações
@@ -35,6 +36,9 @@ int S, C, P, A;
 // é uma lista com todas as seeds necessárias
 // cada thread precisa de uma seed
 list_t *seeds;
+// variavel que serve para que eu deixe que eu
+// crie uma nova thread se a seed foi obtida
+sem_t semDepoisDePegarSeed;
 
 
 // diz com ql velocidade o programa vai executar

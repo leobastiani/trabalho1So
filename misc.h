@@ -193,9 +193,9 @@ list_node_t *novoNo(list_t *list, list_node_t *prev, list_node_t *prox, list_ele
 list_node_t *getNode(list_t *list, int pos);
 list_elem_t _getList(list_t *list, int pos);
 void removeNode(list_t *list, list_node_t *node);
-list_elem_t *_removeUltimoList(list_t *list);
-list_elem_t *_removeInicioList(list_t *list);
-list_elem_t *_removeList(list_t *list, int pos);
+list_elem_t _removeUltimoList(list_t *list);
+list_elem_t _removeInicioList(list_t *list);
+list_elem_t _removeList(list_t *list, int pos);
 void freeNode(list_node_t *node);
 void freeList(list_t *list); // chame freeList(list, NULL) para realizar um free normal
 

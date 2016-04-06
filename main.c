@@ -48,7 +48,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		exit(0);
 	}
 	if(P <= A) {
-		printf("Por favor, utilize uma quantiadede de passageiros maior do que a quantidade de assentos.\n");
+		printf("Por favor, utilize uma quantiadede de passageiros maior do que a quantidade de assentos em cada ônibus.\n");
 		exit(0);
 	}
 	if(A <= C) {
@@ -69,7 +69,9 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	for(int i=0; i<S+C+A+P; i++) {
 		inserirInicioList(seeds, rand());
 	}
+	sem_init(&semDepoisDePegarSeed, 0, 0);
 
+	// inicializando a variavel
 	passageirosConcluidos = 0;
 
 
@@ -94,18 +96,21 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 
 	// criando as threads
 	// alocando a memória
-	threadsPontoOnibus = (pthread_t *) calloc(S, sizeof(pthread_t));
-	threadsOnibus      = (pthread_t *) calloc(C, sizeof(pthread_t));
-	threadsPassageiro  = (pthread_t *) calloc(P, sizeof(pthread_t));
+	threadsPontoOnibus = (pthread_t *) malloc(sizeof(pthread_t) * S);
+	threadsOnibus      = (pthread_t *) malloc(sizeof(pthread_t) * C);
+	threadsPassageiro  = (pthread_t *) malloc(sizeof(pthread_t) * P);
 
 
 	// inicializando as threads
 	sectionDebug("Inicializando threads");
 	for(int i=0; i<S; i++) {
 		pthread_create(&threadsPontoOnibus[i], NULL, pontoOnibusRun, cast(void *, i));
+		// sempre aguardo ele obter a seed de número aleatório para pegar outra
+		sem_wait(&semDepoisDePegarSeed);
 	}
 	for(int i=0; i<C; i++) {
 		pthread_create(&threadsOnibus[i], NULL, onibusRun, cast(void *, i));
+		sem_wait(&semDepoisDePegarSeed);
 	}
 	for(int i=0; i<P; i++) {
 		// devo passar uma strutura contendo o id
@@ -130,6 +135,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 
 		// já posso pedir para ele executar
 		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, cast(void *, param));
+		sem_wait(&semDepoisDePegarSeed);
 	}
 
 	// finalizando as threads

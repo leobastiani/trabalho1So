@@ -35,7 +35,8 @@ void *passageiroRun(void *param) {
 
 	// cada thread deve fazer um srand
 	// resgatando da lista de seeds
-	srand(removeInicioList(seeds, int));
+	srand(removeInicioList(seeds, unsigned int));
+	sem_post(&semDepoisDePegarSeed);
 
 
 	debug("passageiro executando: %d, origem: %2d, destino: %2d\n", this->id, this->pontoOrigem->id, this->pontoDestino->id);
@@ -53,7 +54,7 @@ void *passageiroRun(void *param) {
 	}
 
 	// começo tudo de novo
-	pegarOnibusOrigemDestino(this);
+	// pegarOnibusOrigemDestino(this);
 
 
 
@@ -130,6 +131,8 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 			}
 		}
 		
+		// ???
+		this->pontoOnibus = NULL; // não seu se devo ter
 		sem_post(&onibus->semTodosPassageirosConferiram);
 		break;
 	}
