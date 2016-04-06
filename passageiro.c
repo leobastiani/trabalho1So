@@ -44,41 +44,8 @@ void *passageiroRun(void *param) {
 	this->pontoDescer = this->pontoDestino;
 
 	// o que cada passageiro deve fazer:
-	// primeiro, vai para o ponto de origem
-	caminharAtePonto(this, this->pontoOrigem);
-	// vou esperar o onibus e pegá-lo
-	// depois vou descer e esperar receber um sinal para descer
-	// por tanto, enquanto não chegar no ponto, eu fico no onibus
-	while(true) {
-		sem_wait(&this->semEsperarOnibusChegar);
-		debug("passageiro %2d esperando o onibus andar\n", this->id);
-		// o onibus chegou a um ponto
-		onibus_t *onibus = this->onibus;
-		pontoOnibus_t *pontoOnibus = onibus->pontoOnibus;
-		if(this->pontoDescer != pontoOnibus) {
-			// não quero descer nesse ponto
-			debug("passageiro %2d chegou no ponto %2d, mas não saiu do bus\n", this->id, pontoOnibus->id);
-			// terminada a verificação
-			sem_post(&onibus->semTodosPassageirosConferiram);
-			continue;
-		}
-
-		// eu qro descer nesse ponto
-		debug("passageiro %2d chegou no destino %2d\n", this->id, pontoOnibus->id);
-		// devo sair desse ônibus
-		passageiro_t *passageiro;
-		forList(passageiro_t *, passageiro, onibus->passageiros) {
-			if(this == passageiro) {
-				removeListInFor(onibus->passageiros);
-			}
-		}
-		
-		sem_post(&onibus->semTodosPassageirosConferiram);
-		break;
-	}
-
+	pegarOnibusOrigemDestino(this);
 	
-	// agora eu devo ficar nesse ponto fazendo alguma coisa
 	// estou fora da fila do ponto
 	// devo trocar o ponto de origem com o de destino
 	{
@@ -89,34 +56,7 @@ void *passageiroRun(void *param) {
 	}
 
 	// começo tudo de novo
-	caminharAtePonto(this, this->pontoOrigem);
-	while(true) {
-		sem_wait(&this->semEsperarOnibusChegar);
-		debug("passageiro %2d esperando o onibus andar\n", this->id);
-		// o onibus chegou a um ponto
-		onibus_t *onibus = this->onibus;
-		pontoOnibus_t *pontoOnibus = onibus->pontoOnibus;
-		if(this->pontoDescer != pontoOnibus) {
-			// não quero descer nesse ponto
-			debug("passageiro %2d chegou no ponto %2d, mas não saiu do bus\n", this->id, pontoOnibus->id);
-			// terminada a verificação
-			sem_post(&onibus->semTodosPassageirosConferiram);
-			continue;
-		}
-
-		// eu qro descer nesse ponto
-		debug("passageiro %2d chegou no destino %2d\n", this->id, pontoOnibus->id);
-		// devo sair desse ônibus
-		passageiro_t *passageiro;
-		forList(passageiro_t *, passageiro, onibus->passageiros) {
-			if(this == passageiro) {
-				removeListInFor(onibus->passageiros);
-			}
-		}
-		
-		sem_post(&onibus->semTodosPassageirosConferiram);
-		break;
-	}
+	pegarOnibusOrigemDestino(this);
 
 
 
@@ -160,4 +100,41 @@ void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus) {
 
 bool todosPassageirosChegaram() {
 	return passageirosConcluidos == P;
+}
+
+
+void pegarOnibusOrigemDestino(passageiro_t *this) {
+	// primeiro, vai para o ponto de origem
+	caminharAtePonto(this, this->pontoOrigem);
+	// vou esperar o onibus e pegá-lo
+	// depois vou descer e esperar receber um sinal para descer
+	// por tanto, enquanto não chegar no ponto, eu fico no onibus
+	while(true) {
+		sem_wait(&this->semEsperarOnibusChegar);
+		debug("passageiro %2d esperando o onibus andar\n", this->id);
+		// o onibus chegou a um ponto
+		onibus_t *onibus = this->onibus;
+		pontoOnibus_t *pontoOnibus = onibus->pontoOnibus;
+		if(this->pontoDescer != pontoOnibus) {
+			// não quero descer nesse ponto
+			debug("passageiro %2d chegou no ponto %2d, mas não saiu do bus\n", this->id, pontoOnibus->id);
+			// terminada a verificação
+			sem_post(&onibus->semTodosPassageirosConferiram);
+			continue;
+		}
+
+		// eu qro descer nesse ponto
+		debug("passageiro %2d chegou no destino %2d\n", this->id, pontoOnibus->id);
+		// devo sair desse ônibus
+		passageiro_t *passageiro;
+		forList(passageiro_t *, passageiro, onibus->passageiros) {
+			if(this == passageiro) {
+				removeListInFor(onibus->passageiros);
+			}
+		}
+		
+		sem_post(&onibus->semTodosPassageirosConferiram);
+		break;
+	}
+
 }
