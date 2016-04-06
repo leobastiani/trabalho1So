@@ -12,22 +12,11 @@ void passageiroInit(passageiro_t *this, int id) {
 	// defino o id do passageiro
 	this->id = id;
 
-	// devo definir seu ponto de partida e seu destino
-	int pontoOrigem, pontoDestino;
-	do {
-		// procura um ponto que seja diferente de outro ponto
-		pontoOrigem = randMinMax(0, S-1);
-		pontoDestino = randMinMax(0, S-1);
-		// se eles forem diferentes, posso sair
-	} while(pontoOrigem == pontoDestino);
-	this->pontoOrigem = &pontosOnibus[pontoOrigem];
-	this->pontoDestino = &pontosOnibus[pontoDestino];
-
 	// assim que eu dou um down, fico esperando
 	// começa em zero, pq o próximo wait eu fico bloqueado
 	sem_init(&this->semEsperarOnibusChegar, 0, 0);
 
-	debug("passageiro %2d iniciado, origem %2d, destino %2d\n", this->id, pontoOrigem, pontoDestino);
+	debug("passageiro %2d iniciado\n", this->id);
 }
 
 
@@ -35,41 +24,103 @@ void passageiroInit(passageiro_t *this, int id) {
  * devo fazer free de param
  */
 void *passageiroRun(void *param) {
-	int id = cast(int, param);
-	passageiro_t *this = &passageiros[id];
+	passageiro_param_t *paramConvertido = cast(passageiro_param_t *, param);
+	passageiro_t *this = &passageiros[paramConvertido->id];
+
+	// defino todas as variaveis que depende do parametro
+	this->pontoOrigem = &pontosOnibus[paramConvertido->iPontoOrigem];
+	this->pontoDestino = &pontosOnibus[paramConvertido->iPontoDestino];
+	// ja posso liberá-lo
+	free(paramConvertido);
 
 	// cada thread deve fazer um srand
 	// resgatando da lista de seeds
-	int seed = removeInicioList(seeds, int);
-	srand(seed);
+	srand(removeInicioList(seeds, int));
 
 
-	debug("passageiro executando: %d\n", id);
+	debug("passageiro executando: %d, origem: %2d, destino: %2d\n", this->id, this->pontoOrigem->id, this->pontoDestino->id);
+
+	// desce primeiro no ponto destino
+	this->pontoDescer = this->pontoDestino;
 
 	// o que cada passageiro deve fazer:
 	// primeiro, vai para o ponto de origem
-	irParaPonto(this);
+	caminharAtePonto(this, this->pontoOrigem);
+	// vou esperar o onibus e pegá-lo
+	// depois vou descer e esperar receber um sinal para descer
+	// por tanto, enquanto não chegar no ponto, eu fico no onibus
+	while(true) {
+		sem_wait(&this->semEsperarOnibusChegar);
+		debug("passageiro %2d esperando o onibus andar\n", this->id);
+		// o onibus chegou a um ponto
+		onibus_t *onibus = this->onibus;
+		pontoOnibus_t *pontoOnibus = onibus->pontoOnibus;
+		if(this->pontoDescer != pontoOnibus) {
+			// não quero descer nesse ponto
+			debug("passageiro %2d chegou no ponto %2d, mas não saiu do bus\n", this->id, pontoOnibus->id);
+			// terminada a verificação
+			sem_post(&onibus->semTodosPassageirosConferiram);
+			continue;
+		}
 
-
-	// espero o proximo onibus chegar
-	debug("passageiro %2d esperando um sinal do onibus\n", id);
-	sem_wait(&this->semEsperarOnibusChegar);
-
-	// se nesse ponto não tem onibus, devo esperá-lo
-	onibus_t *onibus = this->pontoOrigem->onibus;
-
-	// devo esperar o próximo se
-	// não tem onibus nesse ponto
-	// o onibus está cheio
-	bool devoEsperar = onibusCheio(onibus);
-	if(devoEsperar) {
+		// eu qro descer nesse ponto
+		debug("passageiro %2d chegou no destino %2d\n", this->id, pontoOnibus->id);
+		// devo sair desse ônibus
+		passageiro_t *passageiro;
+		forList(passageiro_t *, passageiro, onibus->passageiros) {
+			if(this == passageiro) {
+				removeListInFor(onibus->passageiros);
+			}
+		}
 		
+		sem_post(&onibus->semTodosPassageirosConferiram);
+		break;
 	}
 
-	// nesse caso, posso entrar nesse ônibus
-	subirNoOnibus(this, onibus);
+	
+	// agora eu devo ficar nesse ponto fazendo alguma coisa
+	// estou fora da fila do ponto
+	// devo trocar o ponto de origem com o de destino
+	{
+		pontoOnibus_t *swap;
+		swap = this->pontoDestino;
+		this->pontoDestino = this->pontoOrigem;
+		this->pontoOrigem = swap;
+	}
+
+	// começo tudo de novo
+	caminharAtePonto(this, this->pontoOrigem);
+	while(true) {
+		sem_wait(&this->semEsperarOnibusChegar);
+		debug("passageiro %2d esperando o onibus andar\n", this->id);
+		// o onibus chegou a um ponto
+		onibus_t *onibus = this->onibus;
+		pontoOnibus_t *pontoOnibus = onibus->pontoOnibus;
+		if(this->pontoDescer != pontoOnibus) {
+			// não quero descer nesse ponto
+			debug("passageiro %2d chegou no ponto %2d, mas não saiu do bus\n", this->id, pontoOnibus->id);
+			// terminada a verificação
+			sem_post(&onibus->semTodosPassageirosConferiram);
+			continue;
+		}
+
+		// eu qro descer nesse ponto
+		debug("passageiro %2d chegou no destino %2d\n", this->id, pontoOnibus->id);
+		// devo sair desse ônibus
+		passageiro_t *passageiro;
+		forList(passageiro_t *, passageiro, onibus->passageiros) {
+			if(this == passageiro) {
+				removeListInFor(onibus->passageiros);
+			}
+		}
+		
+		sem_post(&onibus->semTodosPassageirosConferiram);
+		break;
+	}
 
 
+
+	passageirosConcluidos++;
 	debug("passageiro %2d encerrado\n", this->id);
 }
 
@@ -79,15 +130,10 @@ void *passageiroRun(void *param) {
  * requisita que um passageiro suba no onibus
  */
 void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
-	if(!onibusCheio(onibus)) {
-		// se este ônibus não está cheio, só subir
-		debug("passageiro %2d subindo no onibus %d\n", this->id, onibus->id);
-		inserirFinalList(onibus->passageiros, this);
-	} else {
-		// se o onibus esta cheio
-		debug("passageiro %2d do ponto %d tentou subir no onibus %d que possuia %d passageiros. e voltou a aguardar\n",
-			this->id, this->pontoOrigem->id, onibus->id, onibus->passageiros->length);
-	}
+	// insere este passageiro na fila do onibus
+	filaPush(onibus->passageiros, this);
+
+	this->onibus = onibus;
 }
 
 
@@ -95,13 +141,23 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 /**
  * só dar um sleep e simula a caminhada até o ponto
  */
-void irParaPonto(passageiro_t *this) {
+void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus) {
 	// em segundos
-	double tempoEspera = randMinMaxD(0, 20);
-	debug("passageiro %2d indo para o ponto %d em %g segundos\n", this->id, this->pontoOrigem->id, tempoEspera);
+	double tempoEspera = randMinMaxD(0, 60);
+	debug("passageiro %2d indo para o ponto %d em %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
 
 	// convertido em microssegundos
-	usleep(tempoEspera * 1000000 * fatorTempo);
+	usleep(tempoEspera * 1E6 * fatorTempo);
 
-	debug("passageiro %2d chegou no ponto %2d, esperou por %g s\n", this->id, this->pontoOrigem->id, tempoEspera);
+	// cheguei no ponto
+	debug("passageiro %2d chegou no ponto %2d, esperou por %g s\n", this->id, pontoOnibus->id, tempoEspera);
+	// devo me por na fila de passageiros dentro do ponto de onibus
+	filaPush(pontoOnibus->passageiros, this);
+	this->pontoOnibus = pontoOnibus;
+}
+
+
+
+bool todosPassageirosChegaram() {
+	return passageirosConcluidos == P;
 }

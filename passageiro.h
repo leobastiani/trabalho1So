@@ -4,6 +4,7 @@
 
 #include <semaphore.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 
 typedef struct pontoOnibus_t pontoOnibus_t;
@@ -13,7 +14,15 @@ typedef struct onibus_t onibus_t;
 typedef struct passageiro_t {
 	int id;
 
+	// onibus que estou
+	onibus_t *onibus;
 	pontoOnibus_t *pontoOrigem, *pontoDestino;
+	// diz ql o próximo ponto que o passageiro quer descer
+	// primeiro ele desce no ponto destino
+	// dps desce no ponto de origem
+	pontoOnibus_t *pontoDescer;
+	// ponto que o passageiro se encontra
+	pontoOnibus_t *pontoOnibus;
 
 	// é o status de cada passageiro, ele pode estar esperando, entrando no onibus, descendo
 	int status;
@@ -23,9 +32,18 @@ typedef struct passageiro_t {
 } passageiro_t;
 
 
+typedef struct passageiro_param_t {
+	int id;
+	int iPontoOrigem;
+	int iPontoDestino;
+} passageiro_param_t;
+
+
 void passageiroInit(passageiro_t *passageiro, int id);
 void *passageiroRun(void *param);
 void subirNoOnibus(passageiro_t *passageiro, onibus_t *onibus);
-void irParaPonto(passageiro_t *this);
+void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
+bool devoDescerDoOnibus(passageiro_t *this, pontoOnibus_t *pontoOnibus);
+bool todosPassageirosChegaram();
 
 #endif // __PASSAGEIRO_H__

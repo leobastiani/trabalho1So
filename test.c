@@ -77,7 +77,7 @@ void testList() {
 	printf("printList\n");
 	printList(int, elem, list, printf("%d", elem), ", ", "\n");
 
-	freeList(list, NULL);
+	freeList(list);
 
 	exit(0);
 }
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 	init(
 		2, // numero de pontos
 		3, // numero de onibus
-	  10, // passageiros
+	  5, // passageiros
 	  4 // assentos
 	 );
 

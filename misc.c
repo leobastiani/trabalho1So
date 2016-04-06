@@ -613,7 +613,7 @@ void removeNode(list_t *list, list_node_t *node) {
 	list->length--;
 
 	// libera esse nó
-	freeNode(node, NULL);
+	freeNode(node);
 }
 
 
@@ -662,15 +662,10 @@ list_elem_t *_removeList(list_t *list, int pos) {
 }
 
 
-void freeNode(list_node_t *node, void (*freeElemFn)(void *)) {
+void freeNode(list_node_t *node) {
 	if(node == NULL) {
 		// não faço nada
 		return ;
-	}
-
-	if(freeElemFn) {
-		// devo dar free no elemento
-		freeElemFn(node->elem);
 	}
 
 	_free(node);
@@ -678,10 +673,10 @@ void freeNode(list_node_t *node, void (*freeElemFn)(void *)) {
 
 
 // chame freeList(list, NULL) para realizar um free normal
-void freeList(list_t *list, void (*freeElemFn)(void *)) {
+void freeList(list_t *list) {
 	void *elem;
 	forList(list_elem_t, elem, list) {
-		freeNode(node, freeElemFn);
+		freeNode(node);
 	}
 
 	_free(list);

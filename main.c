@@ -70,6 +70,8 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		inserirInicioList(seeds, rand());
 	}
 
+	passageirosConcluidos = 0;
+
 
 
 	// iniciando objetos
@@ -106,21 +108,43 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		pthread_create(&threadsOnibus[i], NULL, onibusRun, cast(void *, i));
 	}
 	for(int i=0; i<P; i++) {
-		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, cast(void *, i));
+		// devo passar uma strutura contendo o id
+		// ponto de origem e de destino
+		passageiro_param_t *param = (passageiro_param_t *) malloc(sizeof(passageiro_param_t));
+		// vou precisar liberar param em passageiroRun
+
+		param->id = i;
+		// definindo pontos de ônibus
+		int iPontoOrigem, iPontoDestino;
+		while(true) {
+			// procura um ponto que seja diferente de outro ponto
+			iPontoOrigem = randMinMax(0, S-1);
+			iPontoDestino = randMinMax(0, S-1);
+			// se eles forem diferentes, posso sair
+			if(iPontoOrigem != iPontoDestino) {
+				break;
+			}
+		}
+		param->iPontoOrigem = iPontoOrigem;
+		param->iPontoDestino = iPontoDestino;
+
+		// já posso pedir para ele executar
+		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, cast(void *, param));
 	}
 
 	// finalizando as threads
 	// devem seguir a ordem
-	for(int i=0; i<S; i++) {
-		pthread_join(threadsPontoOnibus[i], NULL);
-	}
-	for(int i=0; i<C; i++) {
-		pthread_join(threadsOnibus[i], NULL);
-	}
 	for(int i=0; i<P; i++) {
 		pthread_join(threadsPassageiro[i], NULL);
 	}
+	debug("Todos os passageiros terminaram.\n");
 
+	for(int i=0; i<C; i++) {
+		pthread_join(threadsOnibus[i], NULL);
+	}
+	for(int i=0; i<S; i++) {
+		pthread_join(threadsPontoOnibus[i], NULL);
+	}
 
 	debug("\n");
 	sectionDebug("Todas as threads foram encerradas");
@@ -131,7 +155,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	free(threadsPassageiro);
 	free(threadsPontoOnibus);
 
-	freeList(seeds, NULL);
+	freeList(seeds);
 }
 
 

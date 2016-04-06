@@ -1,4 +1,5 @@
 #include "onibus.h"
+#include "passageiro.h"
 #include "pontoOnibus.h"
 #include "misc.h"
 #include "main.h"
@@ -14,32 +15,16 @@ void onibusInit(onibus_t *this, int id) {
 	this->passageiros = createList();
 
 	// tenho que por cada ônibus em um ponto especifico
-	int pontoAtualInt = randMinMax(0, S-1);
-	pontoOnibus_t *pontoAtual = &pontosOnibus[pontoAtualInt];
-	// tenta por esse ônibus nesse ponto
-	if(pontoAtual->onibus == NULL) {
-		// se este ponto não tem onibus
-		pontoAtual->onibus = this;
-		this->pontoOnibus = pontoAtual;
-	} else {
-		int proxPonto;
-		// se aquele ponto ja estava ocupado
-		pontoAtual = NULL;
-		this->pontoOnibus = NULL;
-		// coloca ele se locomovendo
-		proxPonto = getProxPonto(pontoAtualInt);
-		this->proxPonto = &pontosOnibus[proxPonto];
-	}
+	int iPontoOnibus = randMinMax(0, S-1);
+	// define que este ônibus está indo para este ponto
+	this->proxPonto = &pontosOnibus[iPontoOnibus];
 
+	// deixa o onibus aguradando o embarque quando ele chega no ponto
+	sem_init(&this->semAguardaEmbarque, 0, 0);
+	sem_init(&this->semTodosPassageirosConferiram, 0, 0);
 
 	// imprimindo variaveis para teste
-	#ifdef DEBUG
-		if(pontoAtual) {
-			debug("ônibus %2d iniciado, parado em %2d\n", id, pontoAtualInt);
-		} else {
-			debug("ônibus %2d iniciado, %d ocupado, se locomovendo para %d\n", id, pontoAtualInt, 0);
-		}
-	#endif // DEBUG
+	debug("ônibus %2d iniciado, indo para %2d\n", id, iPontoOnibus);
 }
 
 
@@ -48,16 +33,27 @@ void *onibusRun(void *param) {
 	onibus_t *this = &onibusArray[id];
 	debug("onibus executando: %d\n", id);
 
-	// se o onibus está num ponto
-	if(this->pontoOnibus) {
-		debug("onibus %d esta num ponto\n", this->id);
-		// devo verificar todos os passageiros
-		passageiro_t *passageiro;
-		// forList(passageiro_t *, passageiro, this->pontoOnibus->passageiros) {
-		// 	// aviso que o onibus chegou
-			
-		// }
+	// definindo a seed desse ponto
+	srand(removeInicioList(seeds, int));
+
+	onibusIrParaPonto(this, this->proxPonto);
+	
+	while(true) {
+		if(todosPassageirosChegaram()) {
+			// todos os passageiros foram concluidos
+			break;
+		}
+
+		// e agora vai para o proximo ponto
+		debug("onibus %2d aguradando embarque\n", this->id);
+		sem_wait(&this->semAguardaEmbarque);
+		debug("onibus %2d percebeu que todos embarcaram\n", this->id);
+
+		onibusIrParaPonto(this, getProxPonto(this->proxPonto));
 	}
+
+
+	debug("onibus %2d encerrado\n", this->id);
 }
 
 
@@ -66,4 +62,32 @@ bool onibusCheio(onibus_t *this) {
 	// cada onibus tem um limite de passageiros,
 	// verifica se estou nesse limite
 	return this->passageiros->length == A;
+}
+
+
+void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
+	if(todosPassageirosChegaram()) {
+		// não preciso mais continuar
+		return ;
+	}
+
+	// em segundos
+	double tempoEspera = randMinMaxD(30, 40);
+	debug("onibus %2d indo para o ponto %d em %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
+
+	// convertido em microssegundos
+	usleep(tempoEspera * 1E6 * fatorTempo);
+
+	// cheguei no ponto
+	debug("onibus %2d chegou no ponto %2d, esperou por %g s\n", this->id, pontoOnibus->id, tempoEspera);
+	// devo verificar se o ponto está ocupado
+	if(pontoOnibus->onibus) {
+		// estava ocupado
+		debug("onibus %2d encontrou o ponto %2d ocupado por onibus %2d, se encaminhando para o proximo ponto\n", this->id, pontoOnibus->id, pontoOnibus->onibus->id);
+		onibusIrParaPonto(this, getProxPonto(pontoOnibus));
+		return ;
+	}
+
+	this->pontoOnibus = pontoOnibus;
+	avisarQueOnibusChegou(pontoOnibus, this);
 }

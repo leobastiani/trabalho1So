@@ -43,7 +43,7 @@ list_t *seeds;
 // é sempre multiplicado quando vou dar um sleep
 #ifdef TEST
 	// estou em teste
-	#define fatorTempo 0.05
+	#define fatorTempo 0.001
 #else
 	#define fatorTempo 1
 #endif // TEST
@@ -63,6 +63,9 @@ pthread_t *threadsPassageiro;
 pthread_t *threadsPontoOnibus;
 // não são vetores
 pthread_t threadTela;
+
+
+int passageirosConcluidos;
 
 
 //----------------------------------------------------

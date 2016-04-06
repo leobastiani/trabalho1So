@@ -196,8 +196,8 @@ void removeNode(list_t *list, list_node_t *node);
 list_elem_t *_removeUltimoList(list_t *list);
 list_elem_t *_removeInicioList(list_t *list);
 list_elem_t *_removeList(list_t *list, int pos);
-void freeNode(list_node_t *node, void (*freeElemFn)(void *));
-void freeList(list_t *list, void (*freeElemFn)(void *)); // chame freeList(list, NULL) para realizar um free normal
+void freeNode(list_node_t *node);
+void freeList(list_t *list); // chame freeList(list, NULL) para realizar um free normal
 
 
 #define inserirFinalList(list, elem) (_inserirFinalList(list, cast(list_elem_t, elem)))
@@ -208,11 +208,19 @@ void freeList(list_t *list, void (*freeElemFn)(void *)); // chame freeList(list,
 #define removeInicioList(list, tipo_t) (cast(tipo_t, _removeInicioList(list)))
 #define removeList(list, pos, tipo_t) (cast(tipo_t, _removeList(list, pos)))
 
+// utilizando esse mesmo TAD para implementar fila e pilha
+#define filaPush(list, elem) inserirFinalList(list, elem)
+#define filaGet(list, tipo_t) removeInicioList(list, tipo_t)
+#define pilhaPush(list, elem) inserirFinalList(list, elem)
+#define pilhaGet(list, tipo_t) removeUltimoList(list, tipo_t)
+
+
 
 // varre todos os elementos da lista
 #define _forList(tipo_t, variavel, list, firstOuLast, prevOuProx) \
 	for(\
-		list_node_t *node=list->firstOuLast, *nextNode=node->prevOuProx;\
+		list_node_t *node=list->firstOuLast,\
+		*nextNode=node ? node->prevOuProx : NULL;\
 		\
 		node && (\
 			node ? (variavel = cast(tipo_t, node->elem)) : 0\
