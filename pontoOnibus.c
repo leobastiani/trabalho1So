@@ -42,6 +42,7 @@ void *pontoOnibusRun(void *param) {
 		// onibus atual no ponto
 		onibus_t *onibus = this->onibus;
 
+		debug("this: %p, onibus: %p, onibus->passageiros: %p\n", this, onibus, onibus->passageiros);		
 		debug("ponto de onibus %2d percebeu que chegou o onibus %2d com %2d passageiros\n", this->id, onibus->id, onibus->passageiros->length);
 
 		// fica um tempinho esperando
@@ -49,7 +50,8 @@ void *pontoOnibusRun(void *param) {
 		// se não tem ngm pra subir, nem ngm pra descer
 		bool temAlguem = onibus->passageiros->length != 0 || this->passageiros->length != 0;
 		if(temAlguem) {
-			double tempoEspera = randMinMaxD(3, 8);
+			double tempoEspera = randMinMaxD(10, 20);
+			debug("ponto de onibus %2d tem um onibus %2d que ira aguardar %g segundos embarcando\n", this->id, onibus->id, tempoEspera);
 			usleep(tempoEspera * 1E6 * fatorTempo);
 		}
 
