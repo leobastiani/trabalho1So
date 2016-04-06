@@ -410,9 +410,13 @@ void section(char *str, ...) {
 	printf("   ============================= */\n");
 }
 
-// inicializa uma seed para gerar números randômicos
-time_t rand_init() {
-	time_t seed = time(NULL);
+// inicializa uma seed para gerar números randômicos, coloque o valor 0 para uma seed aleatória
+unsigned int _srand(unsigned int seed) {
+	if(seed == 0) {
+		seed = time(NULL);
+	}
+
+	debug("_srand(%u);\n", seed);
 	srand(seed);
 	return seed;
 }

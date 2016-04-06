@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
 
 
 	// inicializa uma seed para números randômicos
-	rand_init();
+	_srand(0);
 
 
 	/**

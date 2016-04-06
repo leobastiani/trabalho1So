@@ -56,7 +56,7 @@ double timediff(bool starthere); // devolve em microssegundos o tempo passado de
 int printfVerticaly(char *str); // funcao boa para debug, imprime strings verticalmente
 void section(char *str, ...); // cria uma seção para facilitar o debug da saida
 
-time_t rand_init(); // inicializa uma seed para gerar números randômicos
+unsigned int _srand(unsigned int seed); // inicializa uma seed para gerar números randômicos, coloque o valor 0 para uma seed aleatória
 double Math_random(); // gera um número aleatório entre 0 e 1
 int randMinMax(int min, int max); // gera um número aleatório x, min <= x <= max
 double randMinMaxD(double min, double max); // gera um número aleatório double x, min <= x <= max
@@ -245,8 +245,8 @@ forList(int, elem, list) {
 
 #define printList(tipo_t, variavel, list, printfFn, delimiterStr, endStr) \
 	{ \
-		tipo_t elem; \
-		forList(tipo_t, elem, list) { \
+		tipo_t variavel; \
+		forList(tipo_t, variavel, list) { \
 			if(node != list->first) { \
 				printf(delimiterStr); \
 			} \

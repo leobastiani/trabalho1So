@@ -43,7 +43,7 @@ list_t *seeds;
 // é sempre multiplicado quando vou dar um sleep
 #ifdef TEST
 	// estou em teste
-	#define fatorTempo 0.001
+	#define fatorTempo 0.05
 #else
 	#define fatorTempo 1
 #endif // TEST

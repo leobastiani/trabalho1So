@@ -85,7 +85,7 @@ void testList() {
 
 #ifdef TEST
 int main(int argc, char *argv[]) {
-	srand(1);
+	_srand(1);
 
 	init(
 		2, // numero de pontos

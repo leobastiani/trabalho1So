@@ -87,7 +87,7 @@ void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus) {
 	usleep(tempoEspera * 1E6 * fatorTempo);
 
 	// cheguei no ponto
-	debug("passageiro %2d chegou no ponto %2d, esperou por %g s\n", this->id, pontoOnibus->id, tempoEspera);
+	debug("passageiro %2d chegou no ponto %2d, indo para %2d, esperou por %g s\n", this->id, pontoOnibus->id, this->pontoDestino->id, tempoEspera);
 	// devo me por na fila de passageiros dentro do ponto de onibus
 	filaPush(pontoOnibus->passageiros, this);
 	this->pontoOnibus = pontoOnibus;

@@ -47,7 +47,7 @@ void *onibusRun(void *param) {
 		// e agora vai para o proximo ponto
 		debug("onibus %2d aguradando embarque\n", this->id);
 		sem_wait(&this->semAguardaEmbarque);
-		debug("onibus %2d percebeu que todos embarcaram\n", this->id);
+		debug("onibus %2d foi liberado\n", this->id);
 
 		onibusIrParaPonto(this, getProxPonto(this->proxPonto));
 	}
@@ -88,6 +88,7 @@ void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
 		return ;
 	}
 
+	// consegui parar nesse ponto
 	this->pontoOnibus = pontoOnibus;
 	avisarQueOnibusChegou(pontoOnibus, this);
 }

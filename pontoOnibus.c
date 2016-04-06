@@ -37,17 +37,23 @@ void *pontoOnibusRun(void *param) {
 		// fica aguardando um ônibus chegar
 		debug("ponto de onibus %2d aguardando um onibus chegar\n", this->id);
 		sem_wait(&this->semAguardandoOnibus);
-		debug("ponto de onibus %2d percebeu que chegou o onibus %2d\n", this->id, this->onibus->id);
-
-		// fica um tempinho esperando
-		// simulando os passageiros subindo
-		double tempoEspera = randMinMaxD(3, 8);
-		usleep(tempoEspera * 1E6 * fatorTempo);
 
 		// onibus atual no ponto
 		onibus_t *onibus = this->onibus;
-		passageiro_t *passageiro;
 
+		debug("ponto de onibus %2d percebeu que chegou o onibus %2d com %2d passageiros\n", this->id, onibus->id, onibus->passageiros->length);
+
+		// fica um tempinho esperando
+		// simulando os passageiros subindo
+		// se não tem ngm pra subir, nem ngm pra descer
+		bool temAlguem = onibus->passageiros->length != 0 || this->passageiros->length != 0;
+		if(temAlguem) {
+			double tempoEspera = randMinMaxD(3, 8);
+			usleep(tempoEspera * 1E6 * fatorTempo);
+		}
+
+
+		passageiro_t *passageiro;
 		// descarrego os passageiros nesse ponto
 		int nPassageirosEsperar = onibus->passageiros->length;
 		forList(passageiro_t *, passageiro, onibus->passageiros) {
@@ -57,14 +63,14 @@ void *pontoOnibusRun(void *param) {
 		}
 
 		// espero todos os passageiros descerem
-		debug("ponto de onibus %2d aguardando %d passageiros se tocarem\n", this->id, onibus->passageiros->length);
 		for(int i=0; i<nPassageirosEsperar; i++) {
 			sem_wait(&onibus->semTodosPassageirosConferiram);
 		}
+		debug("ponto de onibus %2d recebeu a resposta de todos os passageiros\n", this->id);
 		
 
 		// enche o onibus com os passageiros presentes nesse ponto
-		if(this->passageiros) {
+		if(this->passageiros->length == 0) {
 			debug("não havia ninguem no ponto de onibus %2d para subir\n", this->id);
 		}
 		forList(passageiro_t *, passageiro, this->passageiros) {
@@ -78,6 +84,14 @@ void *pontoOnibusRun(void *param) {
 			removeListInFor(this->passageiros);
 			// manda ele subir no bus
 			subirNoOnibus(passageiro, onibus);
+		}
+		if(onibus->passageiros->length != 0) {
+			// onibus está partindo com pessoas
+			#ifdef DEBUG
+				debug("onibus %2d partindo do ponto %2d com %2d passageiros: ", onibus->id, this->id, onibus->passageiros->length);
+				printList(passageiro_t *, passageiro, onibus->passageiros, printf("%d", passageiro->id), ", ", "\n");
+				fflush(stdout);
+			#endif // DEBUG
 		}
 
 		// liberando o onibus
