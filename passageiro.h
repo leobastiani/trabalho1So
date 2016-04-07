@@ -40,7 +40,6 @@ void *passageiroRun(void *param);
 void subirNoOnibus(passageiro_t *passageiro, onibus_t *onibus);
 void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
 bool devoDescerDoOnibus(passageiro_t *this, pontoOnibus_t *pontoOnibus);
-bool todosPassageirosChegaram();
 void pegarOnibusOrigemDestino(passageiro_t *this);
 
 #endif // __PASSAGEIRO_H__

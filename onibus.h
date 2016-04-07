@@ -20,6 +20,8 @@ typedef struct onibus_t {
 
 	// ponteiro para o ponto de ônibus atual
 	pontoOnibus_t *pontoOnibus;
+	// se estou andando, ou seja, não estou em nenhum ponto
+	// mas sempre estou indo para algum ponto
 	pontoOnibus_t *proxPonto;
 
 	sem_t semAguardaEmbarque;
@@ -32,5 +34,6 @@ void onibusInit(onibus_t *onibus, int id);
 void *onibusRun(void *param);
 bool onibusCheio(onibus_t *onibus);
 void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus);
+void onibusFinish(onibus_t *this);
 
 #endif // __ONIBUS_H__

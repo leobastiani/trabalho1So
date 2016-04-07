@@ -4,7 +4,10 @@
 #include "misc.h"
 #include "main.h"
 
-
+/**
+ * função necessária para ser chamada antes do Run
+ * inicializa a um ponto de onibus
+ */
 void pontoOnibusInit(pontoOnibus_t *this, int id) {
 	debug("ponto de ônibus %d iniciado.\n", id);
 	// zero todo o ponto
@@ -19,7 +22,10 @@ void pontoOnibusInit(pontoOnibus_t *this, int id) {
 }
 
 
-
+/**
+ * função que deve ser utilizada como argumento em pthread_create
+ * o que cada ponto de onibus deve fazer
+ */
 void *pontoOnibusRun(void *param) {
 	int id = cast(int, param);
 	debug("pontoOnibus executando: %d\n", id);
@@ -30,11 +36,6 @@ void *pontoOnibusRun(void *param) {
 	sem_post(&semDepoisDePegarSeed);
 
 	while(true) {
-		if(todosPassageirosChegaram()) {
-			// todos os passageiros foram concluidos
-			break;
-		}
-
 		// fica aguardando um ônibus chegar
 		debug("ponto de onibus %2d aguardando um onibus chegar\n", this->id);
 		sem_wait(&this->semAguardandoOnibus);
@@ -42,7 +43,10 @@ void *pontoOnibusRun(void *param) {
 		// onibus atual no ponto
 		onibus_t *onibus = this->onibus;
 
-		debug("this: %p, onibus: %p, onibus->passageiros: %p\n", this, onibus, onibus->passageiros);		
+		printf("this: %p\n", this);
+		printf("pontoOnibus: %d\n", this->id);
+		printf("onibus: %p\n", onibus);
+		printf("onibus->passageiros: %p\n", onibus->passageiros);
 		debug("ponto de onibus %2d percebeu que chegou o onibus %2d com %2d passageiros\n", this->id, onibus->id, onibus->passageiros->length);
 
 		// fica um tempinho esperando
@@ -50,8 +54,9 @@ void *pontoOnibusRun(void *param) {
 		// se não tem ngm pra subir, nem ngm pra descer
 		bool temAlguem = onibus->passageiros->length != 0 || this->passageiros->length != 0;
 		if(temAlguem) {
-			double tempoEspera = randMinMaxD(10, 20);
-			debug("ponto de onibus %2d tem um onibus %2d que ira aguardar %g segundos embarcando\n", this->id, onibus->id, tempoEspera);
+			// tempo de embarque
+			double tempoEspera = randMinMaxD(1, 2);
+			debug("ponto de onibus %2d tem um onibus %2d que terminara de embarcar no tempo %g segundos\n", this->id, onibus->id, tempoEspera+segundosFicticios());
 			usleep(tempoEspera * 1E6 * fatorTempo);
 		}
 
@@ -102,16 +107,27 @@ void *pontoOnibusRun(void *param) {
 		sem_post(&onibus->semAguardaEmbarque);
 		onibus->pontoOnibus = NULL;
 		this->onibus = NULL;
-		debug("ponto de onibus %2d liberou o onibus %2d com %2d passageiros\n", this->id, onibus->id, onibus->passageiros->length);
+		debug("ponto de onibus %2d liberou o onibus %2d com %2d passageiros aos %g s\n", this->id, onibus->id, onibus->passageiros->length, segundosFicticios());
 	}
-
-
-
-	debug("ponto de onibus %2d encerrado\n", this->id);
 
 }
 
 
+/**
+ * função chamada assim que um ponto de onibus se encerra
+ * serve para dar free nas variaveis ou simplesmente encerrar-la
+ */
+void pontoOnibusFinish(pontoOnibus_t *this) {
+	// liebera a lista de passageiros
+	freeList(this->passageiros);
+
+	debug("ponto de onibus %2d encerrado\n", this->id);
+}
+
+
+/**
+ * obtem o proximo ponto de onibus a partir do anterior ou atual
+ */
 pontoOnibus_t *getProxPonto(pontoOnibus_t *pontoAnterior) {
 	// lista circular
 	// exemplo:
@@ -121,9 +137,14 @@ pontoOnibus_t *getProxPonto(pontoOnibus_t *pontoAnterior) {
 }
 
 
+/**
+ * permite a um ponto de onibus voltar a execução
+ * e assim executar suas funções
+ */
 void avisarQueOnibusChegou(pontoOnibus_t *this, onibus_t *onibus) {
 	// diz para o ponto que esse onibus está lá
 	this->onibus = onibus;
+	debug("this: %p, this->id: %d, this->onibus: %p\n", this, this->id, this->onibus);
 	// avisa ao ponto que um ônibus chegou
 	sem_post(&this->semAguardandoOnibus);
 }

@@ -5,7 +5,12 @@
 #include "main.h"
 
 
-
+/**
+ * função necessária para ser chamada antes do Run
+ * inicializa um passageiro, mas não define seu ponto de origem
+ * e de destino
+ * isso deve ser resgatado na função Run pelo parametro
+ */
 void passageiroInit(passageiro_t *this, int id) {
 	// zero todo o ponto
 	memset(this, 0, sizeof(passageiro_t));
@@ -22,8 +27,11 @@ void passageiroInit(passageiro_t *this, int id) {
 
 /**
  * devo fazer free de param
+ * função que deve ser utilizada como argumento em pthread_create
+ * passos que o passageiro deve fazer
  */
 void *passageiroRun(void *param) {
+	// vamos trabalhar com o parametro rapidamente para podermos liberá-lo
 	passageiro_param_t *paramConvertido = cast(passageiro_param_t *, param);
 	passageiro_t *this = &passageiros[paramConvertido->id];
 
@@ -42,6 +50,8 @@ void *passageiroRun(void *param) {
 	debug("passageiro executando: %d, origem: %2d, destino: %2d\n", this->id, this->pontoOrigem->id, this->pontoDestino->id);
 
 	// o que cada passageiro deve fazer:
+
+
 	pegarOnibusOrigemDestino(this);
 	
 	// estou fora da fila do ponto
@@ -58,7 +68,6 @@ void *passageiroRun(void *param) {
 
 
 
-	passageirosConcluidos++;
 	debug("passageiro %2d encerrado\n", this->id);
 }
 
@@ -77,18 +86,20 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 
 
 /**
- * só dar um sleep e simula a caminhada até o ponto
+ * simula tanto a chegada de um passageiro até o ponto
+ * como a ociosidade do passageiro no ponto de trabalho dele
+ * poe o passageiro num ponto de onibus
  */
 void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus) {
 	// em segundos
-	double tempoEspera = randMinMaxD(0, 60);
-	debug("passageiro %2d indo para o ponto %d em %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
+	double tempoEspera = randMinMaxD(5, 15);
+	debug("passageiro %2d indo para o ponto %d, demorara %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
 
 	// convertido em microssegundos
 	usleep(tempoEspera * 1E6 * fatorTempo);
 
 	// cheguei no ponto
-	debug("passageiro %2d chegou no ponto %2d, indo para %2d, esperou por %g s\n", this->id, pontoOnibus->id, this->pontoDestino->id, tempoEspera);
+	debug("passageiro %2d chegou no ponto %2d, indo para %2d, agora sao %g s\n", this->id, pontoOnibus->id, this->pontoDestino->id, segundosFicticios());
 	// devo me por na fila de passageiros dentro do ponto de onibus
 	filaPush(pontoOnibus->passageiros, this);
 	this->pontoOnibus = pontoOnibus;
@@ -96,11 +107,13 @@ void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus) {
 
 
 
-bool todosPassageirosChegaram() {
-	return passageirosConcluidos == P;
-}
-
-
+/**
+ * executa tudo o que um passageiro precisa para pegar um onibus até o trabalho
+ * que é:
+ * ir para um ponto
+ * pegar um onibus
+ * descer no destino
+ */
 void pegarOnibusOrigemDestino(passageiro_t *this) {
 	// primeiro, vai para o ponto de origem
 	caminharAtePonto(this, this->pontoOrigem);
@@ -139,8 +152,7 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 			}
 		}
 		
-		// ???
-		this->pontoOnibus = NULL; // não seu se devo ter
+		this->pontoOnibus = NULL;
 		sem_post(&onibus->semTodosPassageirosConferiram);
 		break;
 	}

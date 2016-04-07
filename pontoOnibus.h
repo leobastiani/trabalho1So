@@ -24,5 +24,6 @@ void *pontoOnibusRun(void *param);
 void pontoOnibusInit(pontoOnibus_t *pontoOnibus, int id);
 pontoOnibus_t *getProxPonto(pontoOnibus_t *pontoAnterior);
 void avisarQueOnibusChegou(pontoOnibus_t *this, onibus_t *onibus);
+void pontoOnibusFinish(pontoOnibus_t *this);
 
 #endif // __PONTOONIBUS_H__

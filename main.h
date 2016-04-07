@@ -47,6 +47,7 @@ sem_t semDepoisDePegarSeed;
 // é sempre multiplicado quando vou dar um sleep
 #ifdef TEST
 	// estou em teste
+	// menor tempo possível é 0.05, ainda apresenta indeterminações, mas é bom
 	#define fatorTempo 0.05
 #else
 	#define fatorTempo 1
@@ -69,16 +70,13 @@ pthread_t *threadsPontoOnibus;
 pthread_t threadTela;
 
 
-int passageirosConcluidos;
-
-
 //----------------------------------------------------
 // Funções
 //----------------------------------------------------
 
 
 void init(int S_param, int C_param, int P_param, int A_param);
-
+double segundosFicticios();
 
 
 #endif // __MAIN_H__

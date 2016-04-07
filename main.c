@@ -26,6 +26,10 @@ void usage(char *argv0) {
 }
 
 
+double segundosFicticios() {
+	return (timediff(false)/1E3)/fatorTempo;
+}
+
 
 /**
  * Inicio da aplicação
@@ -71,8 +75,9 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	}
 	sem_init(&semDepoisDePegarSeed, 0, 0);
 
-	// inicializando a variavel
-	passageirosConcluidos = 0;
+
+	// começa a contar o tempo a partir daqui
+	timediff(true);
 
 
 
@@ -146,20 +151,32 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	debug("Todos os passageiros terminaram.\n");
 
 	for(int i=0; i<C; i++) {
-		pthread_join(threadsOnibus[i], NULL);
+		debug("sinal de kill em %d onibus\n", i);
+		pthread_kill(threadsOnibus[i], 0);
+		onibusFinish(&onibusArray[i]);
 	}
+	debug("Todos os ônibus terminaram\n");
+
 	for(int i=0; i<S; i++) {
-		pthread_join(threadsPontoOnibus[i], NULL);
+		debug("sinal de kill em %d ponto de onibus\n", i);
+		pthread_kill(threadsPontoOnibus[i], 0);
+		pontoOnibusFinish(&pontosOnibus[i]);
 	}
 
 	debug("\n");
 	sectionDebug("Todas as threads foram encerradas");
+	debug("Tempo total da aplicação: %g minutos\n", segundosFicticios() / 60);
+	debug("Tempo total no mundo real: %g segundos\n", timediff(false) / 1E3);
 
 
 	// desalocando a memória
 	free(threadsOnibus);
 	free(threadsPassageiro);
 	free(threadsPontoOnibus);
+
+	free(pontosOnibus);
+	free(onibusArray);
+	free(passageiros);
 
 	freeList(seeds);
 }

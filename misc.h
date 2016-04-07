@@ -52,7 +52,7 @@ void show_cursor(); // mostra o cursor dps de escondido
 void setCursor(int lin, int col); // define a posição do cursor iniciando pela posição 0,0
 void moveCursor(int lin, int col); // move o cursor de acordo com as linhas e colunas
 void apagaLinha(); // apaga a linha que o cursor está
-double timediff(bool starthere); // devolve em microssegundos o tempo passado de starthere = true e starthere = false
+double timediff(bool starthere); // devolve em milissegundos o tempo passado de starthere = true e starthere = false
 int printfVerticaly(char *str); // funcao boa para debug, imprime strings verticalmente
 void section(char *str, ...); // cria uma seção para facilitar o debug da saida
 

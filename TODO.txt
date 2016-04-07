@@ -1,5 +1,5 @@
-Acabar com o loop infinito (Leo)
-comentar cada função (Leo)
+Acabar com o loop infinito (Leo) (Resolvido)
+comentar cada função (Leo) (Resolvido)
 testar para mais casos de teste, descobrir onde está o erro, consertar o erro, dar um commit no github, avisar os amigos, conferir mais casos de teste (Paulo)
 Fazer arquivos de trace (Guilherme)
 Fazer animação na tela pelo make e ./onibus (Fábio)

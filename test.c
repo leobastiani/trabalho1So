@@ -9,7 +9,10 @@
 #include "main.h"
 
 
-
+/**
+ * Teste envolvendo inserção e remoção na lista
+ * pq essa lista foi feita para esse trabalho, tive que testar
+ */
 void testList() {
 	list_t *list = createList();
 	int removido;
@@ -83,9 +86,15 @@ void testList() {
 }
 
 
+
+
+
+
 #ifdef TEST
 int main(int argc, char *argv[]) {
-	_srand(1);
+	// gerando seg fault
+	// dois onibus chegam no ponto quase no msmo instante
+	_srand(2);
 
 	init(
 		2, // numero de pontos

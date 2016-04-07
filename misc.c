@@ -122,7 +122,7 @@ double _scanf_double() {
 void *_malloc(size_t size) {
 	void *result = malloc(size);
 	if(result == NULL) {
-		fprintf(stderr, "_malloc: no memory available.\n");
+		printf("_malloc: no memory available.\n");
 		exit(1);
 	}
 	#ifdef CHECK_LEAK
@@ -135,7 +135,7 @@ void *_malloc(size_t size) {
 void *_calloc(size_t count, size_t size) {
 	void *result = calloc(count, size);
 	if(result == NULL) {
-		fprintf(stderr, "_calloc: no memory available.\n");
+		printf("_calloc: no memory available.\n");
 		exit(1);
 	}
 	#ifdef CHECK_LEAK
@@ -148,7 +148,7 @@ void *_calloc(size_t count, size_t size) {
 void *_realloc(void *ptr, size_t new_size) {
 	void *result = realloc(ptr, new_size);
 	if(result == NULL) {
-		fprintf(stderr, "_realloc: no memory available.\n");
+		printf("_realloc: no memory available.\n");
 		exit(1);
 	}
 	#ifdef CHECK_LEAK
@@ -173,7 +173,7 @@ void _free(void *ptr) {
 int _pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg) {
 	int result = pthread_create(thread, attr, start_routine, arg);
 	if(result != 0) {
-		fprintf(stderr, "_pthread_create: returned %d.\n", result);
+		printf("_pthread_create: returned %d.\n", result);
 		exit(1);
 	}
 	return result;
@@ -183,7 +183,7 @@ int _pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start
 FILE *_fopen(char *filename, char *mode) {
 	FILE *result = fopen(filename, mode);
 	if(result == NULL) {
-		fprintf(stderr, "_fopen: error opening file '%s'\n", filename);
+		printf("_fopen: error opening file '%s'\n", filename);
 		exit(1);
 	}
 	return result;
@@ -367,7 +367,7 @@ void apagaLinha() {
 }
 
 #ifndef WIN32
-// devolve em microssegundos o tempo passado de starthere = true e starthere = false
+// devolve em milissegundos o tempo passado de starthere = true e starthere = false
 double timediff(bool starthere) {
 	static struct timeval tempoInicial;
 	if(starthere) {
@@ -378,7 +378,7 @@ double timediff(bool starthere) {
 	gettimeofday(&tempoAtual, NULL);
 	// já possuo os dois tempos, o atual e o inicial
 	
-	double tempoPassado; // em microssegundos
+	double tempoPassado; // em milissegundos
 	tempoPassado = (tempoAtual.tv_sec - tempoInicial.tv_sec) * 1000.0;      // sec to ms
 	tempoPassado += (tempoAtual.tv_usec - tempoInicial.tv_usec) / 1000.0;   // us to ms
 	return tempoPassado;

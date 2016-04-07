@@ -5,7 +5,12 @@
 #include "main.h"
 
 
-
+/**
+ * função necessária para ser chamada antes do Run
+ * inicializa um onibus
+ * com o proximo ponto que ele deve ir
+ * ou seja, todos os pontos começam circulando
+ */
 void onibusInit(onibus_t *this, int id) {
 	// zero todo o ponto
 	memset(this, 0, sizeof(onibus_t));
@@ -24,10 +29,18 @@ void onibusInit(onibus_t *this, int id) {
 	sem_init(&this->semTodosPassageirosConferiram, 0, 0);
 
 	// imprimindo variaveis para teste
-	debug("ônibus %2d iniciado, indo para %2d\n", id, iPontoOnibus);
+	debug("onibus %2d iniciado, indo para %2d\n", id, iPontoOnibus);
 }
 
 
+/**
+ * função que deve ser utilizada como argumento em pthread_create
+ * contem os passos que um onibus deve fazer
+ * que é:
+ * ir para um ponto
+ * esperar os passageiros embarcarem
+ * ir para o próximo ponto
+ */
 void *onibusRun(void *param) {
 	int id = cast(int, param);
 	onibus_t *this = &onibusArray[id];
@@ -37,28 +50,33 @@ void *onibusRun(void *param) {
 	srand(removeInicioList(seeds, unsigned int));
 	sem_post(&semDepoisDePegarSeed);
 
-	onibusIrParaPonto(this, this->proxPonto);
-	
 	while(true) {
-		if(todosPassageirosChegaram()) {
-			// todos os passageiros foram concluidos
-			break;
-		}
+		onibusIrParaPonto(this, this->proxPonto);
 
 		// e agora vai para o proximo ponto
 		debug("onibus %2d aguradando embarque\n", this->id);
 		sem_wait(&this->semAguardaEmbarque);
 		debug("onibus %2d foi liberado\n", this->id);
-
-		onibusIrParaPonto(this, getProxPonto(this->proxPonto));
 	}
 
+}
+
+
+/**
+ * função chamada assim que um onibus se encerra
+ * serve para dar free nas variaveis ou simplesmente encerrar-la
+ */
+void onibusFinish(onibus_t *this) {
+	// libero a lista de passageiros
+	freeList(this->passageiros);
 
 	debug("onibus %2d encerrado\n", this->id);
 }
 
 
-
+/**
+ * diz se um onibus está cheio
+ */
 bool onibusCheio(onibus_t *this) {
 	// cada onibus tem um limite de passageiros,
 	// verifica se estou nesse limite
@@ -66,31 +84,35 @@ bool onibusCheio(onibus_t *this) {
 }
 
 
+/**
+ * função que simula o trajeto de um onibus
+ * calcula o tempo necessário para ele chegar no ponto
+ * e aguarda até sua chegada
+ */
 void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
-	if(todosPassageirosChegaram()) {
-		// não preciso mais continuar
-		return ;
-	}
 
 	// em segundos
-	double tempoEspera = randMinMaxD(12, 25);
-	debug("onibus %2d indo para o ponto %d em %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
+	double tempoEspera = randMinMaxD(5, 7);
+	debug("onibus %2d indo para o ponto %2d, demorar %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
 
 	// convertido em microssegundos
 	usleep(tempoEspera * 1E6 * fatorTempo);
 
 	// cheguei no ponto
-	debug("onibus %2d chegou no ponto %2d, esperou por %g s\n", this->id, pontoOnibus->id, tempoEspera);
+	debug("onibus %2d chegou no ponto %2d em %g s\n", this->id, pontoOnibus->id, segundosFicticios());
 	// devo verificar se o ponto está ocupado
 	if(pontoOnibus->onibus) {
 		// estava ocupado
-		debug("onibus %2d encontrou o ponto %2d ocupado por onibus %2d, se encaminhando para o proximo ponto %2d\n", this->id, pontoOnibus->id, pontoOnibus->onibus->id, getProxPonto(pontoOnibus)->id);
+		debug("onibus %2d encontrou o ponto %2d ocupado por onibus %2d, se encaminhando para o proximo ponto %2d, em %g segundos\n", this->id, pontoOnibus->id, pontoOnibus->onibus->id, getProxPonto(pontoOnibus)->id, segundosFicticios());
 		onibusIrParaPonto(this, getProxPonto(pontoOnibus));
 		return ;
 	}
 
 	// consegui parar nesse ponto
-	debug("onibus %2d conseguiu parar no ponto %2d de fato\n", this->id, pontoOnibus->id);
 	this->pontoOnibus = pontoOnibus;
+	this->proxPonto = getProxPonto(pontoOnibus);
+	
+	debug("onibus %2d conseguiu parar no ponto %2d de fato em %g s, proximo ponto %2d\n", this->id, pontoOnibus->id, segundosFicticios(), this->proxPonto->id);
+
 	avisarQueOnibusChegou(pontoOnibus, this);
 }
