@@ -75,7 +75,7 @@ pthread_t threadTela;
 //----------------------------------------------------
 
 
-void init(int S_param, int C_param, int P_param, int A_param);
+void run(int S_param, int C_param, int P_param, int A_param);
 double segundosFicticios();
 
 

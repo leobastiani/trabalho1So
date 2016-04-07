@@ -101,10 +101,10 @@ int main(int argc, char *argv[]) {
 		freopen("saida.txt", "w", stdout);
 	#endif // SGDB
 
-	#define NUMERO_TESTES 100
+	#define NUMERO_TESTES 1
 	for(int i=0; i<NUMERO_TESTES; i++) {
 
-		init(
+		run(
 			randMinMax(2, 5), // numero de pontos
 			randMinMax(3, 6), // numero de onibus
 			randMinMax(15, 30), // passageiros

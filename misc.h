@@ -58,7 +58,7 @@ void section(char *str, ...); // cria uma seção para facilitar o debug da said
 
 unsigned int _srand(unsigned int seed); // inicializa uma seed para gerar números randômicos, coloque o valor 0 para uma seed aleatória
 double Math_random(); // gera um número aleatório entre 0 e 1
-int randMinMax(int min, int max); // gera um número aleatório x, min <= x <= max
+unsigned int randMinMax(int min, int max); // gera um número aleatório x, min <= x <= max
 double randMinMaxD(double min, double max); // gera um número aleatório double x, min <= x <= max
 
 // troca as funções de alocação de memória, menos no arquivo .c

@@ -40,7 +40,7 @@ double segundosFicticios() {
  * Inicio da aplicação
  * os parametros são iguais aos especificados pelo pdf
  */
-void init(int S_param, int C_param, int P_param, int A_param) {
+void run(int S_param, int C_param, int P_param, int A_param) {
 	sectionDebug("Inicializando variáveis da linha de comando");
 	// atribuindo os parametros as variáveis globais
 	S = S_param; debug("Pontos de ônibus: %d\n", S);
@@ -73,11 +73,8 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		return ;
 	}
 
-
-	// agora é certeza que vou iniciar
-	clearScreen();
-
 	// cria uma seed para cada nova thread
+	// cada thread precisa de uma seed e fazer um srand
 	seeds = createList();
 	for(int i=0; i<S+C+A+P; i++) {
 		filaPush(seeds, rand());
@@ -240,7 +237,7 @@ int main(int argc, char *argv[]) {
 
 
 	/**
-	 * Preparando para a função init
+	 * Preparando para a função run
 	 */
 	char *Sstr = argv[1];
 	char *Cstr = argv[2];
@@ -248,7 +245,7 @@ int main(int argc, char *argv[]) {
 	char *Astr = argv[4];
 
 	// convertendo para inteiros
-	init(atoi(Sstr), atoi(Cstr), atoi(Pstr), atoi(Astr));
+	run(atoi(Sstr), atoi(Cstr), atoi(Pstr), atoi(Astr));
 
 	return 0;
 }

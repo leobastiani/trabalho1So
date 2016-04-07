@@ -427,7 +427,7 @@ double Math_random() {
 }
 
 // gera um número aleatório x, min <= x <= max
-int randMinMax(int min, int max) {
+unsigned int randMinMax(int min, int max) {
 	return rand()%(max - min + 1)+min;
 }
 
