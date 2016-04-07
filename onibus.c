@@ -47,7 +47,7 @@ void *onibusRun(void *param) {
 	debug("onibus executando: %d\n", id);
 
 	// definindo a seed desse ponto
-	srand(removeInicioList(seeds, unsigned int));
+	srand(filaGet(seeds, unsigned int));
 	sem_post(&semDepoisDePegarSeed);
 
 	while(true) {
@@ -93,7 +93,7 @@ void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
 
 	// em segundos
 	double tempoEspera = randMinMaxD(5, 7);
-	debug("onibus %2d indo para o ponto %2d, demorar %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
+	debug("onibus %2d indo para o ponto %2d, demorará %g segundos\n", this->id, pontoOnibus->id, tempoEspera);
 
 	// convertido em microssegundos
 	usleep(tempoEspera * 1E6 * fatorTempo);
@@ -101,9 +101,14 @@ void onibusIrParaPonto(onibus_t *this, pontoOnibus_t *pontoOnibus) {
 	// cheguei no ponto
 	debug("onibus %2d chegou no ponto %2d em %g s\n", this->id, pontoOnibus->id, segundosFicticios());
 	// devo verificar se o ponto está ocupado
+	// dois onibus nao podem verificar esse ponto simultaneamente
+	pthread_mutex_lock(&pontoOnibus->mutexVerificarOnibusPonto);
 	if(pontoOnibus->onibus) {
 		// estava ocupado
 		debug("onibus %2d encontrou o ponto %2d ocupado por onibus %2d, se encaminhando para o proximo ponto %2d, em %g segundos\n", this->id, pontoOnibus->id, pontoOnibus->onibus->id, getProxPonto(pontoOnibus)->id, segundosFicticios());
+
+		// já tomei minha decisão
+		pthread_mutex_unlock(&pontoOnibus->mutexVerificarOnibusPonto);
 		onibusIrParaPonto(this, getProxPonto(pontoOnibus));
 		return ;
 	}

@@ -180,6 +180,9 @@ typedef struct list_t {
 	list_node_t *last;
 	// tamanho da lista
 	int length;
+
+	// garante thread safe
+	pthread_mutex_t mutexAcessoLista;
 } list_t;
 
 

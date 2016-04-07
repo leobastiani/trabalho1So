@@ -97,10 +97,10 @@ int main(int argc, char *argv[]) {
 	_srand(2);
 
 	init(
-		2, // numero de pontos
-		3, // numero de onibus
-	  5, // passageiros
-	  4 // assentos
+		30, // numero de pontos
+		40, // numero de onibus
+	  900, // passageiros
+	  50 // assentos
 	 );
 
 	return 0;

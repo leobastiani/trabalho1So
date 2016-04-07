@@ -26,6 +26,11 @@ void usage(char *argv0) {
 }
 
 
+/**
+ * retorna o momento em segundos da aplicação
+ * retorna uma resposta boa msmo se eu tentar acelearar a aplicação
+ * com o fatorTempo
+ */
 double segundosFicticios() {
 	return (timediff(false)/1E3)/fatorTempo;
 }
@@ -63,6 +68,10 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		printf("A aplicação precisa ter mais de um ponto de ônibus.\n");
 		exit(0);
 	}
+	if(S+C+P > 1023) {
+		printf("A aplicação não pode gerar mais do que 1023 threads.\n");
+		exit(0);
+	}
 
 
 	// agora é certeza que vou iniciar
@@ -71,7 +80,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	// cria uma seed para cada nova thread
 	seeds = createList();
 	for(int i=0; i<S+C+A+P; i++) {
-		inserirInicioList(seeds, rand());
+		filaPush(seeds, rand());
 	}
 	sem_init(&semDepoisDePegarSeed, 0, 0);
 
@@ -162,6 +171,7 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 		pthread_kill(threadsPontoOnibus[i], 0);
 		pontoOnibusFinish(&pontosOnibus[i]);
 	}
+	debug("Todos os pontos de onibus terminaram\n");
 
 	debug("\n");
 	sectionDebug("Todas as threads foram encerradas");

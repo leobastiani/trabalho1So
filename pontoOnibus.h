@@ -17,6 +17,14 @@ typedef struct pontoOnibus_t {
 
 	// semáforo que fica aguardando um ônibus
 	sem_t semAguardandoOnibus;
+
+
+	/**
+	 * variavel que faz um único por vez onibus conseguir
+	 * verificar se tem um onibus naquele ponto
+	 */
+	pthread_mutex_t mutexVerificarOnibusPonto;
+
 } pontoOnibus_t;
 
 

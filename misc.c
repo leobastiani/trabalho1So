@@ -443,6 +443,9 @@ double randMinMaxD(double min, double max) {
 void listInit(list_t *list) {
 	// define os valores padrões da lista
 	memset(list, 0, sizeof(list_t));
+
+	// caso especial para o nosso trabalho de SO
+	pthread_mutex_init(&list->mutexAcessoLista, NULL);
 }
 
 
@@ -506,7 +509,10 @@ list_node_t *novoNo(list_t *list, list_node_t *prev, list_node_t *prox, list_ele
  * a função sem o underline recebe qlqr parametro
  */
 void _inserirFinalList(list_t *list, list_elem_t elem) {
+	// garatindo thread safe
+	pthread_mutex_lock(&list->mutexAcessoLista);
 	novoNo(list, list->last, NULL, elem);
+	pthread_mutex_unlock(&list->mutexAcessoLista);
 }
 
 
@@ -637,6 +643,9 @@ list_elem_t _removeUltimoList(list_t *list) {
 
 
 list_elem_t _removeInicioList(list_t *list) {
+	// garatindo thread safe
+	pthread_mutex_lock(&list->mutexAcessoLista);
+
 	if(list->length == 0) {
 		printf("não posso remover de uma lista vazia. exiting\n");
 		exit(EXIT_FAILURE);
@@ -646,6 +655,8 @@ list_elem_t _removeInicioList(list_t *list) {
 	list_elem_t result = nodeFirst->elem;
 
 	removeNode(list, nodeFirst);
+
+	pthread_mutex_unlock(&list->mutexAcessoLista);
 
 	return result;
 }

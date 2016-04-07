@@ -43,7 +43,7 @@ void *passageiroRun(void *param) {
 
 	// cada thread deve fazer um srand
 	// resgatando da lista de seeds
-	srand(removeInicioList(seeds, unsigned int));
+	srand(filaGet(seeds, unsigned int));
 	sem_post(&semDepoisDePegarSeed);
 
 

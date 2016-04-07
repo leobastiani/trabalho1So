@@ -30,6 +30,7 @@ typedef struct onibus_t {
 
 
 
+
 void onibusInit(onibus_t *onibus, int id);
 void *onibusRun(void *param);
 bool onibusCheio(onibus_t *onibus);

@@ -19,6 +19,9 @@ void pontoOnibusInit(pontoOnibus_t *this, int id) {
 
 	// inicializa os semaphores
 	sem_init(&this->semAguardandoOnibus, 0, 0);
+
+	// inicializando mutex
+	pthread_mutex_init(&this->mutexVerificarOnibusPonto, NULL);
 }
 
 
@@ -32,7 +35,7 @@ void *pontoOnibusRun(void *param) {
 
 	pontoOnibus_t *this = &pontosOnibus[id];
 
-	srand(removeInicioList(seeds, unsigned int));
+	srand(filaGet(seeds, unsigned int));
 	sem_post(&semDepoisDePegarSeed);
 
 	while(true) {
@@ -43,10 +46,6 @@ void *pontoOnibusRun(void *param) {
 		// onibus atual no ponto
 		onibus_t *onibus = this->onibus;
 
-		printf("this: %p\n", this);
-		printf("pontoOnibus: %d\n", this->id);
-		printf("onibus: %p\n", onibus);
-		printf("onibus->passageiros: %p\n", onibus->passageiros);
 		debug("ponto de onibus %2d percebeu que chegou o onibus %2d com %2d passageiros\n", this->id, onibus->id, onibus->passageiros->length);
 
 		// fica um tempinho esperando
@@ -144,7 +143,8 @@ pontoOnibus_t *getProxPonto(pontoOnibus_t *pontoAnterior) {
 void avisarQueOnibusChegou(pontoOnibus_t *this, onibus_t *onibus) {
 	// diz para o ponto que esse onibus está lá
 	this->onibus = onibus;
-	debug("this: %p, this->id: %d, this->onibus: %p\n", this, this->id, this->onibus);
+	// já tomei a decisão de quem vai parar nesse ponto
+	pthread_mutex_unlock(&this->mutexVerificarOnibusPonto);
 	// avisa ao ponto que um ônibus chegou
 	sem_post(&this->semAguardandoOnibus);
 }
