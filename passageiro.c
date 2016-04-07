@@ -3,6 +3,7 @@
 #include "onibus.h"
 #include "misc.h"
 #include "main.h"
+#include "trace.h"
 
 
 /**
@@ -16,6 +17,15 @@ void passageiroInit(passageiro_t *this, int id) {
 	memset(this, 0, sizeof(passageiro_t));
 	// defino o id do passageiro
 	this->id = id;
+
+	// todo passageiro se inicia em casa
+	this->status = STATUS_emCasa;
+
+	// abre seu arquivo de trace
+	// obtem primeiro o nome do trace
+	char fileName[30] = "passageiroXX.trace";
+	sprintf(fileName, "passageiro%02d.trace", id);
+	this->file = fopen(fileName, "w");
 
 	// assim que eu dou um down, fico esperando
 	// começa em zero, pq o próximo wait eu fico bloqueado
@@ -68,6 +78,17 @@ void *passageiroRun(void *param) {
 
 
 
+	passageiroFinish(this);
+}
+
+
+/**
+ * função chamada assim q um passageiro se encerra
+ */
+void passageiroFinish(passageiro_t *this) {
+	// fechando o arquivo
+	fclose(this->file);
+
 	debug("passageiro %2d encerrado\n", this->id);
 }
 
@@ -81,6 +102,10 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 	filaPush(onibus->passageiros, this);
 
 	this->onibus = onibus;
+	// agora que eu subi, avanço no status
+	this->status++;
+	debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
+	gravarTrace(this);
 }
 
 
@@ -117,6 +142,10 @@ void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus) {
 void pegarOnibusOrigemDestino(passageiro_t *this) {
 	// primeiro, vai para o ponto de origem
 	caminharAtePonto(this, this->pontoOrigem);
+	// avanço na etapa do status
+	this->status++;
+	debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
+	gravarTrace(this);
 	// vou esperar o onibus e pegá-lo
 	// depois vou descer e esperar receber um sinal para descer
 	// por tanto, enquanto não chegar no ponto, eu fico no onibus
@@ -143,7 +172,13 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 		}
 
 		// eu qro descer nesse ponto
-		debug("passageiro %2d chegou no destino %2d\n", this->id, pontoOnibus->id);
+		debug("passageiro %2d chegou no destino %2d, desceu do onibus %2d\n", this->id, pontoOnibus->id, onibus->id);
+		this->pontoOnibus = pontoOnibus;
+		// incrimento o status
+		this->status++;
+		debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
+		gravarTrace(this);
+
 		// devo sair desse ônibus
 		passageiro_t *passageiro;
 		forList(passageiro_t *, passageiro, onibus->passageiros) {
@@ -152,9 +187,35 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 			}
 		}
 		
-		this->pontoOnibus = NULL;
+
 		sem_post(&onibus->semTodosPassageirosConferiram);
 		break;
+	}
+
+}
+
+
+/**
+ * salva o estado atual do passageiro no arquivo de trace
+ */
+void gravarTrace(passageiro_t *this) {
+	// arquivo que devo salvar
+	FILE *file = this->file;
+	int status = this->status;
+
+	// se eu cheguei num ponto
+	if(status == STATUS_noPontoDeCasa) {
+		fprintf(file, "Chegou no ponto de ônibus de origem %02d às %s.\n", this->pontoOnibus->id, horaAtual());
+	}
+
+	if(status == STATUS_noPontoDoTrabalho || status == STATUS_deVoltaPontoEmCasa) {
+		fprintf(file, "Desceu do ônibus %02d às %s.\n", this->onibus->id, horaAtual());
+		fprintf(file, "Desceu no ponto de ônibus %02d.\n", this->pontoOnibus->id);
+	}
+
+	// se eu subi num ônibus
+	else if(status == STATUS_aCaminhoDeCasa || status == STATUS_aCaminhoDoTrabalho) {
+		fprintf(file, "Entrou no ônibus %02d às %s.\n", this->onibus->id, horaAtual());
 	}
 
 }

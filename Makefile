@@ -29,4 +29,5 @@ sublimegdb: $(SOURCES)
 
 clear:
 	rm *.o &
+	rm *.trace &
 	rm $(EXECUTABLE)

@@ -5,6 +5,7 @@ subl
 backups
 *.bat
 *.txt
+*.trace
 
 # Windows image file caches
 Thumbs.db
