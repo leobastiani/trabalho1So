@@ -162,16 +162,23 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	for(int i=0; i<C; i++) {
 		debug("cancelando a thread %d de onibus\n", i);
 		pthread_cancel(threadsOnibus[i]);
-		onibusFinish(&onibusArray[i]);
 	}
 	debug("Todos os ônibus terminaram\n");
 
 	for(int i=0; i<S; i++) {
 		debug("cancelando a thread %d de ponto de onibus\n", i);
 		pthread_cancel(threadsPontoOnibus[i]);
-		pontoOnibusFinish(&pontosOnibus[i]);
 	}
 	debug("Todos os pontos de onibus terminaram\n");
+
+
+	// liberando os recursos
+	for(int i=0; i<C; i++) {
+		onibusFinish(&onibusArray[i]);
+	}
+	for(int i=0; i<S; i++) {
+		pontoOnibusFinish(&pontosOnibus[i]);
+	}
 
 	debug("\n");
 	sectionDebug("Todas as threads foram encerradas");
