@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include "misc.h"
 #include "main.h"
-#include "trace.h"
 
 /**
  * Teste envolvendo inserção e remoção na lista

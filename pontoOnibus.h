@@ -28,10 +28,39 @@ typedef struct pontoOnibus_t {
 } pontoOnibus_t;
 
 
+/**
+ * função necessária para ser chamada antes do Run
+ * inicializa a um ponto de onibus
+ */
+void pontoOnibusInit(pontoOnibus_t *this, int id);
+
+
+/**
+ * função que deve ser utilizada como argumento em pthread_create
+ * o que cada ponto de onibus deve fazer
+ */
 void *pontoOnibusRun(void *param);
-void pontoOnibusInit(pontoOnibus_t *pontoOnibus, int id);
-pontoOnibus_t *getProxPonto(pontoOnibus_t *pontoAnterior);
-void avisarQueOnibusChegou(pontoOnibus_t *this, onibus_t *onibus);
+
+
+/**
+ * função chamada assim que um ponto de onibus se encerra
+ * serve para dar free nas variaveis ou simplesmente encerrar-la
+ */
 void pontoOnibusFinish(pontoOnibus_t *this);
+
+
+/**
+ * obtem o proximo ponto de onibus a partir do anterior ou atual
+ */
+pontoOnibus_t *getProxPonto(pontoOnibus_t *pontoAnterior);
+
+
+/**
+ * permite a um ponto de onibus voltar a execução
+ * e assim executar suas funções
+ */
+void avisarQueOnibusChegou(pontoOnibus_t *this, onibus_t *onibus);
+
+
 
 #endif // __PONTOONIBUS_H__

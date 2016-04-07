@@ -75,8 +75,27 @@ pthread_t threadTela;
 //----------------------------------------------------
 
 
-void run(int S_param, int C_param, int P_param, int A_param);
+/**
+ * retorna o momento em segundos da aplicação
+ * retorna uma resposta boa msmo se eu tentar acelearar a aplicação
+ * com o fatorTempo
+ */
 double segundosFicticios();
+
+
+/**
+ * retorna uma string com a hora atual do sistema, não precisa de free
+ * @return formato "11h15m30s"
+ */
+char *horaAtual();
+
+
+/**
+ * Inicio da aplicação
+ * os parametros são iguais aos especificados pelo pdf
+ */
+void run(int S_param, int C_param, int P_param, int A_param);
+
 
 
 #endif // __MAIN_H__

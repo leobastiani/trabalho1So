@@ -1,4 +1,6 @@
 /******************************************
+ * Grupo 3                                *
+ *                                        *
  * Leonardo Guarnieri de Bastiani 8910434 *
  * Fábio Satoshi Sumida           8910542 *
  * Paulo Humberto Sapio de Morais 8910591 *
@@ -10,3 +12,4 @@
  * malloc, pois ela está implementada em  *
  * _malloc no arquivo misc.c              *
  ******************************************/
+

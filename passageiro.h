@@ -56,13 +56,60 @@ typedef struct passageiro_param_t {
 } passageiro_param_t;
 
 
-void passageiroInit(passageiro_t *passageiro, int id);
+/**
+ * função necessária para ser chamada antes do Run
+ * inicializa um passageiro, mas não define seu ponto de origem
+ * e de destino
+ * isso deve ser resgatado na função Run pelo parametro
+ */
+void passageiroInit(passageiro_t *this, int id);
+
+
+/**
+ * devo fazer free de param
+ * função que deve ser utilizada como argumento em pthread_create
+ * passos que o passageiro deve fazer
+ */
 void *passageiroRun(void *param);
-void subirNoOnibus(passageiro_t *passageiro, onibus_t *onibus);
-void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
-bool devoDescerDoOnibus(passageiro_t *this, pontoOnibus_t *pontoOnibus);
-void pegarOnibusOrigemDestino(passageiro_t *this);
-void atualizarStatus(passageiro_t *this);
+
+
+/**
+ * função chamada assim q um passageiro se encerra
+ */
 void passageiroFinish(passageiro_t *this);
+
+
+
+/**
+ * requisita que um passageiro suba no onibus
+ */
+void subirNoOnibus(passageiro_t *this, onibus_t *onibus);
+
+
+
+/**
+ * simula tanto a chegada de um passageiro até o ponto
+ * como a ociosidade do passageiro no ponto de trabalho dele
+ * poe o passageiro num ponto de onibus
+ */
+void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
+
+
+
+/**
+ * executa tudo o que um passageiro precisa para pegar um onibus até o trabalho
+ * que é:
+ * ir para um ponto
+ * pegar um onibus
+ * descer no destino
+ */
+void pegarOnibusOrigemDestino(passageiro_t *this);
+
+
+/**
+ * salva o estado atual do passageiro no arquivo de trace
+ */
+void atualizarStatus(passageiro_t *this);
+
 
 #endif // __PASSAGEIRO_H__

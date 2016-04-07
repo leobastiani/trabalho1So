@@ -37,6 +37,20 @@ double segundosFicticios() {
 
 
 /**
+ * retorna uma string com a hora atual do sistema, não precisa de free
+ * @return formato "11h15m30s"
+ */
+char *horaAtual() {
+	static char result[30] = {0};
+	time_t timeAtual = time(NULL);
+	struct tm *tmAtual = localtime(&timeAtual);
+
+	sprintf(result, "%02dh%02dm%02ds", tmAtual->tm_hour, tmAtual->tm_min, tmAtual->tm_sec);
+	return result;
+}
+
+
+/**
  * Inicio da aplicação
  * os parametros são iguais aos especificados pelo pdf
  */
