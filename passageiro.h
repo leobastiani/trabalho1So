@@ -62,7 +62,7 @@ void subirNoOnibus(passageiro_t *passageiro, onibus_t *onibus);
 void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
 bool devoDescerDoOnibus(passageiro_t *this, pontoOnibus_t *pontoOnibus);
 void pegarOnibusOrigemDestino(passageiro_t *this);
-void gravarTrace(passageiro_t *this);
+void atualizarStatus(passageiro_t *this);
 void passageiroFinish(passageiro_t *this);
 
 #endif // __PASSAGEIRO_H__

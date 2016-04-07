@@ -103,9 +103,7 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus) {
 
 	this->onibus = onibus;
 	// agora que eu subi, avanço no status
-	this->status++;
-	debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
-	gravarTrace(this);
+	atualizarStatus(this);
 }
 
 
@@ -143,9 +141,7 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 	// primeiro, vai para o ponto de origem
 	caminharAtePonto(this, this->pontoOrigem);
 	// avanço na etapa do status
-	this->status++;
-	debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
-	gravarTrace(this);
+	atualizarStatus(this);
 	// vou esperar o onibus e pegá-lo
 	// depois vou descer e esperar receber um sinal para descer
 	// por tanto, enquanto não chegar no ponto, eu fico no onibus
@@ -175,9 +171,7 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 		debug("passageiro %2d chegou no destino %2d, desceu do onibus %2d\n", this->id, pontoOnibus->id, onibus->id);
 		this->pontoOnibus = pontoOnibus;
 		// incrimento o status
-		this->status++;
-		debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
-		gravarTrace(this);
+		atualizarStatus(this);
 
 		// devo sair desse ônibus
 		passageiro_t *passageiro;
@@ -198,9 +192,14 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 /**
  * salva o estado atual do passageiro no arquivo de trace
  */
-void gravarTrace(passageiro_t *this) {
+void atualizarStatus(passageiro_t *this) {
 	// arquivo que devo salvar
 	FILE *file = this->file;
+
+	// atualizo o status
+	this->status++;
+	debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
+
 	int status = this->status;
 
 	// se eu cheguei num ponto

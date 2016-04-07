@@ -96,12 +96,20 @@ int main(int argc, char *argv[]) {
 	// dois onibus chegam no ponto quase no msmo instante
 	_srand(2);
 
-	init(
-		2, // numero de pontos
-		3, // numero de onibus
-	  5, // passageiros
-	  4 // assentos
-	 );
+	#ifdef SGDB
+		// estou compilando no sublime
+		freopen("saida.txt", "w", stdout);
+	#endif // SGDB
+
+
+	for(int i=0; i<100; i++) {
+		init(
+			2, // numero de pontos
+			3, // numero de onibus
+			5, // passageiros
+			4 // assentos
+		);
+	}
 
 	return 0;
 }

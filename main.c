@@ -54,23 +54,23 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	// todos eles devem ser maiores do que zero
 	if(S <= 0 || C <= 0 || P <= 0 || A <= 0) {
 		printf("Por favor, todos os parâmetros de entrada devem ser maiores do que zero.\n");
-		exit(0);
+		return ;
 	}
 	if(P <= A) {
 		printf("Por favor, utilize uma quantiadede de passageiros maior do que a quantidade de assentos em cada ônibus.\n");
-		exit(0);
+		return ;
 	}
 	if(A <= C) {
 		printf("Por favor, utilize uma quantidade de assentos maior do que a quantidade de ônibus.\n");
-		exit(0);
+		return ;
 	}
 	if(S == 1) {
 		printf("A aplicação precisa ter mais de um ponto de ônibus.\n");
-		exit(0);
+		return ;
 	}
 	if(S+C+P > 1023) {
 		printf("A aplicação não pode gerar mais do que 1023 threads.\n");
-		exit(0);
+		return ;
 	}
 
 
@@ -160,15 +160,15 @@ void init(int S_param, int C_param, int P_param, int A_param) {
 	debug("Todos os passageiros terminaram.\n");
 
 	for(int i=0; i<C; i++) {
-		debug("sinal de kill em %d onibus\n", i);
-		pthread_kill(threadsOnibus[i], 0);
+		debug("cancelando a thread %d de onibus\n", i);
+		pthread_cancel(threadsOnibus[i]);
 		onibusFinish(&onibusArray[i]);
 	}
 	debug("Todos os ônibus terminaram\n");
 
 	for(int i=0; i<S; i++) {
-		debug("sinal de kill em %d ponto de onibus\n", i);
-		pthread_kill(threadsPontoOnibus[i], 0);
+		debug("cancelando a thread %d de ponto de onibus\n", i);
+		pthread_cancel(threadsPontoOnibus[i]);
 		pontoOnibusFinish(&pontosOnibus[i]);
 	}
 	debug("Todos os pontos de onibus terminaram\n");
