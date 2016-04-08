@@ -174,11 +174,18 @@ void pegarOnibusOrigemDestino(passageiro_t *this) {
 
 		// devo sair desse ônibus
 		passageiro_t *passageiro;
+		pthread_mutex_lock(&onibus->passageiros->mutexForLista);
+
+		// simula um passageiro descendo
+		usleep(0.8 * 1E6 * fatorTempo);
+
 		forList(passageiro_t *, passageiro, onibus->passageiros) {
 			if(this == passageiro) {
 				removeListInFor(onibus->passageiros);
+				break;
 			}
 		}
+		pthread_mutex_unlock(&onibus->passageiros->mutexForLista);
 		
 
 		sem_post(&onibus->semTodosPassageirosConferiram);

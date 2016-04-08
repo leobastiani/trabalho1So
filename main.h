@@ -67,6 +67,7 @@ pthread_t *threadsOnibus;
 pthread_t *threadsPassageiro;
 pthread_t *threadsPontoOnibus;
 // não são vetores
+// thread da tela que fica executando de tempos em tempos
 pthread_t threadTela;
 
 

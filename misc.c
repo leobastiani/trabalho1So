@@ -446,6 +446,7 @@ void listInit(list_t *list) {
 
 	// caso especial para o nosso trabalho de SO
 	pthread_mutex_init(&list->mutexAcessoLista, NULL);
+	pthread_mutex_init(&list->mutexForLista, NULL);
 }
 
 

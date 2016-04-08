@@ -183,6 +183,7 @@ typedef struct list_t {
 
 	// garante thread safe
 	pthread_mutex_t mutexAcessoLista;
+	pthread_mutex_t mutexForLista;
 } list_t;
 
 

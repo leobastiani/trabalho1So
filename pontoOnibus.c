@@ -48,26 +48,18 @@ void *pontoOnibusRun(void *param) {
 
 		debug("ponto de onibus %2d percebeu que chegou o onibus %2d com %2d passageiros\n", this->id, onibus->id, onibus->passageiros->length);
 
-		// fica um tempinho esperando
-		// simulando os passageiros subindo
-		// se não tem ngm pra subir, nem ngm pra descer
-		bool temAlguem = onibus->passageiros->length != 0 || this->passageiros->length != 0;
-		if(temAlguem) {
-			// tempo de embarque
-			double tempoEspera = randMinMaxD(1, 2);
-			debug("ponto de onibus %2d tem um onibus %2d que terminara de embarcar no tempo %g segundos\n", this->id, onibus->id, tempoEspera+segundosFicticios());
-			usleep(tempoEspera * 1E6 * fatorTempo);
-		}
 
 
 		passageiro_t *passageiro;
 		// descarrego os passageiros nesse ponto
 		int nPassageirosEsperar = onibus->passageiros->length;
+		pthread_mutex_lock(&onibus->passageiros->mutexForLista);
 		forList(passageiro_t *, passageiro, onibus->passageiros) {
 			// aviso ao passageiro para descer
-			sem_post(&passageiro->semEsperarOnibusChegar);
 			debug("despachando do ponto %2d o passageiro %2d\n", this->id, passageiro->id);
+			sem_post(&passageiro->semEsperarOnibusChegar);
 		}
+		pthread_mutex_unlock(&onibus->passageiros->mutexForLista);
 
 		// espero todos os passageiros descerem
 		for(int i=0; i<nPassageirosEsperar; i++) {
@@ -80,6 +72,8 @@ void *pontoOnibusRun(void *param) {
 		if(this->passageiros->length == 0) {
 			debug("não havia ninguem no ponto de onibus %2d para subir\n", this->id);
 		}
+
+		pthread_mutex_lock(&onibus->passageiros->mutexForLista);
 		forList(passageiro_t *, passageiro, this->passageiros) {
 			// aviso ao passageiro que um ônibus chegou
 			if(onibusCheio(onibus)) {
@@ -91,7 +85,10 @@ void *pontoOnibusRun(void *param) {
 			removeListInFor(this->passageiros);
 			// manda ele subir no bus
 			subirNoOnibus(passageiro, onibus);
+			usleep(0.8 * 1E6 * fatorTempo);
 		}
+		pthread_mutex_unlock(&onibus->passageiros->mutexForLista);
+
 		if(onibus->passageiros->length != 0) {
 			// onibus está partindo com pessoas
 			#ifdef DEBUG

@@ -162,6 +162,10 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 		pthread_create(&threadsPassageiro[i], NULL, passageiroRun, cast(void *, param));
 		sem_wait(&semDepoisDePegarSeed);
 	}
+	// todas as threads foram criadas
+	pthread_create(&threadTela, NULL, telaRun, NULL);
+
+
 
 	// finalizando as threads
 	// devem seguir a ordem
@@ -169,6 +173,10 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 		pthread_join(threadsPassageiro[i], NULL);
 	}
 	debug("Todos os passageiros terminaram.\n");
+
+	// libera a tela antes dos pontos
+	// pra n dar seg fault
+	pthread_cancel(threadTela);
 
 	for(int i=0; i<C; i++) {
 		debug("cancelando a thread %d de onibus\n", i);
@@ -190,6 +198,7 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 	for(int i=0; i<S; i++) {
 		pontoOnibusFinish(&pontosOnibus[i]);
 	}
+	telaFinish();
 
 	debug("\n");
 	sectionDebug("Todas as threads foram encerradas");
