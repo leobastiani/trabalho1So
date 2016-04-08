@@ -65,9 +65,9 @@ void imprimirPontoOnibus(pontoOnibus_t *this) {
 	sprintf(buffer, "[S%02d %03d]", this->id, this->passageiros->length);
 	writeTela(buffer, this->id * 4, 0);
 
-	// [O00]
+	// [C00]
 	if(this->onibus) {
-		sprintf(buffer, "[O%02d]", this->onibus->id);
+		sprintf(buffer, "[C%02d]", this->onibus->id);
 		writeTela(buffer, this->id * 4 + 2, 1);
 	}
 	// não tem onibus
@@ -78,7 +78,11 @@ void imprimirPontoOnibus(pontoOnibus_t *this) {
 	int i = 0;
 	passageiro_t *passageiro;
 
+		
 	forList(passageiro_t *, passageiro, this->passageiros) {
+		if (i==30){
+			break;
+		}
 		sprintf(buffer, "%03d", passageiro->id);
 		writeTela(buffer, (this->id * 4) + i/10, 10 + 4 * (i % 10));
 		i++;
@@ -95,24 +99,27 @@ void imprimirTodosOnibus() {
 void imprimirOnibus(onibus_t *this) {
 	char buffer[1000];
 
-	//[O00 99]
-	sprintf(buffer, "[O%02d %03d]", this->id, this->passageiros->length);
+	//[C00 99]
+	sprintf(buffer, "[C%02d %03d]", this->id, this->passageiros->length);
 	#define colunaOnibus 55
 	writeTela(buffer, this->id * 4, colunaOnibus);
 	passageiro_t *passageiro;
 	int i = 0;
 
-	forList(passageiro_t*, passageiro, this->passageiros){
+	forList(passageiro_t*, passageiro, this->passageiros) {
+		if (i==30){
+			break;
+		}
 		sprintf(buffer, "%03d", passageiro->id);
-		writeTela(buffer, this->id * 4, colunaOnibus + 10 + 4 * (i % 10));
+		writeTela(buffer, this->id * 4 + i/10, colunaOnibus + 10 + 4 * (i % 10));
 		i++;
 	}
 
 	if (this->pontoOnibus){
-		sprintf(buffer, "== [%03d]", this->pontoOnibus->id);
+		sprintf(buffer, "== [S%02d]", this->pontoOnibus->id);
 	}
 	else{
-		sprintf(buffer, ">> [%03d]", this->proxPonto->id);
+		sprintf(buffer, ">> [S%02d]", this->proxPonto->id);
 	}
 	writeTela(buffer, this->id * 4 + 1, colunaOnibus);
 	
