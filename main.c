@@ -43,6 +43,8 @@ void usage(char *argv0) {
 	printf("-----------------------------------------------------------------------------------\n");
 	printf("\n");
 	printf("No caso da indicação de movimento, o ônibus pode estar parado(==) ou se movimentando(>>).\n");
+	printf("\n");
+	printf("Para uma melhor visualização, utilize o terminal em tela cheia.\n");
 }
 
 

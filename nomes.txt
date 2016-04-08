@@ -10,6 +10,14 @@
  * taram muito o trabalho, por exemplo:   *
  * não precisamos verificar o retorno de  *
  * malloc, pois ela está implementada em  *
- * _malloc no arquivo misc.c              *
+ * _malloc no arquivo misc.c.             *
+ *                                        *
+ * Para compilar utilize make para a ver- *
+ * são de release.                        *
+ * Make test e make debug para uma versão *
+ * com mais detalhes na tela.             *
+ *                                        *
+ * Utilize a linha de comando --help para *
+ * ajuda.                                 *
  ******************************************/
 
