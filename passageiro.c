@@ -24,7 +24,13 @@ void passageiroInit(passageiro_t *this, int id) {
 	// obtem primeiro o nome do trace
 	char fileName[30] = "passageiroXX.trace";
 	sprintf(fileName, "passageiro%02d.trace", id);
-	this->file = fopen(fileName, "w");
+	#ifdef DEBUG
+		// estou no debug
+		this->file = NULL;
+	#else
+		// não estou no debug
+		this->file = fopen(fileName, "w");
+	#endif // DEBUG
 
 	// assim que eu dou um down, fico esperando
 	// começa em zero, pq o próximo wait eu fico bloqueado
@@ -205,6 +211,12 @@ void atualizarStatus(passageiro_t *this) {
 	// atualizo o status
 	this->status++;
 	debug("passageiro %2d status alterado para: %d\n", this->id, this->status);
+
+	#ifdef DEBUG
+		// estou no debug
+		// não quero ler os arquivos de trace
+		return ;
+	#endif // DEBUG
 
 	int status = this->status;
 

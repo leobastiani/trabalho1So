@@ -45,13 +45,13 @@ sem_t semDepoisDePegarSeed;
 // se é 1, roda na velocidade normal
 // se é 0.2, roda em apenas 20% do tempo
 // é sempre multiplicado quando vou dar um sleep
-#ifdef TEST
+#ifdef DEBUG
 	// estou em teste
 	// menor tempo possível é 0.05, ainda apresenta indeterminações, mas é bom
 	#define fatorTempo 0.05
 #else
 	#define fatorTempo 1
-#endif // TEST
+#endif // DEBUG
 
 
 

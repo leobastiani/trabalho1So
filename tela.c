@@ -12,6 +12,11 @@
 void *telaRun(void *param) {
 	debug("Tela iniciado!\n");
 
+	#ifdef DEBUG
+		// não quero ver a tela se estou no debug
+		return NULL;
+	#endif // DEBUG
+
 	int nLoops = 0;
 
 	while(true) {
