@@ -46,6 +46,11 @@ void *telaRun(void *param) {
 
 
 void writeTela(char *str, int lin, int col) {
+	if(lin >= telaLinha || col >= telaColuna) {
+		// não escreve na parte da tela q não foi alocada
+		return ;
+	}
+
 	char ch;
 	int i = 0;
 	while(ch = str[i]) {

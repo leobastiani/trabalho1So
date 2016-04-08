@@ -8,8 +8,8 @@ typedef struct onibus_t onibus_t;
 typedef struct passageiro_t passageiro_t;
 
 #define telaLinha 29
-// é 27 + 1 do \0
 #define telaColuna 118
+// é 118 + 1 do \0
 char tela[telaLinha][telaColuna+1];
 
 // posições da tela pela linha e coluna
