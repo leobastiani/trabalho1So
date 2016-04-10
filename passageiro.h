@@ -66,6 +66,7 @@ typedef struct passageiro_param_t {
 void passageiroInit(passageiro_t *this, int id);
 
 
+
 /**
  * devo fazer free de param (instanciado dinamicamente em main)
  * função que deve ser utilizada como argumento em pthread_create
@@ -76,10 +77,12 @@ void *passageiroRun(void *param);	//Atua sobre um passageiro (uma struct passage
 //Essa função usa as seguintes outras, passado o ponteiro para a struct do seu passageiro:
 
 
+
 /**
  * função chamada por passageiroRun, assim q um passageiro se encerra 
  */
 void passageiroFinish(passageiro_t *this);	//this eh um ponteiro para a struct que representa o passageiro que se quer finalizar
+
 
 
 
@@ -92,12 +95,14 @@ void subirNoOnibus(passageiro_t *this, onibus_t *onibus);	//Passa um ponteiro pa
 
 
 
+
 /**
  * simula tanto a chegada de um passageiro até o ponto
  * como a ociosidade do passageiro no ponto de trabalho dele
  * poe o passageiro num ponto de onibus
  */
 void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
+
 
 
 
@@ -111,10 +116,12 @@ void caminharAtePonto(passageiro_t *this, pontoOnibus_t *pontoOnibus);
 void pegarOnibusOrigemDestino(passageiro_t *this);
 
 
+
 /**
  * salva o estado atual do passageiro no arquivo de trace
  */
 void atualizarStatus(passageiro_t *this);
+
 
 
 #endif // __PASSAGEIRO_H__

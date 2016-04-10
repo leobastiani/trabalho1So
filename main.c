@@ -23,6 +23,28 @@ void usage(char *argv0) {
 	printf("C número de carros que representam os ônibus.\n");
 	printf("P número de passageiros que desejam andar de ônibus.\n");
 	printf("A número de assentos em cada ônibus.\n");
+	printf("\n");
+	printf("Como saída na acontece:\n");
+	printf("Do lado esquerdo, temos alguns pontos desenhados, e do lado direito, temos alguns ônibus desenhados.\n");
+	printf("Para um número muito grande de pontos ou ônibus, eles podem não estar aparecendo, mas são computados\n");
+	printf("\n");
+	printf("Vamos ver um exemplo de saída do lado esquerdo, ou seja, dos pontos de ônibus:\n");
+	printf("-----------------------------------------------------------------------------------\n");
+	printf("[S'Número do ponto' 'Quantidade de passageiros nesse ponto'] 'Lista de passageiros'\n");
+	printf("\n");
+	printf(" ['Ônibus presente nesse ponto']\n");
+	printf("-----------------------------------------------------------------------------------\n");
+	printf("\n");
+	printf("Agora, vamos ver um exemplo de saída do lado direito, ou seja, dos ônibus:\n");
+	printf("-----------------------------------------------------------------------------------\n");
+	printf("[S'Número do ônibus' 'Quantidade de passageiros nesse ponto'] 'Lista de passageiros'\n");
+	printf("'Indicação do movimento' ['Ponto atual ou próximo ponto']\n");
+	printf("\n");
+	printf("-----------------------------------------------------------------------------------\n");
+	printf("\n");
+	printf("No caso da indicação de movimento, o ônibus pode estar parado(==) ou se movimentando(>>).\n");
+	printf("\n");
+	printf("Para uma melhor visualização, utilize o terminal em tela cheia.\n");
 }
 
 
