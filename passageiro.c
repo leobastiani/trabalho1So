@@ -11,7 +11,8 @@
  * e de destino
  * isso deve ser resgatado na função Run pelo parametro
  */
-void passageiroInit(passageiro_t *this, int id) {
+void passageiroInit(passageiro_t *this, int id) {	//Coloca na struct o ID do passageiro e o arquivo de Trace
+													//e inicia semáforo semEsperarOnibusChegar com 0
 	// zero todo o ponto
 	memset(this, 0, sizeof(passageiro_t));
 	// defino o id do passageiro
@@ -34,7 +35,7 @@ void passageiroInit(passageiro_t *this, int id) {
 
 	// assim que eu dou um down, fico esperando
 	// começa em zero, pq o próximo wait eu fico bloqueado
-	sem_init(&this->semEsperarOnibusChegar, 0, 0);
+	sem_init(&this->semEsperarOnibusChegar, 0, 0);	//Semáforo iniciado em 0
 
 	debug("passageiro %2d iniciado\n", this->id);
 }
@@ -47,7 +48,8 @@ void passageiroInit(passageiro_t *this, int id) {
  */
 void *passageiroRun(void *param) {
 	// vamos trabalhar com o parametro rapidamente para podermos liberá-lo
-	passageiro_param_t *paramConvertido = cast(passageiro_param_t *, param);
+	passageiro_param_t *paramConvertido = cast(passageiro_param_t *, param);	//Cast, pois pthread_create soh passa como
+																				//parâmetro ponteiro para void
 	passageiro_t *this = &passageiros[paramConvertido->id];
 
 	// defino todas as variaveis que depende do parametro

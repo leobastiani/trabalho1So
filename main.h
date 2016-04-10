@@ -6,9 +6,9 @@
 
 
 // declarações
-typedef struct onibus_t onibus_t;
-typedef struct passageiro_t passageiro_t;
-typedef struct pontoOnibus_t pontoOnibus_t;
+typedef struct onibus_t onibus_t;			//Define um ônibus
+typedef struct passageiro_t passageiro_t;	//Define um passageiro
+typedef struct pontoOnibus_t pontoOnibus_t;	//Define um ponto de ônibus
 typedef struct list_t list_t;
 
 
@@ -35,10 +35,10 @@ int S, C, P, A;
 
 // é uma lista com todas as seeds necessárias
 // cada thread precisa de uma seed
-list_t *seeds;
+list_t *seeds;	//Sementes para o Rand
 // variavel que serve para que eu deixe que eu
 // crie uma nova thread se a seed foi obtida
-sem_t semDepoisDePegarSeed;
+sem_t semDepoisDePegarSeed;	//Semáforo mutex para acessar a liste de seeds
 
 
 // diz com ql velocidade o programa vai executar
@@ -56,11 +56,13 @@ sem_t semDepoisDePegarSeed;
 
 
 // os objetos
+//Lista de structs que representam os ônibus, passageiros e de pontos
 onibus_t *onibusArray; // nao tem plural :/
 passageiro_t *passageiros;
 pontoOnibus_t *pontosOnibus;
 
 
+//Listas de identificadores da threads (pthread_t) de ônibus, passageiros e de pontos de ônibus
 // as threads
 // são vetores
 pthread_t *threadsOnibus;

@@ -32,7 +32,10 @@ void usage(char *argv0) {
  * com o fatorTempo
  */
 double segundosFicticios() {
-	return (timediff(false)/1E3)/fatorTempo;
+	return (timediff(false)/1E3)/fatorTempo;	//Em algum momento do cógigo vai ter timediff(true) e vai começar a contar
+												//o tempo. Aqui para de contar e retorna o tempo em milisegundo, por isso
+												//tem que dividir por 1000 (1E3). Divide pelo fator de tempo, pois se for
+												//DEBUG o tempo fica maior (pq? não sei, mas fica).
 }
 
 
@@ -41,7 +44,8 @@ double segundosFicticios() {
  * @return formato "11h15m30s"
  */
 char *horaAtual() {
-	static char result[30] = {0};
+	static char result[30] = {0};	//A variável estática continua declarada, entre as chamadas da função, por isso
+									//não precisa de free, pois usa sempre a mesma.
 	time_t timeAtual = time(NULL);
 	struct tm *tmAtual = localtime(&timeAtual);
 
@@ -87,14 +91,17 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 		return ;
 	}
 
-	// cria uma seed para cada nova thread
+	// cria uma seed para cada nova thread (Acentos têm threads?)
 	// cada thread precisa de uma seed e fazer um srand
 	seeds = createList();
 	for(int i=0; i<S+C+A+P; i++) {
-		filaPush(seeds, rand());
+		filaPush(seeds, rand());	//Coloca valores aleatórios na lista de seeds
 	}
-	sem_init(&semDepoisDePegarSeed, 0, 0);
-
+	sem_init(&semDepoisDePegarSeed, 0, 0);	//Semáforo inicializado com 0
+											//É um quando uma thread já pegou a seed e a seguinte pode ser criada
+											//É 0 quando isso não ocorreu e essa thread tem que esperar pra criar outra thread
+											//Thread criada dá UP após pegar a seed, essa thread dá down pra ver se pode
+											//criar outra thread ou ir dormir.
 
 	// começa a contar o tempo a partir daqui
 	timediff(true);
@@ -102,35 +109,46 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 
 
 	// iniciando objetos
+	
 	// primeiro alloco
-	pontosOnibus = (pontoOnibus_t *) malloc(sizeof(pontoOnibus_t) * S);
-	onibusArray  = (onibus_t *) malloc(sizeof(onibus_t) * C);
-	passageiros  = (passageiro_t *) malloc(sizeof(passageiro_t) * P);
+	pontosOnibus = (pontoOnibus_t *) malloc(sizeof(pontoOnibus_t) * S);	//Lista com S pontos de ônibus
+	onibusArray  = (onibus_t *) malloc(sizeof(onibus_t) * C);			//Lista com C ônibus
+	passageiros  = (passageiro_t *) malloc(sizeof(passageiro_t) * P);	//Lista com P passageiros
+
 	// agora eu inicializo
 	sectionDebug("Iniciando as variaveis");
 	for(int i=0; i<S; i++) {
-		pontoOnibusInit(&pontosOnibus[i], i);
+		pontoOnibusInit(&pontosOnibus[i], i);	//Tah nos arquivo pontoOnibus
 	}
 	for(int i=0; i<C; i++) {
-		onibusInit(&onibusArray[i], i);
+		onibusInit(&onibusArray[i], i);			//Tah no arquivo onibus
 	}
 	for(int i=0; i<P; i++) {
-		passageiroInit(&passageiros[i], i);
+		passageiroInit(&passageiros[i], i);		//Tah no arquivo passageiro
 	}
 
 
-	// criando as threads
+	// criando os identificadores das threads
 	// alocando a memória
-	threadsPontoOnibus = (pthread_t *) malloc(sizeof(pthread_t) * S);
-	threadsOnibus      = (pthread_t *) malloc(sizeof(pthread_t) * C);
-	threadsPassageiro  = (pthread_t *) malloc(sizeof(pthread_t) * P);
+	threadsPontoOnibus = (pthread_t *) malloc(sizeof(pthread_t) * S);	//Lista com S identificadores de threads 
+																		// dos pontos de ônibus
+	threadsOnibus      = (pthread_t *) malloc(sizeof(pthread_t) * C);	//Lista com C identificadores de threads dos ônibus
+	threadsPassageiro  = (pthread_t *) malloc(sizeof(pthread_t) * P);	//Lista com P identificadores de threads dod passageiros
 
 
 	// inicializando as threads
 	sectionDebug("Inicializando threads");
+	//i é o número de identificação do ponto de ônibus, do ônibus e do passageiro.
 	for(int i=0; i<S; i++) {
-		pthread_create(&threadsPontoOnibus[i], NULL, pontoOnibusRun, cast(void *, i));
+		//Para criar um thread, passamos como argumentos, o endereço do identificador da thread correspondente, um NULL,
+		//a função que vai rodar na thread, e o ID do ponto de ônibus como void *.
+		pthread_create(&threadsPontoOnibus[i], NULL, pontoOnibusRun, cast(void *, i));	
 		// sempre aguardo ele obter a seed de número aleatório para pegar outra
+		//Em pontoOnibusRun vai ser pega uma semente, e vai ser dado UP no semáforo (vai de 0 para 1). 
+		//Se isso acontecer ante de chegar aqui, essa thread dá um DOWN e o semáforo volta pra zero, e cria a próxima.
+		//Se chegar nessa parte do código antes disso acontecer, o semáforo vai continuar com valor 0, e essa thread vai
+		//dormir até q pontoOnibusRun pegue a semente, de UP, acorde essa thread e ele volte o semáforo pra 0 antes de 
+		//criar a próxima.
 		sem_wait(&semDepoisDePegarSeed);
 	}
 	for(int i=0; i<C; i++) {
@@ -138,16 +156,19 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 		sem_wait(&semDepoisDePegarSeed);
 	}
 	for(int i=0; i<P; i++) {
-		// devo passar uma strutura contendo o id
-		// ponto de origem e de destino
+		//A função passageiroRun necessita de mais de um parâmetro, por isso...
+		// devo passar uma strutura contendo o id do passageiro e
+		// o ID do ponto de origem e de destino
+		//O tipo passageiro_param_t está declarado em "passageiro.h"
 		passageiro_param_t *param = (passageiro_param_t *) malloc(sizeof(passageiro_param_t));
-		// vou precisar liberar param em passageiroRun
+		// vou precisar passar para  passageiroRun
 
 		param->id = i;
-		// definindo pontos de ônibus
+		// definindo pontos de ônibus de forma aleatória
 		int iPontoOrigem, iPontoDestino;
 		while(true) {
 			// procura um ponto que seja diferente de outro ponto
+			//Como são S pontos de ônibus os ID vão de 0 a S-1
 			iPontoOrigem = randMinMax(0, S-1);
 			iPontoDestino = randMinMax(0, S-1);
 			// se eles forem diferentes, posso sair
@@ -163,12 +184,13 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 		sem_wait(&semDepoisDePegarSeed);
 	}
 	// todas as threads foram criadas
-	pthread_create(&threadTela, NULL, telaRun, NULL);
+	pthread_create(&threadTela, NULL, telaRun, NULL);	//Cria a thread que muda a tela.
 
 
 
 	// finalizando as threads
 	// devem seguir a ordem
+	//Espera tds os passagerios terminarem
 	for(int i=0; i<P; i++) {
 		pthread_join(threadsPassageiro[i], NULL);
 	}
@@ -176,8 +198,9 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 
 	// libera a tela antes dos pontos
 	// pra n dar seg fault
-	pthread_cancel(threadTela);
+	pthread_cancel(threadTela);	//Faz a thread de tela parar
 
+	//Se não tem passagerios, faz as threads de ônibus e de pontos de ônibus pararem.
 	for(int i=0; i<C; i++) {
 		debug("cancelando a thread %d de onibus\n", i);
 		pthread_cancel(threadsOnibus[i]);
@@ -191,6 +214,7 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 	debug("Todos os pontos de onibus terminaram\n");
 
 
+	//Libera os recursos alocados em cada uma das structs que representam os ônibus e os pontos de ônibus
 	// liberando os recursos
 	for(int i=0; i<C; i++) {
 		onibusFinish(&onibusArray[i]);
@@ -198,7 +222,7 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 	for(int i=0; i<S; i++) {
 		pontoOnibusFinish(&pontosOnibus[i]);
 	}
-	telaFinish();
+	telaFinish();	//Finaliza a tela
 
 	debug("\n");
 	sectionDebug("Todas as threads foram encerradas");
@@ -213,7 +237,7 @@ void run(int S_param, int C_param, int P_param, int A_param) {
 
 	free(pontosOnibus);
 	free(onibusArray);
-	free(passageiros);
+	free(passageiros);	//As structs de passageiro não tem nd alocado, pois isso basta dar free em passageiros
 
 	freeList(seeds);
 }

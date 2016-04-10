@@ -18,20 +18,21 @@
 #include <stdio.h>
 
 
-typedef struct pontoOnibus_t pontoOnibus_t;
-typedef struct onibus_t onibus_t;
+typedef struct pontoOnibus_t pontoOnibus_t;	//Struct que representa um ponto de ônibus
+typedef struct onibus_t onibus_t;			//Struct que reprsenta um ônibus
 
-
+//Struct que representa um passagerio (o q um passageiro tem)
 typedef struct passageiro_t {
-	int id;
+	int id;	//Número de identificação
 
 	// arquivo de trace desse passageiro
 	FILE *file;
 
-	// onibus que estou
+	// ponteiro para o struct que representa o onibus que ele está
 	onibus_t *onibus;
+	// ponteiro para a struct que representa o ponto de origem e de destino, respectivamente
 	pontoOnibus_t *pontoOrigem, *pontoDestino;
-	// ponto que o passageiro se encontra
+	// ponteiro para a struct que representa o ponto que o passageiro se encontra no momento
 	pontoOnibus_t *pontoOnibus;
 
 	// é o status de cada passageiro, ele pode estar esperando, entrando no onibus, descendo
@@ -44,15 +45,15 @@ typedef struct passageiro_t {
 	#define STATUS_aCaminhoDeCasa     5
 	#define STATUS_deVoltaPontoEmCasa 6
 
-	// estou no ponto e devo esperar o onibus
-	sem_t semEsperarOnibusChegar;
+	// UP quando (?) estou no ponto e devo esperar o onibus
+	sem_t semEsperarOnibusChegar;	//Semáforo (mutex?)
 } passageiro_t;
 
-
+//Struct de parâmetros que devem ser passador para passageiroRun
 typedef struct passageiro_param_t {
-	int id;
-	int iPontoOrigem;
-	int iPontoDestino;
+	int id;				//ID do passageiro
+	int iPontoOrigem;	//ID do ponto de origem
+	int iPontoDestino;	//ID do ponto de destino
 } passageiro_param_t;
 
 
@@ -66,24 +67,28 @@ void passageiroInit(passageiro_t *this, int id);
 
 
 /**
- * devo fazer free de param
+ * devo fazer free de param (instanciado dinamicamente em main)
  * função que deve ser utilizada como argumento em pthread_create
  * passos que o passageiro deve fazer
  */
-void *passageiroRun(void *param);
+void *passageiroRun(void *param);	//Atua sobre um passageiro (uma struct passageiro_t)
+
+//Essa função usa as seguintes outras, passado o ponteiro para a struct do seu passageiro:
 
 
 /**
- * função chamada assim q um passageiro se encerra
+ * função chamada por passageiroRun, assim q um passageiro se encerra 
  */
-void passageiroFinish(passageiro_t *this);
+void passageiroFinish(passageiro_t *this);	//this eh um ponteiro para a struct que representa o passageiro que se quer finalizar
 
 
 
 /**
  * requisita que um passageiro suba no onibus
  */
-void subirNoOnibus(passageiro_t *this, onibus_t *onibus);
+void subirNoOnibus(passageiro_t *this, onibus_t *onibus);	//Passa um ponteiro para a struct que representa o passageiro
+															//que quer subir e um ponteiro para a struct que representa
+															//o ônibus no qual o passageiro quer subir.
 
 
 
