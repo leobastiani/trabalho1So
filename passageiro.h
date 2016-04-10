@@ -78,10 +78,12 @@ void *passageiroRun(void *param);	//Atua sobre um passageiro (uma struct passage
 
 
 
+
 /**
  * função chamada por passageiroRun, assim q um passageiro se encerra 
  */
 void passageiroFinish(passageiro_t *this);	//this eh um ponteiro para a struct que representa o passageiro que se quer finalizar
+
 
 
 
@@ -92,6 +94,7 @@ void passageiroFinish(passageiro_t *this);	//this eh um ponteiro para a struct q
 void subirNoOnibus(passageiro_t *this, onibus_t *onibus);	//Passa um ponteiro para a struct que representa o passageiro
 															//que quer subir e um ponteiro para a struct que representa
 															//o ônibus no qual o passageiro quer subir.
+
 
 
 
