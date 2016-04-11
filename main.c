@@ -48,6 +48,11 @@ void usage(char *argv0) {
 }
 
 
+void leo(int i) {
+	printf("Não faço nada\n");
+}
+
+
 /**
  * retorna o momento em segundos da aplicação
  * retorna uma resposta boa msmo se eu tentar acelearar a aplicação

@@ -42,7 +42,7 @@ long int _file_size(FILE *file); // funcao que retorna o tamanho de um arquivo
 #define FILE_NOT_FOUND 0
 #define IS_FILE 1
 #define IS_DIR 2
-char file_exists(char const *str); // funcao que retorna true ou false se o arquivo existe, retorna um dos três defines
+char file_exists(char const *path_file); // funcao que retorna true ou false se o arquivo existe, retorna um dos três defines
 int remove_directory(const char *path); // remove um diretorio não vazio por completo
 
 void setBufferedInput(bool enable); // obtem comandos do teclado sem armazenar buffer
@@ -270,4 +270,8 @@ forList(int, elem, list) {
 #define printListDouble(list) printList(double, elem, list, printf("%g", elem), ", ", "\n")
 
 
-#endif
+bool emptyList(list_t *list);
+
+bool posValidaList(list_t *list, int pos);
+
+#endif // __MISC_H__

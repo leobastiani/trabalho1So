@@ -100,5 +100,10 @@ char *horaAtual();
 void run(int S_param, int C_param, int P_param, int A_param);
 
 
+void usage(char *argv0);
+
+int main(int argc, char *argv[]);
+
+void leo(int i);
 
 #endif // __MAIN_H__
