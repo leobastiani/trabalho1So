@@ -94,7 +94,7 @@ void *passageiroRun(void *param) {
  */
 void passageiroFinish(passageiro_t *this) {
 	// fechando o arquivo
-	fclose(this->file);
+	_fclose(this->file);
 
 	debug("passageiro %2d encerrado\n", this->id);
 }
